@@ -84,8 +84,8 @@ export default function SignalPage() {
           >
             {[
               { value: "0.639", label: "F1" },
-              { value: "24.3mo", label: "MEDIAN DETECTION" },
-              { value: "PHARMACOVIGILANCE", label: "DOMAIN" },
+              { value: "24.3", label: "MONTHS MEDIAN DETECTION" },
+              { value: "0.712", label: "PRECISION" },
             ].map((s, i) => (
               <Reveal key={s.label} delay={i * 80}>
                 <div

@@ -29,7 +29,7 @@ const DIVISIONS = [
     desc: "Real-asset intelligence. Minerals, ownership, commodity flow.",
     score: "88.5%",
     href: "/divisions/atlas",
-    img: "/division-atlas.jpg",
+    img: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/11_atlas_crystal-8izZcylrV0Tn38zG7XjP5oMB2LpEI0.png",
   },
   {
     name: "BACCHUS",
@@ -43,7 +43,7 @@ const DIVISIONS = [
     desc: "Healthcare workflow automation. Clinical routing, documentation, pharmacovigilance.",
     score: "81.5%",
     href: "/divisions/helix",
-    img: "/division-helix.jpg",
+    img: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/05_heimdall_shield-Lhnlz7aGUYpjPipmwkQbwTmM4wyC5G.png",
     highlight: true,
   },
   {
@@ -51,14 +51,14 @@ const DIVISIONS = [
     desc: "Security operations & compliance. SOC alert triage.",
     score: "94.0%",
     href: "/divisions/heimdall",
-    img: "/division-heimdall.jpg",
+    img: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/05_heimdall_shield-Lhnlz7aGUYpjPipmwkQbwTmM4wyC5G.png",
   },
   {
     name: "CRUCIBLE",
     desc: "Open research & validation infrastructure.",
     score: "—",
     href: "/crucible",
-    img: "/division-crucible.jpg",
+    img: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/12_crucible_flask-4Zrl14zS8cJZBiu3XAg4i4nxGngla6.png",
   },
 ];
 

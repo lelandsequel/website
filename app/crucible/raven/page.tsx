@@ -136,7 +136,7 @@ export default function RavenPage() {
                 }}
               >
                 <Image
-                  src="/raven-bird.jpg"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/asset_yb78d9eoz_1777045469087-cJVav7s8xjRYeVkNVxCsWpbyWC690k.png"
                   alt="RAVEN artifact - bronze raven sculpture"
                   fill
                   priority

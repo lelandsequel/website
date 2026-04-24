@@ -155,7 +155,7 @@ export default function VantagePage() {
                 <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "1.5rem" }}>
                   <div style={{ position: "relative", width: 100, height: 120 }}>
                     <Image
-                      src="/vantage-tablet.jpg"
+                      src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/02_validation_tablet-CHmorZrPWyOuPbovq6sddaaskWqBP3.png"
                       alt="VANTAGE diagnostic tablet artifact"
                       fill
                       sizes="100px"

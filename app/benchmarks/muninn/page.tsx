@@ -91,7 +91,7 @@ export default function MuninnPage() {
             {[
               { value: "0.847", label: "VALIDATION F1" },
               { value: "0.921", label: "CONTRADICTION RECALL" },
-              { value: "MEMORY", label: "DOMAIN" },
+              { value: "17.3%", label: "REFUSAL RATE" },
             ].map((s, i) => (
               <Reveal key={s.label} delay={i * 80}>
                 <div

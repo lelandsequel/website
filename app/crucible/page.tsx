@@ -103,7 +103,7 @@ export default function CruciblePage() {
                 }}
               >
                 <Image
-                  src="/crucible-book.jpg"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/12_crucible_flask-4Zrl14zS8cJZBiu3XAg4i4nxGngla6.png"
                   alt="Crucible research artifact - open book with laboratory flask"
                   fill
                   priority

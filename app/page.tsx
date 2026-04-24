@@ -121,7 +121,7 @@ export default function Home() {
                 }}
               >
                 <Image
-                  src="/hero-pedestal.jpg"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/asset_4bl1gteo4_1777045469087-hZvn9rV3cAXZmMex2zexyajebVD7wn.png"
                   alt="Five division artifacts on a circular stone pedestal with COSMIC at center"
                   fill
                   priority
@@ -316,7 +316,7 @@ export default function Home() {
                   }}
                 >
                   <Image
-                    src="/aurora-lockbox.jpg"
+                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/13_aurora_confidence_gate-PrPsm1OjTw55MgJurPYqdZM7RW80x5.png"
                     alt="AURORA confidence gate lockbox artifact"
                     fill
                     sizes="(max-width: 900px) 100vw, 50vw"

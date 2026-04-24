@@ -11,29 +11,29 @@ export const metadata: Metadata = {
 const engines = [
   {
     id: "01",
-    name: "NOVA",
-    image: "/engine-nova.jpg",
-    label: "Initial evidence retrieval",
-    desc: "Harvests claims and supporting artifacts from the sealed corpus.",
+    name: "RAVEN",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/asset_yb78d9eoz_1777045469087-cJVav7s8xjRYeVkNVxCsWpbyWC690k.png",
+    label: "Retrieval",
+    desc: "Semantic search over sealed corpus. Returns candidate memories.",
   },
   {
     id: "02",
-    name: "ECLIPSE",
-    image: "/engine-eclipse.jpg",
-    label: "Adversarial challenge generation",
-    desc: "Stress-tests claims with counterfactuals and failure-mode probes.",
+    name: "METEOR",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/06_meteor_entity-Zysao5MMrKDxJMF04kplnYQw5ZYesK.png",
+    label: "Entity normalization",
+    desc: "Resolves aliases, merges duplicates, links references.",
   },
   {
     id: "03",
     name: "PULSAR",
-    image: "/engine-pulsar.jpg",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/asset_bgy5j0yvm_1777045469087-Ui6XOqVIua8hA6PNxGHDRsZS1KsMwg.png",
     label: "Evidence aggregation",
     desc: "Consolidates and deduplicates evidence across sources.",
   },
   {
     id: "04",
     name: "AURORA",
-    image: "/engine-aurora.jpg",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/13_aurora_confidence_gate-PrPsm1OjTw55MgJurPYqdZM7RW80x5.png",
     label: "Confidence gate",
     desc: "Evaluates confidence thresholds and triggers honest refusal when unmet.",
     highlight: true,
@@ -41,22 +41,22 @@ const engines = [
   {
     id: "05",
     name: "LUNA",
-    image: "/engine-luna.jpg",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/08_luna_audit_log-oXe5CGj2s4bC2UrjVVWaTdVb4MZjZ5.png",
     label: "SHA-chained audit log",
     desc: "Writes immutable, SHA-verified events for every pipeline step.",
   },
   {
     id: "06",
     name: "HEIMDALL",
-    image: "/engine-heimdall.jpg",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/03_heimdall_tier_gating-PeYxoBHav2bNZptXqKG62CNal4MA03.png",
     label: "Tier gating",
     desc: "Enforces division-level rules and permission tiers.",
   },
   {
     id: "07",
     name: "DOLOS",
-    image: "/engine-dolos.jpg",
-    label: "Normalization & entity disambiguation",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/07_dolos_normalization-68381bjvj5CmawdbguP3BMhE0EfDXX.png",
+    label: "Normalization",
     desc: "Resolves entities and normalizes formats for consistency.",
   },
 ];
@@ -165,7 +165,7 @@ export default function CosmicPage() {
         </div>
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <Image
-            src="/cosmic-gears.jpg"
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/14_cosmic_gears-K9HQ0vMauixT038vFrW1jo3PVOe14f.png"
             alt="COSMIC represented as interlocking sculptural gears on a stone pedestal"
             width={480}
             height={440}

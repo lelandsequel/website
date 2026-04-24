@@ -9,21 +9,21 @@ export const metadata: Metadata = {
 
 const contactCards = [
   {
-    icon: "/contact-quill.jpg",
+    icon: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/01_jl_seal-6VGQpLEumwo7hTq3FwwqJgmHZKZXHc.png",
     title: "Research Inquiries",
     body: "Questions about methodology, benchmark results, or research partnerships.",
     link: "mailto:leland@jourdanlabs.com?subject=Research Inquiry",
     linkLabel: "leland@jourdanlabs.com →",
   },
   {
-    icon: "/contact-key.jpg",
+    icon: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/01_jl_seal-6VGQpLEumwo7hTq3FwwqJgmHZKZXHc.png",
     title: "Evaluation API Access",
     body: "Request access to the COSMIC evaluation API for reproducibility verification or integration assessment.",
     link: "mailto:leland@jourdanlabs.com?subject=COSMIC Evaluation API Key Request",
     linkLabel: "Request API key →",
   },
   {
-    icon: "/contact-ring.jpg",
+    icon: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/01_jl_seal-6VGQpLEumwo7hTq3FwwqJgmHZKZXHc.png",
     title: "Investment & Partnership",
     body: "Pre-seed investment discussions, strategic partnerships, and enterprise evaluation.",
     link: "mailto:leland@jourdanlabs.com?subject=Investment Discussion",
@@ -102,7 +102,7 @@ export default function ContactPage() {
         </div>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <Image
-            src="/contact-envelope.jpg"
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/asset_wh1rla9ao_1777045469087-zOAjYw2gx5vR6KupeuWLbvUUxjavX9.png"
             alt="Sealed envelope with wax seal"
             width={380}
             height={340}
