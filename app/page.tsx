@@ -484,6 +484,38 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Footer */}
+      <footer
+        style={{
+          borderTop: "1px solid var(--bg-border)",
+          padding: "1.25rem 2rem",
+          backgroundColor: "var(--bg)",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: 1280,
+            margin: "0 auto",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            fontSize: "0.75rem",
+            color: "var(--text-secondary)",
+          }}
+        >
+          <span style={{ fontWeight: 600, letterSpacing: "0.04em" }}>
+            JOURDANLABS / HOUSTON, TX
+          </span>
+          <span>Six benchmarks. Publicly reproducible.</span>
+          <a
+            href="mailto:leland@jourdanlabs.com"
+            style={{ color: "var(--text-secondary)" }}
+          >
+            leland@jourdanlabs.com
+          </a>
+        </div>
+      </footer>
+
       {/* Responsive overrides — desktop-first, collapse on mobile */}
       <style>{`
         @media (max-width: 900px) {
