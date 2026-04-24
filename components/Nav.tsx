@@ -3,10 +3,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const links = [
-  { href: "/cosmic", label: "COSMIC" },
   { href: "/divisions", label: "Divisions" },
-  { href: "/crucible", label: "Crucible" },
-  { href: "/applications", label: "Applications" },
+  { href: "/crucible", label: "Benchmarks" },
+  { href: "/cosmic", label: "COSMIC" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -17,8 +16,7 @@ export default function Nav() {
     <header
       style={{
         borderBottom: "1px solid var(--bg-border)",
-        backgroundColor: "rgba(14,15,19,0.96)",
-        backdropFilter: "blur(12px)",
+        backgroundColor: "var(--bg)",
         position: "sticky",
         top: 0,
         zIndex: 100,
@@ -26,22 +24,22 @@ export default function Nav() {
     >
       <div
         style={{
-          maxWidth: 1100,
+          maxWidth: 1280,
           margin: "0 auto",
           padding: "0 2rem",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          height: 56,
+          height: 72,
         }}
       >
         <Link
           href="/"
           style={{
-            fontFamily: "var(--font-geist-mono), monospace",
+            fontFamily: "var(--font-geist-sans), 'Inter', system-ui, sans-serif",
             fontWeight: 700,
-            fontSize: "0.875rem",
-            letterSpacing: "0.12em",
+            fontSize: "0.8125rem",
+            letterSpacing: "0.22em",
             color: "var(--text-primary)",
             textTransform: "uppercase",
           }}
@@ -49,7 +47,7 @@ export default function Nav() {
           JOURDANLABS
         </Link>
 
-        <nav style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
+        <nav style={{ display: "flex", gap: "2.5rem", alignItems: "center" }}>
           {links.map((l) => {
             const active =
               pathname === l.href ||
@@ -59,11 +57,12 @@ export default function Nav() {
                 key={l.href}
                 href={l.href}
                 style={{
-                  fontSize: "0.8125rem",
-                  fontWeight: 500,
-                  letterSpacing: "0.03em",
+                  fontSize: "0.75rem",
+                  fontWeight: 600,
+                  letterSpacing: "0.18em",
+                  textTransform: "uppercase",
                   color: active ? "var(--accent)" : "var(--text-secondary)",
-                  transition: "color 0.15s",
+                  transition: "color 0.2s",
                 }}
               >
                 {l.label}
