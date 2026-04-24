@@ -4,9 +4,9 @@ import Image from "next/image";
 import Reveal from "@/components/Reveal";
 
 export const metadata: Metadata = {
-  title: "JourdanLabs — We ship no bullshit.",
+  title: "JourdanLabs — Five industry divisions. One reasoning substrate.",
   description:
-    "An AI research lab building deterministic reasoning systems, validated on sealed public benchmarks.",
+    "JourdanLabs builds deterministic AI products for regulated industries — where a confident wrong answer costs more than honest refusal.",
 };
 
 const container: React.CSSProperties = {
@@ -15,476 +15,380 @@ const container: React.CSSProperties = {
   padding: "0 2rem",
 };
 
-const DIVISIONS = [
-  { name: "ATLAS", desc: "Real-asset intelligence: minerals, ownership, commodity flow.", img: "/artifact-atlas.jpg" },
-  { name: "BACCHUS", desc: "Luxury hospitality market intelligence.", img: "/artifact-bacchus.jpg" },
-  { name: "HELIX", desc: "Health and human performance.", img: "/artifact-helix.jpg" },
-  { name: "HEIMDALL", desc: "Security operations and compliance.", img: "/artifact-heimdall.jpg" },
-  { name: "CRUCIBLE", desc: "Open research and validation infrastructure.", img: "/artifact-crucible.jpg" },
-];
-
-const BENCHMARKS = [
-  { name: "SIGNAL", domain: "Pharmacovigilance", result: "F1 0.639 · 24.3 mo median lead time" },
-  { name: "CITADEL", domain: "Corporate hierarchy", result: "F1 0.616" },
-  { name: "SENTINEL", domain: "SOC triage", result: "94% held-out" },
-  { name: "ORACLE", domain: "Factual verification", result: "51% vs 31% / 25% baselines" },
-  { name: "LENS", domain: "Semantic code search", result: "P@5 0.250 deterministic" },
-  { name: "COMPASS", domain: "Reading-level complexity", result: "15/15 within-1-tier" },
-];
-
 export default function Home() {
   return (
     <>
       {/* ─────────────────────────── HERO ─────────────────────────── */}
+      <section style={{ padding: "5rem 0 6rem" }}>
+        <div style={container}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1.1fr)",
+              gap: "3rem",
+              alignItems: "center",
+            }}
+            className="hero-grid"
+          >
+            <Reveal>
+              <div
+                className="smallcaps"
+                style={{ marginBottom: "1.5rem" }}
+              >
+                Houston, TX
+              </div>
+              <h1
+                style={{
+                  fontSize: "clamp(2.5rem, 5.5vw, 4rem)",
+                  fontWeight: 800,
+                  letterSpacing: "-0.03em",
+                  lineHeight: 1.02,
+                  color: "var(--text-primary)",
+                  marginBottom: "1.5rem",
+                }}
+              >
+                Five industry divisions.
+                <br />
+                One reasoning substrate.
+                <br />
+                No LLM calls at runtime.
+              </h1>
+              <div
+                style={{
+                  width: 60,
+                  height: 3,
+                  backgroundColor: "var(--accent)",
+                  marginBottom: "1.5rem",
+                }}
+              />
+              <p
+                style={{
+                  fontSize: "1.0625rem",
+                  lineHeight: 1.65,
+                  color: "var(--text-secondary)",
+                  maxWidth: 420,
+                  marginBottom: "2.5rem",
+                }}
+              >
+                JourdanLabs builds deterministic AI products for regulated
+                industries — where a confident wrong answer costs more than
+                honest refusal.
+              </p>
+              <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+                <Link
+                  href="/portfolio"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    padding: "0.875rem 1.5rem",
+                    backgroundColor: "var(--text-primary)",
+                    color: "var(--bg)",
+                    fontWeight: 600,
+                    fontSize: "0.75rem",
+                    letterSpacing: "0.14em",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Explore the Portfolio
+                  <span style={{ marginLeft: "0.25rem" }}>→</span>
+                </Link>
+                <Link
+                  href="/cosmic"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    padding: "0.875rem 1.5rem",
+                    border: "1px solid var(--accent)",
+                    color: "var(--accent)",
+                    fontWeight: 600,
+                    fontSize: "0.75rem",
+                    letterSpacing: "0.14em",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Read the Thesis
+                </Link>
+              </div>
+            </Reveal>
+
+            <Reveal delay={200}>
+              <div
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  aspectRatio: "1.15/1",
+                }}
+              >
+                <Image
+                  src="/hero-pedestal.jpg"
+                  alt="Five division artifacts on a circular stone pedestal with COSMIC at center"
+                  fill
+                  priority
+                  sizes="(max-width: 900px) 100vw, 55vw"
+                  style={{ objectFit: "contain" }}
+                />
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────── PORTFOLIO / VANTAGE ─────────────────── */}
       <section
         style={{
-          minHeight: "calc(100vh - 72px)",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          padding: "5rem 0 3rem",
+          padding: "5rem 0",
+          backgroundColor: "var(--bg-card)",
+          borderTop: "1px solid var(--bg-border)",
+          borderBottom: "1px solid var(--bg-border)",
         }}
       >
         <div style={container}>
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "minmax(0, 1.05fr) minmax(0, 1fr)",
+              gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)",
               gap: "4rem",
-              alignItems: "center",
+              alignItems: "start",
             }}
-            className="hero-grid"
+            className="portfolio-grid"
           >
             <Reveal>
-              <div className="smallcaps" style={{ marginBottom: "2rem" }}>
-                JourdanLabs
+              <div
+                className="smallcaps"
+                style={{ marginBottom: "1rem" }}
+              >
+                The Portfolio &middot; Crucible / Vantage
               </div>
-              <h1
+              <h2
                 style={{
-                  fontSize: "clamp(3rem, 7vw, 5.5rem)",
+                  fontSize: "clamp(2rem, 4vw, 3rem)",
                   fontWeight: 800,
-                  letterSpacing: "-0.035em",
-                  lineHeight: 0.98,
+                  letterSpacing: "-0.025em",
+                  lineHeight: 1.05,
                   color: "var(--text-primary)",
-                  marginBottom: "2rem",
-                  textWrap: "balance" as const,
+                  marginBottom: "1.5rem",
                 }}
               >
-                We ship no bullshit.
-              </h1>
+                Products validating products.
+              </h2>
               <p
                 style={{
-                  fontSize: "1.125rem",
-                  lineHeight: 1.6,
+                  fontSize: "1rem",
+                  lineHeight: 1.65,
                   color: "var(--text-secondary)",
-                  maxWidth: 520,
-                  marginBottom: "2.5rem",
+                  maxWidth: 440,
+                  marginBottom: "2rem",
                 }}
               >
-                An AI research lab building deterministic reasoning systems,
-                validated on sealed public benchmarks.
+                VANTAGE is the COSMIC diagnostic suite — a structured scan of
+                engine capability across all five division domains. Each scan
+                produces a sealed receipt with per-task scores, honest refusal
+                rates, and BCa confidence intervals.
               </p>
               <Link
-                href="#benchmarks"
+                href="/crucible/vantage"
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
-                  padding: "1rem 1.75rem",
-                  backgroundColor: "var(--accent)",
-                  color: "#F0E7D5",
+                  gap: "0.5rem",
+                  color: "var(--accent)",
                   fontWeight: 600,
-                  fontSize: "0.875rem",
-                  letterSpacing: "0.14em",
+                  fontSize: "0.8125rem",
+                  letterSpacing: "0.08em",
                   textTransform: "uppercase",
-                  borderRadius: 2,
                 }}
               >
-                See the benchmarks
+                Explore Vantage
+                <span>→</span>
               </Link>
             </Reveal>
 
-            <Reveal delay={200}>
-              <div style={{ position: "relative", aspectRatio: "4/5", width: "100%" }}>
-                <Image
-                  src="/hero-monolith.jpg"
-                  alt="Carved stone monolith artifact on a pedestal"
-                  fill
-                  priority
-                  sizes="(max-width: 900px) 100vw, 50vw"
-                  style={{ objectFit: "contain" }}
-                />
+            <Reveal delay={150}>
+              <div
+                style={{
+                  backgroundColor: "var(--bg)",
+                  border: "1px solid var(--bg-border)",
+                  padding: "1.75rem 2rem",
+                  fontFamily: "var(--font-geist-mono), monospace",
+                  fontSize: "0.9rem",
+                  lineHeight: 1.8,
+                }}
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
+                  <span>ATLAS</span>
+                  <span style={{ letterSpacing: "0.15em" }}>. . . . . . .</span>
+                  <span style={{ fontWeight: 700 }}>88.5%</span>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
+                  <span>BACCHUS</span>
+                  <span style={{ letterSpacing: "0.15em" }}>. . . . . . .</span>
+                  <span style={{ fontWeight: 700 }}>88.9%</span>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "1.25rem" }}>
+                  <span>HELIX</span>
+                  <span style={{ letterSpacing: "0.15em" }}>. . . . . . .</span>
+                  <span style={{ fontWeight: 700 }}>81.5%</span>
+                </div>
+                <div
+                  style={{
+                    borderTop: "1px solid var(--bg-border)",
+                    paddingTop: "1.25rem",
+                  }}
+                >
+                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.25rem" }}>
+                    <span style={{ color: "var(--text-tertiary)" }}>REFUSAL RATE</span>
+                    <span>—</span>
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.25rem" }}>
+                    <span style={{ color: "var(--text-tertiary)" }}>CORPUS SHA</span>
+                    <span>sealed</span>
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    <span style={{ color: "var(--text-tertiary)" }}>BCa CI</span>
+                    <span>B=2000</span>
+                  </div>
+                </div>
               </div>
             </Reveal>
           </div>
-
-          {/* Burnt-orange rule + location */}
-          <Reveal delay={400}>
-            <div style={{ marginTop: "4rem", display: "flex", alignItems: "center", gap: "1.5rem" }}>
-              <div style={{ flex: 1, height: 1, backgroundColor: "var(--accent)", opacity: 0.75 }} />
-              <div className="smallcaps" style={{ color: "var(--text-tertiary)" }}>
-                Houston, TX &middot; Founded 2025
-              </div>
-            </div>
-          </Reveal>
         </div>
       </section>
 
-      {/* ─────────────────── DIVISIONS / PLATFORM ─────────────────── */}
-      <section style={{ padding: "8rem 0", borderTop: "1px solid var(--bg-border)" }}>
-        <div style={container}>
-          <Reveal>
-            <div className="smallcaps" style={{ marginBottom: "1.5rem" }}>The Platform</div>
-            <h2
-              style={{
-                fontSize: "clamp(2rem, 4.5vw, 3.5rem)",
-                fontWeight: 800,
-                letterSpacing: "-0.03em",
-                lineHeight: 1.05,
-                color: "var(--text-primary)",
-                maxWidth: 820,
-                marginBottom: "5rem",
-                textWrap: "balance" as const,
-              }}
-            >
-              Five divisions. One reasoning substrate.
-            </h2>
-          </Reveal>
-
-          {/* Five artifacts on pedestals */}
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(5, minmax(0, 1fr))",
-              gap: "1.5rem",
-              marginBottom: "4rem",
-            }}
-            className="divisions-grid"
-          >
-            {DIVISIONS.map((d, i) => (
-              <Reveal key={d.name} delay={i * 120}>
-                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
-                  <div style={{ position: "relative", width: "100%", aspectRatio: "1/1", marginBottom: "-1px" }}>
-                    <Image
-                      src={d.img}
-                      alt={`${d.name} sculptural artifact`}
-                      fill
-                      sizes="(max-width: 900px) 45vw, 18vw"
-                      style={{ objectFit: "contain" }}
-                    />
-                  </div>
-                  {/* Stone pedestal with carved name */}
-                  <div
-                    className="pedestal"
-                    style={{
-                      width: "100%",
-                      padding: "1rem 0.5rem 1.25rem",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <span
-                      style={{
-                        fontSize: "0.8125rem",
-                        fontWeight: 700,
-                        letterSpacing: "0.22em",
-                        color: "#3A352C",
-                        textTransform: "uppercase",
-                      }}
-                    >
-                      {d.name}
-                    </span>
-                  </div>
-                  <p
-                    style={{
-                      marginTop: "1.25rem",
-                      fontSize: "0.875rem",
-                      lineHeight: 1.5,
-                      color: "var(--text-secondary)",
-                      maxWidth: 200,
-                    }}
-                  >
-                    {d.desc}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-
-          {/* COSMIC substrate slab */}
-          <Reveal delay={200}>
-            <div
-              style={{
-                background: "linear-gradient(180deg, #C8BEA6 0%, #A89E86 100%)",
-                borderTop: "1px solid #D4C8B0",
-                boxShadow: "0 2px 0 #8A8070, 0 12px 32px rgba(31,27,22,0.15)",
-                padding: "2rem 2.5rem",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                flexWrap: "wrap",
-                gap: "1rem",
-                marginBottom: "4rem",
-              }}
-            >
-              <div>
-                <div
-                  style={{
-                    fontSize: "0.7rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.28em",
-                    color: "#3A352C",
-                    marginBottom: "0.25rem",
-                  }}
-                >
-                  COSMIC
-                </div>
-                <div style={{ fontSize: "1.0625rem", fontWeight: 600, color: "#1F1B16" }}>
-                  Reasoning Substrate
-                </div>
-              </div>
-              <div style={{ fontSize: "0.875rem", color: "#3A352C", maxWidth: 520, lineHeight: 1.5 }}>
-                Shared deterministic pipeline. Every division. Every benchmark. Every verdict.
-              </div>
-            </div>
-          </Reveal>
-
-          {/* Four attribute pills */}
-          <Reveal delay={400}>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
-                gap: "2rem",
-                paddingTop: "2rem",
-                borderTop: "1px solid var(--bg-border)",
-              }}
-              className="attr-grid"
-            >
-              {[
-                "No LLM calls at runtime",
-                "SHA-verified grounding",
-                "6 peer-reviewable benchmarks",
-                "Every result reproducible",
-              ].map((t) => (
-                <div key={t} style={{ display: "flex", alignItems: "baseline", gap: "0.75rem" }}>
-                  <span style={{ color: "var(--accent)", fontWeight: 700 }}>—</span>
-                  <span style={{ fontSize: "0.875rem", color: "var(--text-secondary)", lineHeight: 1.5 }}>
-                    {t}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ─────────────────────── METHODOLOGY ─────────────────────── */}
-      <section style={{ padding: "8rem 0", borderTop: "1px solid var(--bg-border)" }}>
+      {/* ─────────────────────── THESIS ─────────────────────── */}
+      <section style={{ padding: "6rem 0" }}>
         <div style={container}>
           <div
             style={{
               display: "grid",
               gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)",
-              gap: "5rem",
+              gap: "4rem",
               alignItems: "center",
             }}
-            className="method-grid"
+            className="thesis-grid"
           >
             <Reveal>
-              <div className="smallcaps" style={{ marginBottom: "1.5rem" }}>The Method</div>
+              <div
+                className="smallcaps"
+                style={{ marginBottom: "1rem" }}
+              >
+                Thesis
+              </div>
               <h2
                 style={{
-                  fontSize: "clamp(2rem, 4vw, 3.25rem)",
+                  fontSize: "clamp(1.75rem, 3.5vw, 2.5rem)",
                   fontWeight: 800,
-                  letterSpacing: "-0.03em",
-                  lineHeight: 1.05,
+                  letterSpacing: "-0.025em",
+                  lineHeight: 1.1,
                   color: "var(--text-primary)",
-                  marginBottom: "2rem",
-                  textWrap: "balance" as const,
+                  marginBottom: "1.75rem",
                 }}
               >
-                Validation-first. Always.
+                Current AI guesses confidently.
+                <br />
+                COSMIC is the opposite architecture.
               </h2>
-              <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem", fontSize: "1rem", lineHeight: 1.7, color: "var(--text-secondary)", maxWidth: 560 }}>
-                <p>
-                  Every result ships against a sealed, SHA-verifiable corpus. No benchmark gaming, no cherry-picking — the
-                  corpus exists before the engine sees it.
-                </p>
-                <p>
-                  Our pipelines are deterministic. No LLM calls at runtime. Identical inputs produce byte-identical outputs.
-                  We baseline against real industry tools, not straw men.
-                </p>
-                <p>
-                  Every methodology arc is published with per-fix attribution, honest limitations, and step-by-step reproduction instructions.
-                </p>
-              </div>
               <div
                 style={{
-                  marginTop: "2.5rem",
-                  paddingLeft: "1.5rem",
-                  borderLeft: "2px solid var(--accent)",
-                  fontSize: "1.125rem",
-                  fontWeight: 600,
-                  color: "var(--text-primary)",
-                  fontStyle: "italic",
+                  fontSize: "1rem",
+                  lineHeight: 1.7,
+                  color: "var(--text-secondary)",
+                  maxWidth: 480,
                 }}
               >
-                If we can&apos;t prove it, we don&apos;t ship it.
+                <p style={{ marginBottom: "1rem" }}>
+                  Large language models achieve impressive benchmark numbers but
+                  produce unreliable outputs when underlying knowledge is absent
+                  or contested. COSMIC is a multi-engine deterministic pipeline —
+                  no LLM calls at runtime, every claim SHA-grounded, honest
+                  refusal as a first-class output.
+                </p>
               </div>
             </Reveal>
 
-            <Reveal delay={200}>
-              <div style={{ position: "relative", aspectRatio: "1/1", width: "100%" }}>
-                <Image
-                  src="/artifact-methodology.jpg"
-                  alt="Carved book and laboratory flask sculptural artifact"
-                  fill
-                  sizes="(max-width: 900px) 90vw, 45vw"
-                  style={{ objectFit: "contain" }}
-                />
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* ─────────────────────── BENCHMARKS ─────────────────────── */}
-      <section id="benchmarks" style={{ padding: "8rem 0", borderTop: "1px solid var(--bg-border)" }}>
-        <div style={container}>
-          <Reveal>
-            <div className="smallcaps" style={{ marginBottom: "1.5rem" }}>The Receipts</div>
-            <h2
-              style={{
-                fontSize: "clamp(2rem, 4.5vw, 3.5rem)",
-                fontWeight: 800,
-                letterSpacing: "-0.03em",
-                lineHeight: 1.05,
-                color: "var(--text-primary)",
-                maxWidth: 820,
-                marginBottom: "4rem",
-                textWrap: "balance" as const,
-              }}
-            >
-              Six published. One landing this week.
-            </h2>
-          </Reveal>
-
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
-              gap: "1.25rem",
-              marginBottom: "1.25rem",
-            }}
-            className="bench-grid"
-          >
-            {BENCHMARKS.map((b, i) => (
-              <Reveal key={b.name} delay={i * 80}>
+            <Reveal delay={150}>
+              <div style={{ position: "relative" }}>
                 <div
                   style={{
-                    border: "1px solid var(--accent-border)",
-                    backgroundColor: "var(--bg)",
-                    padding: "1.75rem 1.75rem 2rem",
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "1rem",
+                    position: "relative",
+                    width: "100%",
+                    aspectRatio: "1.1/1",
+                  }}
+                >
+                  <Image
+                    src="/aurora-lockbox.jpg"
+                    alt="AURORA confidence gate lockbox artifact"
+                    fill
+                    sizes="(max-width: 900px) 100vw, 50vw"
+                    style={{ objectFit: "contain" }}
+                  />
+                </div>
+                {/* Annotation labels */}
+                <div
+                  style={{
+                    position: "absolute",
+                    right: 0,
+                    top: "30%",
+                    textAlign: "left",
+                    paddingLeft: "1rem",
+                    borderLeft: "2px solid var(--text-tertiary)",
                   }}
                 >
                   <div
                     style={{
-                      fontSize: "0.7rem",
-                      fontWeight: 700,
-                      letterSpacing: "0.22em",
-                      color: "var(--accent)",
-                    }}
-                  >
-                    {b.name}
-                  </div>
-                  <div style={{ fontSize: "1.0625rem", fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.01em" }}>
-                    {b.domain}
-                  </div>
-                  <div
-                    style={{
-                      fontFamily: "var(--font-geist-mono), monospace",
                       fontSize: "0.8125rem",
-                      color: "var(--text-secondary)",
-                      marginTop: "auto",
-                      lineHeight: 1.5,
+                      fontWeight: 700,
+                      letterSpacing: "0.1em",
+                      color: "var(--text-primary)",
                     }}
                   >
-                    {b.result}
+                    AURORA
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "0.75rem",
+                      color: "var(--text-tertiary)",
+                    }}
+                  >
+                    / confidence gate
                   </div>
                 </div>
-              </Reveal>
-            ))}
-          </div>
-
-          {/* Highlighted upcoming MUNINN card */}
-          <Reveal delay={300}>
-            <div
-              style={{
-                border: "1px solid var(--accent)",
-                backgroundColor: "var(--accent-dim)",
-                padding: "1.75rem",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                flexWrap: "wrap",
-                gap: "1rem",
-                marginLeft: "2rem",
-                marginRight: "2rem",
-              }}
-            >
-              <div>
                 <div
                   style={{
-                    fontSize: "0.7rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.22em",
-                    color: "var(--accent)",
-                    marginBottom: "0.5rem",
+                    position: "absolute",
+                    right: 0,
+                    top: "55%",
+                    textAlign: "left",
+                    paddingLeft: "1rem",
+                    borderLeft: "2px solid var(--text-tertiary)",
                   }}
                 >
-                  MUNINN &middot; Landing this week
-                </div>
-                <div style={{ fontSize: "1.0625rem", fontWeight: 700, color: "var(--text-primary)" }}>
-                  Memory validation
+                  <div
+                    style={{
+                      fontSize: "0.8125rem",
+                      fontWeight: 700,
+                      letterSpacing: "0.1em",
+                      color: "var(--text-primary)",
+                    }}
+                  >
+                    LUNA
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "0.75rem",
+                      color: "var(--text-tertiary)",
+                    }}
+                  >
+                    / immutable audit log
+                  </div>
                 </div>
               </div>
-              <div style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.8125rem", color: "var(--text-secondary)" }}>
-                Sealed corpus &middot; baselines under review
-              </div>
-            </div>
-          </Reveal>
-
-          <Reveal delay={400}>
-            <div style={{ marginTop: "3rem" }}>
-              <Link
-                href="/crucible"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "0.5rem",
-                  padding: "1rem 1.75rem",
-                  border: "1px solid var(--text-primary)",
-                  color: "var(--text-primary)",
-                  fontWeight: 600,
-                  fontSize: "0.8125rem",
-                  letterSpacing: "0.14em",
-                  textTransform: "uppercase",
-                  borderRadius: 2,
-                }}
-              >
-                See the methodology
-              </Link>
-            </div>
-          </Reveal>
+            </Reveal>
+          </div>
         </div>
       </section>
 
-      {/* Footer */}
+      {/* ─────────────────────── FOOTER ─────────────────────── */}
       <footer
         style={{
           borderTop: "1px solid var(--bg-border)",
@@ -501,6 +405,8 @@ export default function Home() {
             justifyContent: "space-between",
             fontSize: "0.75rem",
             color: "var(--text-secondary)",
+            flexWrap: "wrap",
+            gap: "1rem",
           }}
         >
           <span style={{ fontWeight: 600, letterSpacing: "0.04em" }}>
@@ -516,18 +422,12 @@ export default function Home() {
         </div>
       </footer>
 
-      {/* Responsive overrides — desktop-first, collapse on mobile */}
+      {/* Responsive overrides */}
       <style>{`
         @media (max-width: 900px) {
           .hero-grid { grid-template-columns: 1fr !important; gap: 3rem !important; }
-          .divisions-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; row-gap: 3rem !important; }
-          .attr-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 1.5rem !important; }
-          .method-grid { grid-template-columns: 1fr !important; gap: 3rem !important; }
-          .bench-grid { grid-template-columns: 1fr !important; }
-        }
-        @media (max-width: 560px) {
-          .divisions-grid { grid-template-columns: 1fr !important; }
-          .attr-grid { grid-template-columns: 1fr !important; }
+          .portfolio-grid { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
+          .thesis-grid { grid-template-columns: 1fr !important; gap: 3rem !important; }
         }
       `}</style>
     </>
