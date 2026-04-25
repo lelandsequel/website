@@ -19,31 +19,31 @@ const TEAM = [
     name: "Leland Jourdan II",
     title: "FOUNDER & CEO",
     bio: "Former Chevron supply chain consultant. Lean Six Sigma Master Black Belt. Architect of the COSMIC reasoning substrate. Houston, TX.",
-    img: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/A_young_African_American_man_in_a_navy_blue_hoodie-1777141699513-CT9HWvVZikBaAtLdMqgDGOt1WxDj2R.png",
+    img: "/team-ceo.png",
   },
   {
     name: "Isaac Weathers",
     title: "CTO",
     bio: "Executive Director at JPMorgan, 20 years software architecture. Joining JourdanLabs full-time post-funding.",
-    img: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/A_rugged_bearded_man_with_dark_hair_in_a_man_bun_-1777141689018-oYCorWFlvoy9j1eHM2cOXy2vttyB56.png",
+    img: "/team-cto.png",
   },
   {
     name: "Colton Williams",
     title: "CFO",
     bio: "Purdue Finance. 10-year oil & gas finance veteran. Leads finance, contracts, and capital strategy.",
-    img: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/A_cheerful_red-haired_Caucasian_man_with_a_bright_-1777144291869-JXX5htVJsvtqboxNbHZKlXaRQhXgEY.png",
+    img: "/team-cfo.png",
   },
   {
     name: "Charles Jourdan",
     title: "CSO",
     bio: "Leads the HELIX health and human performance division. Twenty years in holistic wellness and athlete performance. Houston, TX.",
-    img: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/A_fit_young_African_American_man_with_short_fade_h-1777141672223-ckQQzF7dF11Ulm29tPU720E1thwCch.png",
+    img: "/team-cso.png",
   },
   {
     name: "Lee Jourdan",
     title: "ADVISOR & CHAIRMAN",
     bio: "Former Chevron CDIO. Independent Board Director, PROS Holdings. Strategic advisor and Board Chair.",
-    img: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/A_distinguished_older_African_American_man_with_a_-1777141737946-agr97REgOWHpd7L5bCcAiWIzMmgHRJ.png",
+    img: "/team-chairman.png",
   },
 ];
 
