@@ -152,31 +152,31 @@ export default function VantagePage() {
                   padding: "1.5rem",
                 }}
               >
-                <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "1.5rem" }}>
-                  <div style={{ position: "relative", width: 100, height: 120 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "2rem", marginBottom: "1.5rem" }}>
+                  <div style={{ position: "relative", width: 140, height: 160, flexShrink: 0 }}>
                     <Image
                       src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/02_validation_tablet-CHmorZrPWyOuPbovq6sddaaskWqBP3.png"
                       alt="VANTAGE diagnostic tablet artifact"
                       fill
-                      sizes="100px"
+                      sizes="140px"
                       style={{ objectFit: "contain" }}
                     />
                   </div>
-                  <div>
+                  <div style={{ marginLeft: "0.5rem" }}>
                     <div
                       style={{
-                        fontSize: "1.5rem",
+                        fontSize: "1.75rem",
                         fontWeight: 700,
                         letterSpacing: "0.15em",
                         color: "var(--text-primary)",
-                        marginBottom: "0.25rem",
+                        marginBottom: "0.375rem",
                       }}
                     >
                       VANTAGE
                     </div>
                     <div
                       style={{
-                        fontSize: "0.6875rem",
+                        fontSize: "0.75rem",
                         letterSpacing: "0.1em",
                         color: "var(--text-tertiary)",
                       }}
