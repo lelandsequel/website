@@ -113,15 +113,17 @@ export default function TeamPage() {
                       display: "flex",
                       alignItems: "flex-end",
                       justifyContent: "center",
+                      backgroundColor: "var(--bg)",
                     }}
                   >
                     <img
                       src={member.img}
                       alt={member.name}
-                      style={{ 
-                        maxWidth: "100%", 
-                        maxHeight: "100%", 
+                      style={{
+                        maxWidth: "100%",
+                        maxHeight: "100%",
                         objectFit: "contain",
+                        mixBlendMode: "multiply",
                       }}
                     />
                   </div>
