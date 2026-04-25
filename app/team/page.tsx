@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import Reveal from "@/components/Reveal";
 
 export const metadata: Metadata = {
@@ -111,13 +110,19 @@ export default function TeamPage() {
                       width: "100%",
                       aspectRatio: "3/4",
                       marginBottom: "1.25rem",
+                      display: "flex",
+                      alignItems: "flex-end",
+                      justifyContent: "center",
                     }}
                   >
-                    <Image
+                    <img
                       src={member.img}
                       alt={member.name}
-                      fill
-                      style={{ objectFit: "contain", objectPosition: "bottom" }}
+                      style={{ 
+                        maxWidth: "100%", 
+                        maxHeight: "100%", 
+                        objectFit: "contain",
+                      }}
                     />
                   </div>
                   <h3
