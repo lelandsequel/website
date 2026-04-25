@@ -111,16 +111,13 @@ export default function TeamPage() {
                       width: "100%",
                       aspectRatio: "3/4",
                       marginBottom: "1.25rem",
-                      backgroundColor: "#F5F1EB",
-                      borderRadius: 4,
-                      overflow: "hidden",
                     }}
                   >
                     <Image
                       src={member.img}
                       alt={member.name}
                       fill
-                      style={{ objectFit: "contain", objectPosition: "bottom" }}
+                      style={{ objectFit: "cover", objectPosition: "top" }}
                     />
                   </div>
                   <h3
