@@ -75,7 +75,7 @@ export default function OraclePage() {
             <Reveal delay={150}>
               <div style={{ position: "relative", width: "100%", height: 400 }}>
                 <Image
-                  src="/benchmark-oracle.jpg"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/asset_awwjziwbp_1777097497293.png-8nE7sY8c5qQrZ2uHICNu3spT2x3LzW.jpeg"
                   alt="ORACLE scales artifact"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"

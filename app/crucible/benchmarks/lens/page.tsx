@@ -75,7 +75,7 @@ export default function LensPage() {
             <Reveal delay={150}>
               <div style={{ position: "relative", width: "100%", height: 400 }}>
                 <Image
-                  src="/benchmark-lens.jpg"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/asset_e5q588zd0_1777097497293.png-1XI6j1WyeJs2GKzVIhJlSDojUnZ1tl.jpeg"
                   alt="LENS magnifying glass artifact"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
