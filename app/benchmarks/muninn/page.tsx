@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import Reveal from "@/components/Reveal";
 
 export const metadata: Metadata = {
@@ -40,36 +41,59 @@ export default function MuninnPage() {
       {/* ─────────────────────────── HERO ─────────────────────────── */}
       <section style={{ padding: "3rem 0 4rem" }}>
         <div style={container}>
-          <Reveal>
-            <div className="smallcaps" style={{ marginBottom: "1rem" }}>
-              MUNINN &middot; MEMORY VALIDATION
-            </div>
-            <h1
-              style={{
-                fontSize: "clamp(3rem, 8vw, 6rem)",
-                fontWeight: 900,
-                letterSpacing: "-0.03em",
-                lineHeight: 0.95,
-                color: "var(--text-primary)",
-                marginBottom: "1.5rem",
-              }}
-            >
-              MUNINN
-            </h1>
-            <p
-              style={{
-                fontSize: "clamp(1.125rem, 2.5vw, 1.5rem)",
-                fontWeight: 600,
-                lineHeight: 1.4,
-                color: "var(--text-secondary)",
-                maxWidth: 700,
-              }}
-            >
-              The first benchmark for memory validation pipelines —
-              contradiction detection, importance ranking, and honest refusal on
-              retrieved memories.
-            </p>
-          </Reveal>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "3rem",
+              alignItems: "center",
+            }}
+            className="hero-grid"
+          >
+            <Reveal>
+              <div className="smallcaps" style={{ marginBottom: "1rem" }}>
+                MUNINN &middot; MEMORY VALIDATION
+              </div>
+              <h1
+                style={{
+                  fontSize: "clamp(3rem, 8vw, 6rem)",
+                  fontWeight: 900,
+                  letterSpacing: "-0.03em",
+                  lineHeight: 0.95,
+                  color: "var(--text-primary)",
+                  marginBottom: "1.5rem",
+                }}
+              >
+                MUNINN
+              </h1>
+              <p
+                style={{
+                  fontSize: "clamp(1.125rem, 2.5vw, 1.5rem)",
+                  fontWeight: 600,
+                  lineHeight: 1.4,
+                  color: "var(--text-secondary)",
+                  maxWidth: 700,
+                }}
+              >
+                The first benchmark for memory validation pipelines —
+                contradiction detection, importance ranking, and honest refusal on
+                retrieved memories.
+              </p>
+            </Reveal>
+
+            <Reveal delay={150}>
+              <div style={{ position: "relative", width: "100%", height: 400 }}>
+                <Image
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/asset_yb78d9eoz_1777045469087-cJVav7s8xjRYeVkNVxCsWpbyWC690k.png"
+                  alt="RAVEN retrieval machine artifact"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  style={{ objectFit: "contain" }}
+                  priority
+                />
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
 
@@ -396,6 +420,7 @@ export default function MuninnPage() {
       {/* Responsive overrides */}
       <style>{`
         @media (max-width: 768px) {
+          .hero-grid { grid-template-columns: 1fr !important; }
           .stats-grid { grid-template-columns: 1fr !important; }
           .repro-grid { grid-template-columns: 1fr !important; }
         }
