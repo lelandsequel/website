@@ -32,7 +32,7 @@ const TEAM = [
     name: "Colton Williams",
     title: "CFO",
     bio: "Purdue Finance. 10-year oil & gas finance veteran. Leads finance, contracts, and capital strategy.",
-    img: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/A_cheerful_red-haired_Caucasian_man_with_a_bright_-1777141678599-9b6JbPiNSUUxG5iIOQyDEhvhYO4hzg.png",
+    img: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/A_cheerful_red-haired_Caucasian_man_with_a_bright_-1777144291869-JXX5htVJsvtqboxNbHZKlXaRQhXgEY.png",
   },
   {
     name: "Charles Jourdan",
