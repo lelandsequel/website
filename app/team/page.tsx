@@ -117,7 +117,7 @@ export default function TeamPage() {
                       src={member.img}
                       alt={member.name}
                       fill
-                      style={{ objectFit: "cover", objectPosition: "top" }}
+                      style={{ objectFit: "contain", objectPosition: "bottom" }}
                     />
                   </div>
                   <h3
