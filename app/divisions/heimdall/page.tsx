@@ -4,117 +4,335 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "HEIMDALL Division — Security Operations & Compliance",
   description:
-    "HEIMDALL applies COSMIC to security operations. SENTINEL is in pre-pilot with 94.0% held-out accuracy.",
-};
-
-const accent = "#4A7BA7";
-
-const S: Record<string, React.CSSProperties> = {
-  container: { maxWidth: 900, margin: "0 auto", padding: "0 2rem" },
-  containerSm: { maxWidth: 760, margin: "0 auto", padding: "0 2rem" },
-  label: { fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.6875rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "var(--text-tertiary)", display: "block" },
-  p: { color: "var(--text-secondary)", lineHeight: 1.75, marginBottom: "1rem" },
-  section: { padding: "5rem 0", borderBottom: "1px solid var(--bg-border)" },
+    "Trust scoring. Confidence-gated triage. Security operations and compliance reasoning for regulated enterprise.",
 };
 
 export default function HeimdallPage() {
   return (
-    <>
-      <section style={{ padding: "6rem 0 4rem", borderBottom: "1px solid var(--bg-border)", borderTop: `2px solid ${accent}` }}>
-        <div style={S.container}>
-          <div style={{ maxWidth: 680 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.25rem" }}>
-              <Link href="/divisions" style={{ fontSize: "0.8125rem", color: "var(--text-tertiary)" }}>← Divisions</Link>
-            </div>
-            <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.6875rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: accent, display: "block", marginBottom: "1rem" }}>HEIMDALL</span>
-            <h1 style={{ fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, letterSpacing: "-0.035em", lineHeight: 1.1, color: "var(--text-primary)", marginBottom: "1.25rem" }}>
-              Security operations and compliance.
-            </h1>
-            <p style={{ fontSize: "1.0625rem", color: "var(--text-secondary)", lineHeight: 1.7, maxWidth: 560 }}>
-              HEIMDALL applies the COSMIC reasoning substrate to security operations — SOC alert triage,
-              compliance monitoring, and threat classification. Every decision is traceable. Every refusal
-              is logged. No guessing at the security perimeter.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section style={S.section}>
-        <div style={S.container}>
-          <span style={S.label}>Products</span>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "1px", backgroundColor: "var(--bg-border)", border: "1px solid var(--bg-border)" }}>
-            {[
-              {
-                name: "SENTINEL",
-                status: "Pre-pilot",
-                description: "Deterministic SOC alert triage. SOAR adapters for Chronicle, Microsoft Sentinel, Splunk, and Elastic. 94.0% held-out accuracy. LUNA audit chain on every decision.",
-                accuracy: "94.0%",
-              },
-              {
-                name: "AEGIS",
-                status: "Roadmap",
-                description: "Compliance monitoring and regulatory reporting automation. Deterministic rule evaluation against sealed compliance corpora. No LLM interpretation of regulatory text.",
-                accuracy: "—",
-              },
-            ].map((product) => (
-              <div key={product.name} style={{ backgroundColor: "var(--bg-card)", padding: "1.75rem" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.75rem" }}>
-                  <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.75rem", fontWeight: 700, color: accent }}>{product.name}</span>
-                  <span style={{ fontSize: "0.625rem", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: product.status === "Pre-pilot" ? accent : "var(--text-tertiary)", border: `1px solid ${product.status === "Pre-pilot" ? accent : "var(--bg-border)"}`, padding: "0.125rem 0.5rem", fontFamily: "var(--font-geist-mono), monospace" }}>{product.status}</span>
-                </div>
-                <p style={{ fontSize: "0.8125rem", color: "var(--text-secondary)", lineHeight: 1.6, marginBottom: "1rem" }}>{product.description}</p>
-                {product.accuracy !== "—" && (
-                  <div style={{ fontSize: "0.75rem", color: "var(--text-tertiary)" }}>
-                    Held-out accuracy: <span style={{ fontFamily: "var(--font-geist-mono), monospace", color: accent }}>{product.accuracy}</span>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section style={{ padding: "4rem 0", borderBottom: "1px solid var(--bg-border)" }}>
-        <div style={S.containerSm}>
-          <span style={S.label}>SENTINEL benchmark results</span>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1px", border: "1px solid var(--bg-border)", backgroundColor: "var(--bg-border)" }}>
-            {[
-              { label: "Held-out accuracy", value: "94.0%" },
-              { label: "Unit tests passed", value: "210/210" },
-              { label: "Regressions introduced", value: "0" },
-            ].map((m) => (
-              <div key={m.label} style={{ backgroundColor: "var(--bg-card)", padding: "1.5rem" }}>
-                <div style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.625rem", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-tertiary)", marginBottom: "0.5rem" }}>{m.label}</div>
-                <div style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "1.5rem", fontWeight: 700, color: accent, letterSpacing: "-0.02em" }}>{m.value}</div>
-              </div>
-            ))}
-          </div>
-          <div style={{ marginTop: "1.25rem" }}>
-            <Link href="/crucible/benchmarks/sentinel" style={{ fontSize: "0.875rem", color: accent }}>
-              View full SENTINEL benchmark →
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section style={{ padding: "5rem 0" }}>
-        <div style={S.containerSm}>
-          <span style={S.label}>Why deterministic matters in security</span>
-          <p style={S.p}>
-            A SOC triage system that occasionally hallucinates a false negative — classifying a real threat
-            as noise — is not a triage system. It is a liability. SENTINEL's HEIMDALL gate escalates
-            alerts that fall outside the calibrated decision boundary to a human analyst, rather than
-            guessing on novel threat patterns.
-          </p>
-          <p style={{ ...S.p, marginBottom: "2rem" }}>
-            The LUNA audit chain means every triage decision — and every refusal — has an immutable,
-            tamper-evident record. When an incident requires post-mortem, the chain of evidence is there.
-          </p>
-          <Link href="/applications" style={{ fontSize: "0.875rem", color: accent }}>
-            Contact for pre-pilot access →
+    <article style={{ backgroundColor: "var(--bg)" }}>
+      {/* Breadcrumb */}
+      <div
+        style={{
+          maxWidth: 1120,
+          margin: "0 auto",
+          padding: "1.5rem 2rem 0",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
+            fontSize: "0.75rem",
+            fontFamily: "var(--font-geist-mono), monospace",
+            letterSpacing: "0.06em",
+          }}
+        >
+          <Link href="/portfolio" style={{ color: "var(--text-secondary)" }}>
+            DIVISIONS
           </Link>
+          <span style={{ color: "var(--text-tertiary)" }}>/</span>
+          <span style={{ color: "var(--text-primary)" }}>HEIMDALL</span>
+        </div>
+      </div>
+
+      {/* Hero */}
+      <section
+        style={{
+          maxWidth: 1120,
+          margin: "0 auto",
+          padding: "2rem 2rem 4rem",
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "3rem",
+          alignItems: "center",
+        }}
+        className="hero-grid"
+      >
+        <div>
+          <span
+            style={{
+              fontFamily: "var(--font-geist-mono), monospace",
+              fontSize: "0.6875rem",
+              fontWeight: 600,
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              color: "var(--accent)",
+              display: "block",
+              marginBottom: "0.75rem",
+            }}
+          >
+            DIVISION
+          </span>
+          <h1
+            style={{
+              fontSize: "clamp(2.25rem, 5vw, 3.25rem)",
+              fontWeight: 700,
+              letterSpacing: "-0.03em",
+              lineHeight: 1.05,
+              color: "var(--text-primary)",
+              marginBottom: "0.5rem",
+            }}
+          >
+            Security operations & compliance.
+          </h1>
+          <p
+            style={{
+              fontSize: "1.125rem",
+              color: "var(--text-secondary)",
+              marginBottom: "0.75rem",
+            }}
+          >
+            Trust scoring. Confidence-gated triage.
+          </p>
+          <div
+            style={{
+              width: 60,
+              height: 3,
+              backgroundColor: "var(--accent)",
+              marginBottom: "1.5rem",
+            }}
+          />
+          <p
+            style={{
+              fontSize: "1rem",
+              color: "var(--text-secondary)",
+              lineHeight: 1.7,
+              maxWidth: 460,
+              marginBottom: "1rem",
+            }}
+          >
+            HEIMDALL handles security operations triage and compliance reasoning.
+            Designed for regulated enterprise and defense verticals where a wrong
+            answer that looks right is a liability.
+          </p>
+          <p
+            style={{
+              fontSize: "1rem",
+              color: "var(--text-secondary)",
+              lineHeight: 1.7,
+              maxWidth: 460,
+              marginBottom: "1rem",
+            }}
+          >
+            The division applies the same confidence-gated posture as the rest of
+            JourdanLabs: the system refuses to route or classify when aggregate
+            confidence falls below threshold, surfacing the ambiguous case to a
+            human analyst rather than emitting a verdict.
+          </p>
+          <p
+            style={{
+              fontSize: "1rem",
+              color: "var(--text-secondary)",
+              lineHeight: 1.7,
+              maxWidth: 460,
+            }}
+          >
+            Built on COSMIC. Validated on the SENTINEL benchmark.
+          </p>
+        </div>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          {/* Placeholder for sculptural hero image */}
+          <div
+            style={{
+              width: 400,
+              height: 380,
+              backgroundColor: "#A8A095",
+              borderRadius: 8,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontFamily: "var(--font-geist-mono), monospace",
+              fontSize: "0.75rem",
+              color: "#1F1B16",
+              textAlign: "center",
+              padding: "2rem",
+            }}
+          >
+            [IMAGE: shield with keyhole/gate motif on stone pedestal]
+          </div>
         </div>
       </section>
-    </>
+
+      {/* Products */}
+      <section
+        style={{
+          backgroundColor: "var(--bg-muted)",
+          padding: "4rem 2rem",
+        }}
+      >
+        <div style={{ maxWidth: 1120, margin: "0 auto" }}>
+          <span
+            style={{
+              fontFamily: "var(--font-geist-mono), monospace",
+              fontSize: "0.6875rem",
+              fontWeight: 600,
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              color: "var(--accent)",
+              display: "block",
+              marginBottom: "1.5rem",
+            }}
+          >
+            Products
+          </span>
+          <div style={{ maxWidth: 560 }}>
+            <div
+              style={{
+                backgroundColor: "var(--bg-card)",
+                padding: "2rem",
+                borderRadius: "8px",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.75rem",
+                  marginBottom: "1rem",
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "var(--font-geist-mono), monospace",
+                    fontSize: "1.125rem",
+                    fontWeight: 700,
+                    color: "var(--text-primary)",
+                    letterSpacing: "0.04em",
+                  }}
+                >
+                  SENTINEL
+                </span>
+                <span
+                  style={{
+                    fontSize: "0.5625rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.06em",
+                    textTransform: "uppercase",
+                    color: "var(--text-tertiary)",
+                    backgroundColor: "var(--bg-muted)",
+                    padding: "0.25rem 0.5rem",
+                    borderRadius: "4px",
+                    fontFamily: "var(--font-geist-mono), monospace",
+                    border: "1px solid var(--bg-border)",
+                  }}
+                >
+                  Pre-Pilot
+                </span>
+              </div>
+              <p
+                style={{
+                  fontSize: "0.875rem",
+                  color: "var(--text-secondary)",
+                  lineHeight: 1.7,
+                  marginBottom: "1.5rem",
+                }}
+              >
+                SOC triage and incident response. Classifies and routes security
+                alerts with confidence-gated output. Currently in pre-pilot with a
+                partner organization.
+              </p>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  paddingTop: "1rem",
+                  borderTop: "1px solid var(--bg-border)",
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: "0.6875rem",
+                    fontFamily: "var(--font-geist-mono), monospace",
+                    color: "var(--text-tertiary)",
+                    letterSpacing: "0.06em",
+                  }}
+                >
+                  HELD-OUT ACCURACY:
+                </span>
+                <span
+                  style={{
+                    fontSize: "0.875rem",
+                    fontFamily: "var(--font-geist-mono), monospace",
+                    color: "var(--accent)",
+                    fontWeight: 600,
+                  }}
+                >
+                  94%
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section
+        style={{
+          maxWidth: 1120,
+          margin: "0 auto",
+          padding: "3rem 2rem",
+        }}
+      >
+        <Link
+          href="/crucible/benchmarks/sentinel"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.5rem",
+            padding: "1rem 2rem",
+            border: "1px solid var(--accent)",
+            color: "var(--accent)",
+            fontSize: "0.875rem",
+            fontWeight: 500,
+            letterSpacing: "0.02em",
+          }}
+        >
+          See SENTINEL benchmark
+          <span>→</span>
+        </Link>
+      </section>
+
+      {/* Footer */}
+      <footer
+        style={{
+          borderTop: "1px solid var(--bg-border)",
+          padding: "1.25rem 2rem",
+          backgroundColor: "var(--bg)",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: 1120,
+            margin: "0 auto",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            fontSize: "0.75rem",
+            color: "var(--text-secondary)",
+            flexWrap: "wrap",
+            gap: "1rem",
+          }}
+        >
+          <span style={{ fontWeight: 600, letterSpacing: "0.04em" }}>
+            JOURDANLABS / HOUSTON, TX
+          </span>
+          <span>Six benchmarks. Publicly reproducible.</span>
+          <a
+            href="mailto:leland@jourdanlabs.com"
+            style={{ color: "var(--text-secondary)" }}
+          >
+            leland@jourdanlabs.com
+          </a>
+        </div>
+      </footer>
+
+      <style>{`
+        @media (max-width: 900px) {
+          .hero-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+    </article>
   );
 }

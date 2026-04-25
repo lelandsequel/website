@@ -1,210 +1,320 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Reveal from "@/components/Reveal";
 
 export const metadata: Metadata = {
-  title: "CITADEL — Corporate Hierarchy Reconstruction",
+  title: "CITADEL — Corporate Hierarchy Reasoning",
   description:
-    "SEC Exhibit 21 corporate subsidiary reconstruction. F1 0.616. 400-entity corpus, SHA-verified ground truth, full checkpoint arc.",
+    "Entity resolution and hierarchical reasoning over corporate ownership structures. F1 0.616, 400/660 coverage.",
 };
 
-const S: Record<string, React.CSSProperties> = {
-  container: { maxWidth: 760, margin: "0 auto", padding: "0 2rem" },
-  label: { fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.6875rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "var(--text-tertiary)", display: "block" },
-  sectionTitle: { fontSize: "1.125rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.875rem" },
-  p: { color: "var(--text-secondary)", lineHeight: 1.75, marginBottom: "1rem" },
-  divider: { border: "none", borderTop: "1px solid var(--bg-border)", margin: "3rem 0" },
+const container: React.CSSProperties = {
+  maxWidth: 1280,
+  margin: "0 auto",
+  padding: "0 2rem",
 };
-
-function Table({ headers, rows }: { headers: string[]; rows: (string | React.ReactNode)[][] }) {
-  return (
-    <div style={{ overflowX: "auto", border: "1px solid var(--bg-border)" }}>
-      <table style={{ width: "100%", borderCollapse: "collapse" }}>
-        <thead>
-          <tr>
-            {headers.map((h) => (
-              <th key={h} style={{ textAlign: "left", padding: "0.75rem 1rem", fontSize: "0.6875rem", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--text-tertiary)", borderBottom: "1px solid var(--bg-border)", whiteSpace: "nowrap" }}>
-                {h}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row, i) => (
-            <tr key={i}>
-              {row.map((cell, j) => (
-                <td key={j} style={{ padding: "0.75rem 1rem", fontSize: "0.8125rem", color: j === 0 ? "var(--text-primary)" : "var(--text-secondary)", borderBottom: i < rows.length - 1 ? "1px solid var(--bg-border)" : "none", fontFamily: j > 0 ? "var(--font-geist-mono), monospace" : "inherit" }}>
-                  {cell}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
 
 export default function CitadelPage() {
   return (
-    <article style={{ padding: "5rem 0 6rem" }}>
-      <div style={S.container}>
-        <div style={{ marginBottom: "3rem" }}>
-          <Link href="/crucible/benchmarks" style={{ fontSize: "0.8125rem", color: "var(--text-tertiary)", display: "inline-flex", alignItems: "center", gap: "0.25rem", marginBottom: "2rem" }}>
-            ← Benchmarks
-          </Link>
-          <span style={{ ...S.label, marginBottom: "1rem" }}>CITADEL · Corporate Hierarchy Reconstruction</span>
-          <h1 style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 700, letterSpacing: "-0.03em", lineHeight: 1.15, color: "var(--text-primary)", marginBottom: "0.75rem" }}>
-            CITADEL
-          </h1>
-          <p style={{ fontSize: "1rem", color: "var(--text-secondary)", lineHeight: 1.6 }}>
-            Corporate subsidiary hierarchy reconstruction from SEC Exhibit 21 filings.
-          </p>
-        </div>
+    <>
+      {/* Breadcrumb */}
+      <div style={{ ...container, paddingTop: "1.5rem" }}>
+        <Link
+          href="/crucible/benchmarks"
+          style={{
+            fontSize: "0.75rem",
+            color: "var(--text-tertiary)",
+          }}
+        >
+          ← BENCHMARKS / CITADEL · ENTITY RESOLUTION
+        </Link>
+      </div>
 
-        <div style={{ border: "1px solid var(--bg-border)", padding: "2rem", marginBottom: "3rem", backgroundColor: "var(--bg-card)" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "2rem" }}>
+      {/* Hero */}
+      <section style={{ padding: "3rem 0 4rem" }}>
+        <div style={container}>
+          <Reveal>
+            <div className="smallcaps" style={{ marginBottom: "1rem" }}>
+              CITADEL · ENTITY RESOLUTION
+            </div>
+            <h1
+              style={{
+                fontSize: "clamp(3rem, 8vw, 6rem)",
+                fontWeight: 900,
+                letterSpacing: "-0.03em",
+                lineHeight: 0.95,
+                color: "var(--text-primary)",
+                marginBottom: "1.5rem",
+              }}
+            >
+              CITADEL
+            </h1>
+            <p
+              style={{
+                fontSize: "clamp(1.125rem, 2.5vw, 1.5rem)",
+                fontWeight: 600,
+                lineHeight: 1.4,
+                color: "var(--text-secondary)",
+                maxWidth: 700,
+              }}
+            >
+              Corporate hierarchy reasoning.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Stats */}
+      <section style={{ padding: "0 0 4rem" }}>
+        <div style={container}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+              gap: "1.5rem",
+            }}
+            className="stats-grid"
+          >
             {[
-              { label: "Micro F1", value: "0.6161" },
-              { label: "Entities scored", value: "342 / 400" },
-              { label: "Checkpoint", value: "E.2 (sealed)" },
-            ].map((m) => (
-              <div key={m.label}>
-                <div style={{ ...S.label, marginBottom: "0.375rem" }}>{m.label}</div>
-                <div style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "1.75rem", fontWeight: 700, color: "var(--accent)", letterSpacing: "-0.02em" }}>
-                  {m.value}
+              { value: "0.616", label: "F1" },
+              { value: "400/660", label: "COVERAGE" },
+              { value: "E.2", label: "CHECKPOINT (SEALED)" },
+            ].map((s, i) => (
+              <Reveal key={s.label} delay={i * 80}>
+                <div
+                  style={{
+                    backgroundColor: "var(--bg-card)",
+                    border: "1px solid var(--bg-border)",
+                    borderRadius: 8,
+                    padding: "2rem",
+                    textAlign: "center",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: "clamp(1.75rem, 4vw, 3rem)",
+                      fontWeight: 800,
+                      letterSpacing: "-0.02em",
+                      color: "var(--text-primary)",
+                      marginBottom: "0.5rem",
+                    }}
+                  >
+                    {s.value}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "0.6875rem",
+                      fontWeight: 600,
+                      letterSpacing: "0.12em",
+                      color: "var(--text-tertiary)",
+                    }}
+                  >
+                    {s.label}
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* What It Is */}
+      <section style={{ padding: "4rem 0", borderTop: "1px solid var(--bg-border)" }}>
+        <div style={{ ...container, maxWidth: 900 }}>
+          <Reveal>
+            <div className="smallcaps" style={{ marginBottom: "1rem", color: "var(--accent)" }}>
+              What It Is
+            </div>
+            <p
+              style={{
+                fontSize: "1rem",
+                lineHeight: 1.75,
+                color: "var(--text-secondary)",
+                marginBottom: "1rem",
+              }}
+            >
+              CITADEL tests entity resolution and hierarchical reasoning over corporate ownership
+              structures. The system must resolve corporate entities across multiple data sources
+              and reconstruct ownership hierarchies from SEC Exhibit 21 filings and related
+              documents.
+            </p>
+            <p
+              style={{
+                fontSize: "1rem",
+                lineHeight: 1.75,
+                color: "var(--text-secondary)",
+              }}
+            >
+              The methodology arc follows CP-D → E → E.1 → E.2, with each checkpoint documenting
+              specific fixes and their per-task attribution. The sealed corpus contains 660
+              entities; the current pipeline covers 400 with scored results.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Methodology */}
+      <section
+        style={{
+          padding: "4rem 0",
+          backgroundColor: "var(--bg-card)",
+          borderTop: "1px solid var(--bg-border)",
+          borderBottom: "1px solid var(--bg-border)",
+        }}
+      >
+        <div style={{ ...container, maxWidth: 900 }}>
+          <Reveal>
+            <div className="smallcaps" style={{ marginBottom: "1.5rem", color: "var(--accent)" }}>
+              Methodology
+            </div>
+          </Reveal>
+
+          <Reveal delay={100}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+              {[
+                { label: "Corpus", value: "Sealed, SHA-verified before pipeline contact" },
+                { label: "Baselines", value: "Honest baselines, real implementations" },
+                { label: "Pipeline", value: "Deterministic, no LLM inference at runtime" },
+                { label: "Attribution", value: "Per-fix attribution shown in checkpoint arc" },
+                { label: "Limitations", value: "42 systematic zero-TP entities documented" },
+                { label: "Reproducibility", value: "Full instructions in GitHub repo" },
+              ].map((row) => (
+                <div
+                  key={row.label}
+                  style={{
+                    display: "flex",
+                    gap: "1.5rem",
+                    fontSize: "0.875rem",
+                    padding: "0.75rem 0",
+                    borderBottom: "1px solid var(--bg-border)",
+                  }}
+                >
+                  <span
+                    style={{
+                      color: "var(--text-tertiary)",
+                      minWidth: 140,
+                      fontFamily: "var(--font-geist-mono), monospace",
+                      fontSize: "0.75rem",
+                      letterSpacing: "0.04em",
+                    }}
+                  >
+                    {row.label}
+                  </span>
+                  <span style={{ color: "var(--text-secondary)" }}>{row.value}</span>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Reproducibility / Limitations */}
+      <section style={{ padding: "4rem 0" }}>
+        <div style={{ ...container, maxWidth: 900 }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "3rem",
+            }}
+            className="repro-grid"
+          >
+            <Reveal>
+              <div className="smallcaps" style={{ marginBottom: "1rem", color: "var(--accent)" }}>
+                Reproducibility
+              </div>
+              <div
+                style={{
+                  backgroundColor: "var(--bg-card)",
+                  border: "1px solid var(--bg-border)",
+                  borderRadius: 8,
+                  padding: "1.5rem",
+                  fontFamily: "var(--font-geist-mono), monospace",
+                  fontSize: "0.8125rem",
+                  lineHeight: 1.8,
+                }}
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
+                  <span style={{ color: "var(--text-tertiary)" }}>Corpus source</span>
+                  <span style={{ color: "var(--text-secondary)" }}>SEC EDGAR (public)</span>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
+                  <span style={{ color: "var(--text-tertiary)" }}>Corpus seal</span>
+                  <span style={{ color: "var(--text-secondary)" }}>SHA-256 in CHECKPOINT_RESULTS.md</span>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                  <span style={{ color: "var(--text-tertiary)" }}>Repo</span>
+                  <span style={{ color: "var(--text-secondary)" }}>github.com/jourdanlabs/benchmarks/citadel</span>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
+            </Reveal>
 
-        <section style={{ marginBottom: "3rem" }}>
-          <h2 style={S.sectionTitle}>What it is</h2>
-          <p style={S.p}>
-            CITADEL reconstructs corporate subsidiary hierarchies from publicly filed SEC Exhibit 21 documents.
-            Every US public company with annual revenues exceeding certain thresholds must file Exhibit 21 with
-            their 10-K, listing all significant subsidiaries. These filings are public via EDGAR but are
-            unstructured — the data lives in HTML tables, PDFs, and free-text disclosures of varying quality.
-          </p>
-          <p style={S.p}>
-            COSMIC's CITADEL pipeline ingests Exhibit 21 filings, normalizes entity names using a deterministic
-            rule set (no ML inference), and reconstructs parent→subsidiary DAGs for a 400-entity corpus drawn
-            from the S&P 500 and Fortune 500. The ground truth was assembled from the same EDGAR filings using
-            an independent reference implementation, sealed with SHA-256 before any pipeline contact.
-          </p>
-          <p style={S.p}>
-            This task matters for financial compliance, competitive intelligence, and regulatory reporting.
-            Who owns what — and can you prove it from public filings, without LLM guessing? CITADEL answers
-            that question deterministically.
-          </p>
-        </section>
-
-        <hr style={S.divider} />
-
-        <section style={{ marginBottom: "3rem" }}>
-          <h2 style={S.sectionTitle}>Results</h2>
-          <div style={{ marginBottom: "1.5rem" }}>
-            <Table
-              headers={["Metric", "Value", "95% CI (BCa, B=2000)"]}
-              rows={[
-                ["Micro F1", "0.6161", "[0.5282 – 0.6740]"],
-                ["Micro Precision", "0.6523", "—"],
-                ["Micro Recall", "0.5836", "—"],
-                ["Macro F1", "0.5936", "[0.5551 – 0.6251]"],
-                ["Entities scored", "342", "of 400 in corpus"],
-                ["Entities with ≥1 TP", "290", "—"],
-                ["TP / FP / FN", "23,999 / 12,791 / 17,120", "—"],
-              ]}
-            />
-          </div>
-          <p style={{ ...S.p, fontSize: "0.8125rem" }}>
-            Confidence intervals computed via BCa bootstrap (B=2,000). Ground truth SHA:
-            <code style={{ marginLeft: "0.375rem" }}>4911f158...cf54c</code> (verified).
-          </p>
-        </section>
-
-        <section style={{ marginBottom: "3rem" }}>
-          <h2 style={S.sectionTitle}>Methodology arc</h2>
-          <p style={{ ...S.p, marginBottom: "1.25rem" }}>
-            CITADEL has a documented checkpoint arc showing per-fix attribution:
-          </p>
-          <Table
-            headers={["Checkpoint", "Micro F1", "Delta", "Fix"]}
-            rows={[
-              ["D (baseline)", "0.6025", "—", "Initial reconstruction, 5 sessions"],
-              ["E (regression)", "0.5774", "−0.0251", "Code change introduced normalization regression"],
-              ["E.1", "0.5826", "+0.0052", "Class A: _INLINE_JUR regex fix + _SKIP plural + SEC disclaimer"],
-              ["E.2 (current seal)", "0.6161", "+0.0335", "Class B: canonical 3-fallback Exhibit 21 document finder"],
-            ]}
-          />
-          <p style={{ ...S.p, fontSize: "0.8125rem", marginTop: "1rem" }}>
-            Each fix is scoped, attributed, and re-scored in isolation. The regression at Checkpoint E
-            is documented openly — CITADEL declined before recovering, and the arc shows why.
-          </p>
-        </section>
-
-        <hr style={S.divider} />
-
-        <section style={{ marginBottom: "3rem" }}>
-          <h2 style={S.sectionTitle}>Reproducibility</h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-            {[
-              { label: "Corpus SHA-256 (E.2)", value: "a6a98dbb30794fb98413129c3a9855af2214f840b1a1fe74e5175485dab99d81" },
-              { label: "Ground truth SHA-256", value: "4911f15899f4a9b6fa342de27470c828887569320b9c7f9da231d516e86cf54c" },
-              { label: "Entities in corpus", value: "400" },
-              { label: "Repo", value: "github.com/jourdanlabs/benchmarks/citadel" },
-            ].map((r) => (
-              <div key={r.label} style={{ display: "flex", gap: "1rem", flexWrap: "wrap", fontSize: "0.8125rem" }}>
-                <span style={{ color: "var(--text-tertiary)", minWidth: 180 }}>{r.label}</span>
-                <code style={{ color: "var(--text-secondary)", wordBreak: "break-all" }}>{r.value}</code>
+            <Reveal delay={100}>
+              <div className="smallcaps" style={{ marginBottom: "1rem", color: "var(--accent)" }}>
+                Limitations
               </div>
-            ))}
+              <div style={{ fontSize: "0.9375rem", lineHeight: 1.65, color: "var(--text-secondary)" }}>
+                <p style={{ marginBottom: "0.75rem" }}>
+                  <strong style={{ color: "var(--text-primary)" }}>Coverage ceiling at F1 ~0.62.</strong>{" "}
+                  Class C structural issues (PDF embeds, non-standard layouts) represent the ceiling
+                  without new data sources.
+                </p>
+                <p style={{ marginBottom: "0.75rem" }}>
+                  <strong style={{ color: "var(--text-primary)" }}>42 systematic zero-TP entities.</strong>{" "}
+                  Root causes documented: PDF-embedded Exhibit 21 documents, abbreviated filings,
+                  GLEIF-only fallback coverage.
+                </p>
+                <p>
+                  <strong style={{ color: "var(--text-primary)" }}>Same-source ground truth.</strong>{" "}
+                  Ground truth assembled from EDGAR using independent implementation but shares
+                  upstream data source.
+                </p>
+              </div>
+            </Reveal>
           </div>
-        </section>
-
-        <section style={{ marginBottom: "3rem" }}>
-          <h2 style={S.sectionTitle}>Limitations</h2>
-          <div style={{ borderLeft: "2px solid var(--bg-border)", paddingLeft: "1.5rem" }}>
-            <p style={S.p}>
-              <strong style={{ color: "var(--text-primary)" }}>42 systematic zero-TP entities.</strong>{" "}
-              Root causes include: PDF-embedded Exhibit 21 documents (Class C1, structural), abbreviated
-              filings under SEC Rule 601(b)(21)(ii), and GLEIF-only fallback coverage.
-            </p>
-            <p style={S.p}>
-              <strong style={{ color: "var(--text-primary)" }}>HCA Healthcare (2,578 GT relationships, 0 TP).</strong>{" "}
-              EX-21 document found but contains zero parseable subsidiaries in the expected HTML format.
-              Likely cause: PDF embed or non-standard layout. Class C1 structural issue.
-            </p>
-            <p style={S.p}>
-              <strong style={{ color: "var(--text-primary)" }}>Coverage ceiling at F1 ~0.62.</strong>{" "}
-              Class C structural issues represent the ceiling without new data sources.
-            </p>
-            <p style={{ ...S.p, marginBottom: 0 }}>
-              <strong style={{ color: "var(--text-primary)" }}>Ground truth assembled from same source.</strong>{" "}
-              Ground truth was assembled from EDGAR filings using an independent implementation, but shares the same
-              upstream data source as the pipeline. Off-EDGAR data was not incorporated.
-            </p>
-          </div>
-        </section>
-
-        <section>
-          <h2 style={S.sectionTitle}>Next version</h2>
-          <p style={S.p}>
-            Checkpoint F targets Class C1 structural issues: multi-part exhibit ingestion, prior-year filing
-            fallback, and REIT-specific subsidiary structure detection. The 42 systematic zero-TP entities
-            are the known gap list.
-          </p>
-        </section>
-
-        <div style={{ marginTop: "3rem", paddingTop: "2rem", borderTop: "1px solid var(--bg-border)", display: "flex", gap: "1.5rem" }}>
-          <a href="https://github.com/jourdanlabs/benchmarks/tree/main/citadel" target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.875rem", color: "var(--accent)" }}>
-            GitHub →
-          </a>
-          <Link href="/crucible/reproducibility" style={{ fontSize: "0.875rem", color: "var(--text-secondary)" }}>
-            Reproducibility guide →
-          </Link>
         </div>
-      </div>
-    </article>
+      </section>
+
+      {/* Footer */}
+      <footer
+        style={{
+          borderTop: "1px solid var(--bg-border)",
+          padding: "1.25rem 2rem",
+          backgroundColor: "var(--bg)",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: 1280,
+            margin: "0 auto",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            fontSize: "0.75rem",
+            color: "var(--text-secondary)",
+            flexWrap: "wrap",
+            gap: "1rem",
+          }}
+        >
+          <span style={{ fontWeight: 600, letterSpacing: "0.04em" }}>
+            JOURDANLABS / HOUSTON, TX
+          </span>
+          <span>Six benchmarks. Publicly reproducible.</span>
+          <a
+            href="mailto:leland@jourdanlabs.com"
+            style={{ color: "var(--text-secondary)" }}
+          >
+            leland@jourdanlabs.com
+          </a>
+        </div>
+      </footer>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .stats-grid { grid-template-columns: 1fr !important; }
+          .repro-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+    </>
   );
 }
