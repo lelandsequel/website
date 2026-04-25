@@ -182,48 +182,8 @@ export default function TeamPage() {
         </div>
       </section>
 
-      {/* ─────────────────────────── CTA ─────────────────────────── */}
-      <section style={{ padding: "3rem 0 5rem" }}>
-        <div style={container}>
-          <Reveal>
-            <div style={{ textAlign: "center" }}>
-              <div className="smallcaps" style={{ marginBottom: "1rem" }}>
-                Join
-              </div>
-              <h2
-                style={{
-                  fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
-                  fontWeight: 700,
-                  letterSpacing: "-0.02em",
-                  marginBottom: "1.5rem",
-                }}
-              >
-                {"We're hiring."}
-              </h2>
-              <Link
-                href="/contact"
-                style={{
-                  display: "inline-block",
-                  padding: "1rem 2.5rem",
-                  backgroundColor: "var(--accent)",
-                  color: "#fff",
-                  fontSize: "0.75rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.15em",
-                  textTransform: "uppercase",
-                  borderRadius: 2,
-                  transition: "background-color 0.2s",
-                }}
-              >
-                Get in Touch
-              </Link>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
       {/* ─────────────────────────── RESPONSIVE STYLES ─────────────────────────── */}
-      <style jsx>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         @media (max-width: 1240px) {
           .team-grid {
             grid-template-columns: repeat(3, 1fr) !important;
@@ -244,7 +204,7 @@ export default function TeamPage() {
         .team-card:hover {
           transform: translateY(-4px);
         }
-      `}</style>
+      ` }} />
     </>
   );
 }
