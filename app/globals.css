@@ -1,16 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #0E0F13;
-  --bg-card: #13141A;
-  --bg-border: #1E2028;
-  --text-primary: #F5F5F5;
-  --text-secondary: #9A9BA8;
-  --text-tertiary: #62636F;
-  --accent: #7EC8E3;
-  --accent-dim: rgba(126, 200, 227, 0.10);
-  --accent-border: rgba(126, 200, 227, 0.22);
-  --divider: #1E2028;
+  /* Museum-artifact palette — warm cream, deep charcoal, burnt orange */
+  --bg: #F0E7D5;
+  --bg-card: #E8DDC7;
+  --bg-border: #D4C8B0;
+  --text-primary: #1F1B16;
+  --text-secondary: #4A443C;
+  --text-tertiary: #8A8578;
+  --accent: #B85A2E;
+  --accent-dim: rgba(184, 90, 46, 0.10);
+  --accent-border: rgba(184, 90, 46, 0.30);
+  --divider: #D4C8B0;
+  --stone: #8A8578;
+  --stone-dark: #6B6657;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -20,6 +23,7 @@ html {
   color: var(--text-primary);
   font-family: var(--font-geist-sans), 'Inter', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 body {
@@ -32,13 +36,13 @@ body {
   color: var(--accent);
 }
 
-a { color: var(--accent); text-decoration: none; transition: opacity 0.15s; }
-a:hover { opacity: 0.8; }
+a { color: var(--accent); text-decoration: none; transition: opacity 0.2s; }
+a:hover { opacity: 0.7; }
 
 code {
   font-family: var(--font-geist-mono), monospace;
   font-size: 0.85em;
-  background: var(--bg-border);
+  background: var(--bg-card);
   padding: 0.1em 0.35em;
   border-radius: 2px;
   color: var(--accent);
@@ -57,9 +61,109 @@ pre {
 
 pre code { background: none; padding: 0; color: inherit; }
 
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(10px); }
+/* Patient fade-in on scroll — long, quiet */
+@keyframes patientFade {
+  from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-.fade-up { animation: fadeUp 0.5s ease forwards; }
+.reveal {
+  opacity: 0;
+}
+
+.reveal.in {
+  animation: patientFade 800ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+/* Small-caps section label */
+.smallcaps {
+  font-family: var(--font-geist-sans), 'Inter', system-ui, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Pedestal — stone slab under artifact */
+.pedestal {
+  position: relative;
+  background: linear-gradient(180deg, #C8BEA6 0%, #B0A68E 100%);
+  border-top: 1px solid #D4C8B0;
+  box-shadow: 0 2px 0 #9A9078, 0 8px 24px rgba(31, 27, 22, 0.12);
+}
+
+.pedestal-top {
+  background: #C8BEA6;
+  border-bottom: 1px solid #9A9078;
+}
+
+/* ─────────────────────────── MOBILE RESPONSIVE ─────────────────────────── */
+
+/* Mobile breakpoint: 768px */
+@media (max-width: 768px) {
+  /* Hide desktop nav, show hamburger */
+  .desktop-nav {
+    display: none !important;
+  }
+  
+  .mobile-menu-btn {
+    display: flex !important;
+  }
+  
+  .mobile-menu {
+    display: flex !important;
+  }
+  
+  /* Reduce section padding on mobile */
+  section {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  
+  /* Smaller headings on mobile */
+  h1 {
+    font-size: clamp(2rem, 8vw, 2.5rem) !important;
+  }
+  
+  h2 {
+    font-size: clamp(1.5rem, 6vw, 2rem) !important;
+  }
+}
+
+/* Tablet breakpoint: 900px - collapse grids */
+@media (max-width: 900px) {
+  .hero-grid,
+  .portfolio-grid,
+  .thesis-grid,
+  .content-grid,
+  .benchmark-grid,
+  .two-col-grid,
+  .repro-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2.5rem !important;
+  }
+  
+  /* Hide elements on tablet/mobile */
+  .hide-mobile {
+    display: none !important;
+  }
+  
+  /* Stack horizontal layouts */
+  .stack-mobile {
+    flex-direction: column !important;
+  }
+}
+
+/* Small mobile: 480px */
+@media (max-width: 480px) {
+  /* Even smaller text */
+  h1 {
+    font-size: clamp(1.75rem, 7vw, 2rem) !important;
+  }
+  
+  /* Smaller buttons */
+  .smallcaps {
+    font-size: 0.625rem !important;
+  }
+}

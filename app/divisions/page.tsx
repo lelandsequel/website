@@ -43,7 +43,7 @@ const DIVISIONS = [
     name: "HEIMDALL",
     tagline: "Security operations & compliance",
     headline: "SENTINEL",
-    products: "SENTINEL (pre-pilot) · AEGIS (roadmap)",
+    products: "SENTINEL (pre-pilot)",
     href: "/divisions/heimdall",
     accent: "#4A7BA7",
   },
