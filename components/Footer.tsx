@@ -7,7 +7,7 @@ export default function Footer() {
         padding: "3rem 0",
       }}
     >
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 2rem" }}>
+      <div style={{ width: "92%", maxWidth: 1600, margin: "0 auto" }}>
         <div
           style={{
             width: 48,

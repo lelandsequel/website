@@ -9,9 +9,9 @@ export const metadata: Metadata = {
 };
 
 const container: React.CSSProperties = {
-  maxWidth: 1440,
+  width: "92%",
+  maxWidth: 1600,
   margin: "0 auto",
-  padding: "0 3rem",
 };
 
 const divisions = [
@@ -256,7 +256,8 @@ export default function ApplicationsPage() {
       >
         <div
           style={{
-            maxWidth: 1280,
+            width: "92%",
+            maxWidth: 1600,
             margin: "0 auto",
             display: "flex",
             alignItems: "center",

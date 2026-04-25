@@ -25,9 +25,9 @@ export default function Nav() {
     >
       <div
         style={{
-          maxWidth: 1280,
+          width: "92%",
+          maxWidth: 1600,
           margin: "0 auto",
-          padding: "0 2rem",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",

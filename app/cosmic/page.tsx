@@ -113,9 +113,10 @@ export default function CosmicPage() {
       {/* Hero */}
       <section
         style={{
-          maxWidth: 1440,
+          width: "92%",
+          maxWidth: 1600,
           margin: "0 auto",
-          padding: "4.5rem 3rem 3.5rem",
+          padding: "4.5rem 0 3.5rem",
           display: "grid",
           gridTemplateColumns: "1fr 1fr",
           gap: "3rem",
@@ -178,7 +179,7 @@ export default function CosmicPage() {
       {/* Pipeline Architecture */}
       <section
         style={{
-          maxWidth: 1440,
+          maxWidth: 1600,
           margin: "0 auto",
           padding: "2.5rem 2rem 3rem",
         }}
@@ -378,7 +379,7 @@ export default function CosmicPage() {
       {/* Core Design Principles */}
       <section
         style={{
-          maxWidth: 1440,
+          maxWidth: 1600,
           margin: "0 auto",
           padding: "2.5rem 2rem 3rem",
         }}
@@ -451,7 +452,7 @@ export default function CosmicPage() {
       >
         <div
           style={{
-            maxWidth: 1440,
+            maxWidth: 1600,
             margin: "0 auto",
           }}
         >
@@ -523,7 +524,7 @@ export default function CosmicPage() {
       >
         <div
           style={{
-            maxWidth: 1440,
+            maxWidth: 1600,
             margin: "0 auto",
             display: "flex",
             alignItems: "center",
