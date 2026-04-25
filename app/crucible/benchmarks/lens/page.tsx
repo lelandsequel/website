@@ -10,9 +10,9 @@ export const metadata: Metadata = {
 };
 
 const container: React.CSSProperties = {
-  maxWidth: 1280,
+  maxWidth: 1440,
   margin: "0 auto",
-  padding: "0 2rem",
+  padding: "0 3rem",
 };
 
 export default function LensPage() {
