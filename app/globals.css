@@ -97,3 +97,73 @@ pre code { background: none; padding: 0; color: inherit; }
   background: #C8BEA6;
   border-bottom: 1px solid #9A9078;
 }
+
+/* ─────────────────────────── MOBILE RESPONSIVE ─────────────────────────── */
+
+/* Mobile breakpoint: 768px */
+@media (max-width: 768px) {
+  /* Hide desktop nav, show hamburger */
+  .desktop-nav {
+    display: none !important;
+  }
+  
+  .mobile-menu-btn {
+    display: flex !important;
+  }
+  
+  .mobile-menu {
+    display: flex !important;
+  }
+  
+  /* Reduce section padding on mobile */
+  section {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  
+  /* Smaller headings on mobile */
+  h1 {
+    font-size: clamp(2rem, 8vw, 2.5rem) !important;
+  }
+  
+  h2 {
+    font-size: clamp(1.5rem, 6vw, 2rem) !important;
+  }
+}
+
+/* Tablet breakpoint: 900px - collapse grids */
+@media (max-width: 900px) {
+  .hero-grid,
+  .portfolio-grid,
+  .thesis-grid,
+  .content-grid,
+  .benchmark-grid,
+  .two-col-grid,
+  .repro-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2.5rem !important;
+  }
+  
+  /* Hide elements on tablet/mobile */
+  .hide-mobile {
+    display: none !important;
+  }
+  
+  /* Stack horizontal layouts */
+  .stack-mobile {
+    flex-direction: column !important;
+  }
+}
+
+/* Small mobile: 480px */
+@media (max-width: 480px) {
+  /* Even smaller text */
+  h1 {
+    font-size: clamp(1.75rem, 7vw, 2rem) !important;
+  }
+  
+  /* Smaller buttons */
+  .smallcaps {
+    font-size: 0.625rem !important;
+  }
+}

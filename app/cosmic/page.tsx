@@ -112,6 +112,7 @@ export default function CosmicPage() {
     <div style={{ backgroundColor: "var(--bg)", minHeight: "100vh" }}>
       {/* Hero */}
       <section
+        className="content-grid"
         style={{
           width: "92%",
           maxWidth: 1600,
