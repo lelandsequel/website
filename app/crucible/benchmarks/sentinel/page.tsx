@@ -75,7 +75,7 @@ export default function SentinelPage() {
             <Reveal delay={150}>
               <div style={{ position: "relative", width: "100%", height: 400 }}>
                 <Image
-                  src="/benchmark-sentinel.png"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Remove_background_from_image_with_bronze_sentinel_-1777137250844-lHyZl7dmDtHkVpyhK2aX3EONzQxyO7.png"
                   alt="SENTINEL lighthouse artifact"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"

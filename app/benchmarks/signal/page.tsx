@@ -82,7 +82,7 @@ export default function SignalPage() {
             <Reveal delay={150}>
               <div style={{ position: "relative", width: "100%", height: 400 }}>
                 <Image
-                  src="/benchmark-signal.png"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Remove_background_from_image_with_bronze_stethosco-1777137244063-pqODSbadnd99XTk4kI9LNQAM8aXGPJ.png"
                   alt="SIGNAL pharmacovigilance artifact"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"

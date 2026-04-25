@@ -75,7 +75,7 @@ export default function CompassPage() {
             <Reveal delay={150}>
               <div style={{ position: "relative", width: "100%", height: 400 }}>
                 <Image
-                  src="/benchmark-compass.png"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Remove_background_from_image_with_bronze_maritime_-1777137225837-YgXr84kFEE7aazZ9yfmGUttCc4NTmG.png"
                   alt="COMPASS navigation artifact"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
