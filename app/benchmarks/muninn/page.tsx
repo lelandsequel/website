@@ -84,8 +84,8 @@ export default function MuninnPage() {
             <Reveal delay={150}>
               <div style={{ position: "relative", width: "100%", height: 400 }}>
                 <Image
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/asset_yb78d9eoz_1777045469087-cJVav7s8xjRYeVkNVxCsWpbyWC690k.png"
-                  alt="RAVEN retrieval machine artifact"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/fbYaWPz4%202-lQComK756p03kGuoNSP4BJgzeG7QSZ.png"
+                  alt="MUNINN memory validation benchmark artifact - two ravens facing each other"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
                   style={{ objectFit: "contain" }}
