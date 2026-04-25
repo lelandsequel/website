@@ -75,7 +75,7 @@ export default function CitadelPage() {
             <Reveal delay={150}>
               <div style={{ position: "relative", width: "100%", height: 400 }}>
                 <Image
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/asset_actjt525i_1777097497293.png-SG5DggeQAqaU9XwgkJJdDMQDAlu1GQ.jpeg"
+                  src="/benchmark-citadel.jpg"
                   alt="CITADEL fortress artifact"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
