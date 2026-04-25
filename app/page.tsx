@@ -116,7 +116,8 @@ export default function Home() {
               <div
                 style={{
                   position: "relative",
-                  width: "100%",
+                  width: "125%",
+                  marginLeft: "-12.5%",
                   aspectRatio: "1.15/1",
                 }}
               >
