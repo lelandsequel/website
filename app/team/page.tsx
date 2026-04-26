@@ -123,7 +123,6 @@ export default function TeamPage() {
                         maxWidth: "100%",
                         maxHeight: "100%",
                         objectFit: "contain",
-                        mixBlendMode: "multiply",
                       }}
                     />
                   </div>
