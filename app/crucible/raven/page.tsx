@@ -349,6 +349,347 @@ export default function RavenPage() {
         </div>
       </section>
 
+      {/* ─────────────────── v1.1 CAPABILITIES ─────────────────── */}
+      <section
+        style={{
+          padding: "4rem 0",
+          backgroundColor: "var(--bg-card)",
+          borderTop: "1px solid var(--bg-border)",
+          borderBottom: "1px solid var(--bg-border)",
+        }}
+      >
+        <div style={container}>
+          <Reveal>
+            <div className="smallcaps" style={{ marginBottom: "0.5rem", color: "var(--accent)" }}>
+              v1.1.0 — Shipped
+            </div>
+            <h2
+              style={{
+                fontSize: "clamp(1.5rem, 3vw, 2rem)",
+                fontWeight: 700,
+                color: "var(--text-primary)",
+                marginBottom: "2.5rem",
+              }}
+            >
+              Three new capabilities. Three sealed benchmarks. 100% across all three.
+            </h2>
+          </Reveal>
+
+          {/* Capability 1.1 */}
+          <Reveal delay={80}>
+            <div
+              style={{
+                backgroundColor: "var(--bg)",
+                border: "1px solid var(--bg-border)",
+                borderRadius: 8,
+                padding: "2rem",
+                marginBottom: "1.5rem",
+                display: "grid",
+                gridTemplateColumns: "minmax(0, 2fr) minmax(0, 1fr)",
+                gap: "2rem",
+                alignItems: "center",
+              }}
+              className="capability-grid"
+            >
+              <div>
+                <div
+                  style={{
+                    fontFamily: "var(--font-geist-mono), monospace",
+                    fontSize: "0.6875rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.12em",
+                    color: "var(--accent)",
+                    marginBottom: "0.5rem",
+                  }}
+                >
+                  CAPABILITY 1.1
+                </div>
+                <h3
+                  style={{
+                    fontSize: "1.375rem",
+                    fontWeight: 700,
+                    color: "var(--text-primary)",
+                    marginBottom: "0.75rem",
+                  }}
+                >
+                  Contradiction reconciliation.
+                </h3>
+                <p style={{ fontSize: "0.9375rem", lineHeight: 1.65, color: "var(--text-secondary)", marginBottom: "1rem" }}>
+                  PULSAR detects contradictions; reconciliation resolves them. Four-rule hierarchy —
+                  identity → temporal → evidence strength → importance — picks the surviving claim
+                  with a full audit trail. Sealed corpus: 25 reconciliable pairs across all four
+                  bases. <strong style={{ color: "var(--text-primary)" }}>100% accuracy</strong> vs
+                  18% for v1.0 baseline.
+                </p>
+                <Link
+                  href="/crucible/benchmarks/muninn-v2-reconciliation"
+                  style={{
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.06em",
+                    color: "var(--accent)",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  MUNINN v2 Benchmark →
+                </Link>
+              </div>
+              <div
+                style={{
+                  textAlign: "center",
+                  padding: "1.25rem",
+                  border: "1px solid var(--bg-border)",
+                  borderRadius: 8,
+                  backgroundColor: "var(--bg-card)",
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: "2.5rem",
+                    fontWeight: 800,
+                    letterSpacing: "-0.02em",
+                    color: "var(--accent)",
+                    lineHeight: 1,
+                    marginBottom: "0.5rem",
+                  }}
+                >
+                  100%
+                </div>
+                <div
+                  style={{
+                    fontSize: "0.6875rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.1em",
+                    color: "var(--text-tertiary)",
+                  }}
+                >
+                  RECONCILIATION ACCURACY
+                </div>
+                <div
+                  style={{
+                    fontSize: "0.6875rem",
+                    color: "var(--text-tertiary)",
+                    marginTop: "0.5rem",
+                    fontFamily: "var(--font-geist-mono), monospace",
+                  }}
+                >
+                  v1.0: 18%
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Capability 1.2 */}
+          <Reveal delay={160}>
+            <div
+              style={{
+                backgroundColor: "var(--bg)",
+                border: "1px solid var(--bg-border)",
+                borderRadius: 8,
+                padding: "2rem",
+                marginBottom: "1.5rem",
+                display: "grid",
+                gridTemplateColumns: "minmax(0, 2fr) minmax(0, 1fr)",
+                gap: "2rem",
+                alignItems: "center",
+              }}
+              className="capability-grid"
+            >
+              <div>
+                <div
+                  style={{
+                    fontFamily: "var(--font-geist-mono), monospace",
+                    fontSize: "0.6875rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.12em",
+                    color: "var(--accent)",
+                    marginBottom: "0.5rem",
+                  }}
+                >
+                  CAPABILITY 1.2
+                </div>
+                <h3
+                  style={{
+                    fontSize: "1.375rem",
+                    fontWeight: 700,
+                    color: "var(--text-primary)",
+                    marginBottom: "0.75rem",
+                  }}
+                >
+                  Memories that age honestly.
+                </h3>
+                <p style={{ fontSize: "0.9375rem", lineHeight: 1.65, color: "var(--text-secondary)", marginBottom: "1rem" }}>
+                  Six per-class decay policies — facts decay differently than preferences differently
+                  than identity claims (which never decay). Class-aware ECLIPSE applies the right
+                  curve per memory. Sealed corpus: 310 queries across 5 classes × 6 time horizons.{" "}
+                  <strong style={{ color: "var(--text-primary)" }}>100% accuracy</strong> vs 25.8%
+                  uniform-decay baseline.
+                </p>
+                <Link
+                  href="/crucible/benchmarks/decay"
+                  style={{
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.06em",
+                    color: "var(--accent)",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  DECAY Benchmark →
+                </Link>
+              </div>
+              <div
+                style={{
+                  textAlign: "center",
+                  padding: "1.25rem",
+                  border: "1px solid var(--bg-border)",
+                  borderRadius: 8,
+                  backgroundColor: "var(--bg-card)",
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: "2.5rem",
+                    fontWeight: 800,
+                    letterSpacing: "-0.02em",
+                    color: "var(--accent)",
+                    lineHeight: 1,
+                    marginBottom: "0.5rem",
+                  }}
+                >
+                  100%
+                </div>
+                <div
+                  style={{
+                    fontSize: "0.6875rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.1em",
+                    color: "var(--text-tertiary)",
+                  }}
+                >
+                  DECAY-AWARE RECALL
+                </div>
+                <div
+                  style={{
+                    fontSize: "0.6875rem",
+                    color: "var(--text-tertiary)",
+                    marginTop: "0.5rem",
+                    fontFamily: "var(--font-geist-mono), monospace",
+                  }}
+                >
+                  uniform: 25.8% · none: 16.1%
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Capability 1.3 */}
+          <Reveal delay={240}>
+            <div
+              style={{
+                backgroundColor: "var(--bg)",
+                border: "1px solid var(--bg-border)",
+                borderRadius: 8,
+                padding: "2rem",
+                display: "grid",
+                gridTemplateColumns: "minmax(0, 2fr) minmax(0, 1fr)",
+                gap: "2rem",
+                alignItems: "center",
+              }}
+              className="capability-grid"
+            >
+              <div>
+                <div
+                  style={{
+                    fontFamily: "var(--font-geist-mono), monospace",
+                    fontSize: "0.6875rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.12em",
+                    color: "var(--accent)",
+                    marginBottom: "0.5rem",
+                  }}
+                >
+                  CAPABILITY 1.3
+                </div>
+                <h3
+                  style={{
+                    fontSize: "1.375rem",
+                    fontWeight: 700,
+                    color: "var(--text-primary)",
+                    marginBottom: "0.75rem",
+                  }}
+                >
+                  Refusal as a first-class output.
+                </h3>
+                <p style={{ fontSize: "0.9375rem", lineHeight: 1.65, color: "var(--text-secondary)", marginBottom: "1rem" }}>
+                  When RAVEN refuses, it tells you WHY. Five typed reasons (insufficient evidence,
+                  conflicting evidence, staleness, identity ambiguity, scope violation) — each with
+                  a recommended action and an audit hash. Sealed corpus: 200 queries, 40 per type.{" "}
+                  <strong style={{ color: "var(--text-primary)" }}>
+                    100% precision and per-type recall
+                  </strong>
+                  .
+                </p>
+                <Link
+                  href="/crucible/benchmarks/refusal"
+                  style={{
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.06em",
+                    color: "var(--accent)",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  REFUSAL Benchmark →
+                </Link>
+              </div>
+              <div
+                style={{
+                  textAlign: "center",
+                  padding: "1.25rem",
+                  border: "1px solid var(--bg-border)",
+                  borderRadius: 8,
+                  backgroundColor: "var(--bg-card)",
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: "2.5rem",
+                    fontWeight: 800,
+                    letterSpacing: "-0.02em",
+                    color: "var(--accent)",
+                    lineHeight: 1,
+                    marginBottom: "0.5rem",
+                  }}
+                >
+                  100%
+                </div>
+                <div
+                  style={{
+                    fontSize: "0.6875rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.1em",
+                    color: "var(--text-tertiary)",
+                  }}
+                >
+                  PRECISION · PER-TYPE RECALL
+                </div>
+                <div
+                  style={{
+                    fontSize: "0.6875rem",
+                    color: "var(--text-tertiary)",
+                    marginTop: "0.5rem",
+                    fontFamily: "var(--font-geist-mono), monospace",
+                  }}
+                >
+                  v1.0: 20% precision
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* ─────────────────── STATS ─────────────────── */}
       <section
         style={{
@@ -512,6 +853,7 @@ export default function RavenPage() {
           .positioning-grid { grid-template-columns: 1fr !important; }
           .stats-grid { grid-template-columns: 1fr !important; }
           .details-grid { grid-template-columns: 1fr !important; }
+          .capability-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </>

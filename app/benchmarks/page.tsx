@@ -5,7 +5,7 @@ import Reveal from "@/components/Reveal";
 export const metadata: Metadata = {
   title: "Benchmarks — JourdanLabs",
   description:
-    "Six public benchmarks spanning pharmacovigilance, entity resolution, SOC triage, factual verification, semantic search, and reading calibration.",
+    "Public benchmarks spanning pharmacovigilance, entity resolution, SOC triage, factual verification, semantic search, reading calibration, and memory validation (RAVEN v1.1).",
 };
 
 const container: React.CSSProperties = {
@@ -21,6 +21,27 @@ const BENCHMARKS = [
     desc: "The first benchmark for memory validation pipelines — contradiction detection, importance ranking, and honest refusal.",
     result: "F1 0.847 · Recall 0.921",
     href: "/benchmarks/muninn",
+  },
+  {
+    name: "MUNINN v2",
+    domain: "Memory Validation",
+    desc: "Contradiction reconciliation — pick the surviving claim with a four-rule hierarchy and a full audit trail.",
+    result: "100% · 25 pairs · RAVEN v1.1",
+    href: "/crucible/benchmarks/muninn-v2-reconciliation",
+  },
+  {
+    name: "DECAY",
+    domain: "Memory Validation",
+    desc: "Per-class memory decay — facts, preferences, and identity claims age on different clocks.",
+    result: "100% · 310 queries · RAVEN v1.1",
+    href: "/crucible/benchmarks/decay",
+  },
+  {
+    name: "REFUSAL",
+    domain: "Memory Validation",
+    desc: "Structured refusal — five typed reasons, each with a recommended action and an audit hash.",
+    result: "100% precision · RAVEN v1.1",
+    href: "/crucible/benchmarks/refusal",
   },
   {
     name: "SIGNAL",
@@ -93,7 +114,7 @@ export default function BenchmarksPage() {
                 maxWidth: 700,
               }}
             >
-              Six sealed benchmarks.
+              Sealed benchmarks.
               <br />
               Publicly reproducible.
             </h1>
