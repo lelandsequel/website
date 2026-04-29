@@ -256,6 +256,94 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ─────────────────── RAVEN OPEN SOURCE ─────────────────── */}
+      <section
+        style={{
+          padding: "5rem 0",
+          backgroundColor: "var(--bg)",
+          borderBottom: "1px solid var(--bg-border)",
+        }}
+      >
+        <div style={container}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)",
+              gap: "4rem",
+              alignItems: "center",
+            }}
+            className="raven-grid"
+          >
+            <Reveal>
+              <div
+                className="smallcaps"
+                style={{ marginBottom: "1rem" }}
+              >
+                From CRUCIBLE / Open Source
+              </div>
+              <h2
+                style={{
+                  fontSize: "clamp(2rem, 4vw, 3rem)",
+                  fontWeight: 800,
+                  letterSpacing: "-0.025em",
+                  lineHeight: 1.05,
+                  color: "var(--text-primary)",
+                  marginBottom: "1.5rem",
+                }}
+              >
+                Memory validation, open source.
+              </h2>
+              <p
+                style={{
+                  fontSize: "1rem",
+                  lineHeight: 1.65,
+                  color: "var(--text-secondary)",
+                  maxWidth: 440,
+                  marginBottom: "2rem",
+                }}
+              >
+                RAVEN is JourdanLabs&apos; open-source memory validation pipeline.
+                Seven engines, deterministic, MIT licensed. Ships now.
+              </p>
+              <Link
+                href="/crucible/raven"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  color: "var(--accent)",
+                  fontWeight: 600,
+                  fontSize: "0.8125rem",
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                }}
+              >
+                Explore RAVEN
+                <span>→</span>
+              </Link>
+            </Reveal>
+
+            <Reveal delay={150}>
+              <div
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  aspectRatio: "1/1",
+                }}
+              >
+                <Image
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/asset_yb78d9eoz_1777045469087-cJVav7s8xjRYeVkNVxCsWpbyWC690k.png"
+                  alt="RAVEN artifact - bronze raven with mechanical hand on pedestal"
+                  fill
+                  sizes="(max-width: 900px) 100vw, 50vw"
+                  style={{ objectFit: "contain" }}
+                />
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
       {/* ─────────────────────── THESIS ─────────────────────── */}
       <section style={{ padding: "6rem 0" }}>
         <div style={container}>
@@ -429,6 +517,7 @@ export default function Home() {
         @media (max-width: 900px) {
           .hero-grid { grid-template-columns: 1fr !important; gap: 3rem !important; }
           .portfolio-grid { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
+          .raven-grid { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
           .thesis-grid { grid-template-columns: 1fr !important; gap: 3rem !important; }
         }
       `}</style>

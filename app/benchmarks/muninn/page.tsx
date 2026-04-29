@@ -186,7 +186,15 @@ export default function MuninnPage() {
               Existing memory benchmarks (LongMemEval, others) measure retrieval recall — did you
               find the right chunk? Muninn measures the next layer — once you have the chunks, can
               you tell which are reliable, which contradict each other, and which the agent should
-              never see?
+              never see?{" "}
+              <Link
+                href="/crucible/raven"
+                style={{ color: "var(--accent)", textDecoration: "underline", textUnderlineOffset: 3 }}
+              >
+                RAVEN
+              </Link>{" "}
+              is the open-source validation system this benchmark measures. The benchmark is the
+              receipt; the system is the product.
             </p>
           </Reveal>
 
@@ -278,7 +286,16 @@ export default function MuninnPage() {
                       color: row.highlight ? "var(--accent)" : "var(--text-secondary)",
                     }}
                   >
-                    {row.system}
+                    {row.highlight ? (
+                      <Link
+                        href="/crucible/raven"
+                        style={{ color: "inherit", textDecoration: "underline", textUnderlineOffset: 3 }}
+                      >
+                        {row.system}
+                      </Link>
+                    ) : (
+                      row.system
+                    )}
                   </span>
                   <span
                     style={{
