@@ -100,7 +100,7 @@ export default function HelixPage() {
         </div>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <Image
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/05_heimdall_shield-Lhnlz7aGUYpjPipmwkQbwTmM4wyC5G.png"
+            src="/division-helix.png"
             alt="HELIX DNA artifact"
             width={420}
             height={400}

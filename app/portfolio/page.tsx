@@ -43,7 +43,7 @@ const DIVISIONS = [
     desc: "Healthcare workflow automation. Clinical routing, documentation, pharmacovigilance.",
     score: "81.5%",
     href: "/divisions/helix",
-    img: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/05_heimdall_shield-Lhnlz7aGUYpjPipmwkQbwTmM4wyC5G.png",
+    img: "/division-helix.png",
     highlight: true,
   },
   {
