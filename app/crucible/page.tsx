@@ -26,8 +26,8 @@ const SECTIONS = [
   },
   {
     name: "RAVEN",
-    subtitle: "Open Source · Memory Validation",
-    desc: "Seven-engine memory validation pipeline for AI agents. Runs after retrieval to filter contradictions, stale facts, and unranked noise.",
+    subtitle: "Open Source · Memory Validation · v1.1.0",
+    desc: "Seven-engine memory validation pipeline for AI agents. v1.1.0 ships contradiction reconciliation, decay-aware recall, and structured refusal — three sealed benchmarks at 100%.",
     href: "/crucible/raven",
     img: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/asset_yb78d9eoz_1777045469087-cJVav7s8xjRYeVkNVxCsWpbyWC690k.png",
     cta: "Explore RAVEN →",
@@ -35,7 +35,7 @@ const SECTIONS = [
   {
     name: "BENCHMARKS",
     subtitle: undefined as string | undefined,
-    desc: "Six public benchmarks across pharmacovigilance, entity resolution, SOC, verification, semantic search, calibration.",
+    desc: "Sealed public benchmarks across pharmacovigilance, entity resolution, SOC, verification, semantic search, calibration, and memory validation (RAVEN v1.1).",
     href: "/benchmarks",
     img: "/crucible-benchmarks.jpg",
     cta: undefined as string | undefined,

@@ -5,7 +5,7 @@ import BenchmarkGrid from "@/components/BenchmarkGrid";
 export const metadata: Metadata = {
   title: "Benchmark Program — CRUCIBLE",
   description:
-    "Six sealed benchmarks across pharmacovigilance, corporate hierarchy, SOC triage, factual verification, semantic search, and reading-level calibration.",
+    "Sealed benchmarks across pharmacovigilance, corporate hierarchy, SOC triage, factual verification, semantic search, reading-level calibration, and memory validation (RAVEN v1.1).",
 };
 
 const S: Record<string, React.CSSProperties> = {
@@ -21,6 +21,9 @@ const BENCHMARKS_DETAIL = [
   { name: "ORACLE", domain: "Factual verification", task: "Claim verification with honest refusal against sealed KB", headline: "51%", sub: "vs 31% / 25% always-confident baselines", href: "/crucible/benchmarks/oracle", sealed: true },
   { name: "LENS", domain: "Semantic search", task: "Intent-based retrieval for dense technical corpora", headline: "25×", sub: "vs grep on intent queries", href: "/crucible/benchmarks/lens", sealed: true },
   { name: "COMPASS", domain: "Document calibration", task: "Reading-level tier assignment for technical documents", headline: "15/15", sub: "within-1-tier · research-paper category", href: "/crucible/benchmarks/compass", sealed: true },
+  { name: "MUNINN v2", domain: "Memory validation", task: "Contradiction reconciliation — pick the surviving claim across four bases", headline: "100%", sub: "25 reconciliable pairs · RAVEN v1.1 capability 1.1", href: "/crucible/benchmarks/muninn-v2-reconciliation", sealed: true },
+  { name: "DECAY", domain: "Memory validation", task: "Per-class memory decay — right curve for the right kind of memory", headline: "100%", sub: "310 queries · 5 classes × 6 horizons · RAVEN v1.1 capability 1.2", href: "/crucible/benchmarks/decay", sealed: true },
+  { name: "REFUSAL", domain: "Memory validation", task: "Structured refusal — refuse for the right reason, with action and audit hash", headline: "100%", sub: "200 queries · 5 typed reasons · RAVEN v1.1 capability 1.3", href: "/crucible/benchmarks/refusal", sealed: true },
 ];
 
 export default function BenchmarksIndexPage() {
@@ -34,7 +37,7 @@ export default function BenchmarksIndexPage() {
             </div>
             <span style={{ ...S.label, marginBottom: "1rem" }}>CRUCIBLE / Benchmark Program</span>
             <h1 style={{ fontSize: "clamp(1.75rem, 4vw, 2.75rem)", fontWeight: 700, letterSpacing: "-0.03em", lineHeight: 1.1, color: "var(--text-primary)", marginBottom: "1.25rem" }}>
-              Six benchmarks. Publicly reproducible.
+              Sealed benchmarks. Publicly reproducible.
             </h1>
             <p style={{ fontSize: "1rem", color: "var(--text-secondary)", lineHeight: 1.7 }}>
               Every result ships with a sealed corpus (SHA-verified), honest baselines against real tools,
