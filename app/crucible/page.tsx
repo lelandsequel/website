@@ -18,21 +18,35 @@ const container: React.CSSProperties = {
 const SECTIONS = [
   {
     name: "VANTAGE",
+    subtitle: undefined as string | undefined,
     desc: "Flagship diagnostic suite. Sealed receipts, per-task scores, BCa confidence intervals.",
     href: "/crucible/vantage",
     img: "/crucible-vantage.jpg",
+    cta: undefined as string | undefined,
+  },
+  {
+    name: "RAVEN",
+    subtitle: "Open Source · Memory Validation",
+    desc: "Seven-engine memory validation pipeline for AI agents. Runs after retrieval to filter contradictions, stale facts, and unranked noise.",
+    href: "/crucible/raven",
+    img: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/asset_yb78d9eoz_1777045469087-cJVav7s8xjRYeVkNVxCsWpbyWC690k.png",
+    cta: "Explore RAVEN →",
   },
   {
     name: "BENCHMARKS",
+    subtitle: undefined as string | undefined,
     desc: "Six public benchmarks across pharmacovigilance, entity resolution, SOC, verification, semantic search, calibration.",
     href: "/benchmarks",
     img: "/crucible-benchmarks.jpg",
+    cta: undefined as string | undefined,
   },
   {
     name: "METHODOLOGY",
+    subtitle: undefined as string | undefined,
     desc: "Seven non-negotiable principles. Sealed corpora, honest baselines, per-fix attribution, refusal as a feature.",
     href: "/methodology",
     img: "/crucible-methodology.jpg",
+    cta: undefined as string | undefined,
   },
 ];
 
@@ -138,7 +152,7 @@ export default function CruciblePage() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+              gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
               gap: "1.5rem",
             }}
             className="cards-grid"
@@ -170,7 +184,7 @@ export default function CruciblePage() {
                       src={s.img}
                       alt={`${s.name} artifact`}
                       fill
-                      sizes="(max-width: 900px) 45vw, 28vw"
+                      sizes="(max-width: 900px) 45vw, 22vw"
                       style={{ objectFit: "contain" }}
                     />
                   </div>
@@ -180,20 +194,48 @@ export default function CruciblePage() {
                       fontWeight: 800,
                       letterSpacing: "0.04em",
                       color: "var(--text-primary)",
-                      marginBottom: "0.5rem",
+                      marginBottom: s.subtitle ? "0.25rem" : "0.5rem",
                     }}
                   >
                     {s.name}
                   </h3>
+                  {s.subtitle && (
+                    <div
+                      style={{
+                        fontSize: "0.6875rem",
+                        fontWeight: 600,
+                        letterSpacing: "0.08em",
+                        textTransform: "uppercase",
+                        color: "var(--accent)",
+                        marginBottom: "0.5rem",
+                      }}
+                    >
+                      {s.subtitle}
+                    </div>
+                  )}
                   <p
                     style={{
                       fontSize: "0.875rem",
                       lineHeight: 1.55,
                       color: "var(--text-secondary)",
+                      marginBottom: s.cta ? "1rem" : 0,
                     }}
                   >
                     {s.desc}
                   </p>
+                  {s.cta && (
+                    <span
+                      style={{
+                        marginTop: "auto",
+                        fontSize: "0.75rem",
+                        fontWeight: 600,
+                        letterSpacing: "0.06em",
+                        color: "var(--accent)",
+                      }}
+                    >
+                      {s.cta}
+                    </span>
+                  )}
                 </Link>
               </Reveal>
             ))}
@@ -333,10 +375,15 @@ export default function CruciblePage() {
 
       {/* Responsive overrides */}
       <style>{`
+        @media (max-width: 1100px) {
+          .cards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+        }
         @media (max-width: 900px) {
           .hero-grid { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
-          .cards-grid { grid-template-columns: 1fr !important; }
           .why-grid { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 600px) {
+          .cards-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </>

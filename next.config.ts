@@ -22,6 +22,8 @@ const nextConfig: NextConfig = {
       { source: "/methodology", destination: "/crucible/methodology", permanent: true },
       { source: "/reproducibility", destination: "/crucible/reproducibility", permanent: true },
       { source: "/systems", destination: "/cosmic", permanent: true },
+      { source: "/raven", destination: "/crucible/raven", permanent: true },
+      { source: "/muninn", destination: "/benchmarks/muninn", permanent: true },
     ];
   },
 };
