@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 
 const links = [
+  { href: "/bifrost", label: "BIFROST" },
   { href: "/portfolio", label: "Portfolio" },
   { href: "/cosmic", label: "COSMIC" },
   { href: "/benchmarks", label: "Benchmarks" },
