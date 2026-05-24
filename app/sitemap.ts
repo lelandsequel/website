@@ -6,6 +6,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [
     { url: BASE, priority: 1.0 },
     { url: `${BASE}/bifrost`, priority: 0.9 },
+    { url: `${BASE}/cipher`, priority: 0.85 },
+    { url: `${BASE}/comps`, priority: 0.8 },
     { url: `${BASE}/cosmic`, priority: 0.9 },
     { url: `${BASE}/divisions`, priority: 0.9 },
     { url: `${BASE}/divisions/atlas`, priority: 0.8 },

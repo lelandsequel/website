@@ -6,6 +6,8 @@ import { useState, useEffect } from "react";
 const links = [
   { href: "/bifrost", label: "BIFROST" },
   { href: "/portfolio", label: "Portfolio" },
+  { href: "/cipher", label: "CIPHER" },
+  { href: "/comps", label: "COMPS" },
   { href: "/cosmic", label: "COSMIC" },
   { href: "/benchmarks", label: "Benchmarks" },
   { href: "/team", label: "Team" },

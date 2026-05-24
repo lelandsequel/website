@@ -9,6 +9,16 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return {
+      beforeFiles: [
+        { source: "/cipher", destination: "https://cipher-demo-chi.vercel.app/cipher" },
+        { source: "/cipher/:path*", destination: "https://cipher-demo-chi.vercel.app/cipher/:path*" },
+        { source: "/comps", destination: "https://cipher-demo-chi.vercel.app/cipher/comps" },
+        { source: "/comps/:path*", destination: "https://cipher-demo-chi.vercel.app/cipher/comps/:path*" },
+      ],
+    };
+  },
   async redirects() {
     return [
       { source: "/research", destination: "/crucible/benchmarks", permanent: true },
