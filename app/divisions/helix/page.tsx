@@ -1,441 +1,101 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 
 export const metadata: Metadata = {
-  title: "HELIX Division — Healthcare Workflow Automation",
+  title: "HELIX Division — Health and Human Performance",
   description:
-    "HELIX applies COSMIC to healthcare workflow automation. Clinical routing, documentation, pharmacovigilance.",
+    "HELIX applies COSMIC to health and human performance — adaptive training for athletes and coaches, plus PHAROS pharmacovigilance. HELIX app is in TestFlight.",
+};
+
+const accent = "#E8735A";
+
+const S: Record<string, React.CSSProperties> = {
+  container: { maxWidth: 900, margin: "0 auto", padding: "0 2rem" },
+  containerSm: { maxWidth: 760, margin: "0 auto", padding: "0 2rem" },
+  label: { fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.6875rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "var(--text-tertiary)", display: "block" },
+  p: { color: "var(--text-secondary)", lineHeight: 1.75, marginBottom: "1rem" },
+  section: { padding: "5rem 0", borderBottom: "1px solid var(--bg-border)" },
 };
 
 export default function HelixPage() {
   return (
-    <article style={{ backgroundColor: "var(--bg)" }}>
-      {/* Breadcrumb */}
-      <div
-        style={{
-          maxWidth: 1120,
-          margin: "0 auto",
-          padding: "1.5rem 2rem 0",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "0.5rem",
-            fontSize: "0.75rem",
-            fontFamily: "var(--font-geist-mono), monospace",
-            letterSpacing: "0.06em",
-          }}
-        >
-          <Link href="/portfolio" style={{ color: "var(--text-secondary)" }}>
-            DIVISIONS
-          </Link>
-          <span style={{ color: "var(--text-tertiary)" }}>/</span>
-          <span style={{ color: "var(--text-primary)" }}>HELIX</span>
-        </div>
-      </div>
-
-      {/* Hero */}
-      <section
-        style={{
-          maxWidth: 1120,
-          margin: "0 auto",
-          padding: "2rem 2rem 4rem",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "3rem",
-          alignItems: "center",
-        }}
-      >
-        <div>
-          <span
-            style={{
-              fontFamily: "var(--font-geist-mono), monospace",
-              fontSize: "0.6875rem",
-              fontWeight: 600,
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-              color: "var(--accent)",
-              display: "block",
-              marginBottom: "0.75rem",
-            }}
-          >
-            HELIX
-          </span>
-          <h1
-            style={{
-              fontSize: "clamp(2.25rem, 5vw, 3.25rem)",
-              fontWeight: 700,
-              letterSpacing: "-0.03em",
-              lineHeight: 1.05,
-              color: "var(--text-primary)",
-              marginBottom: "0.5rem",
-            }}
-          >
-            Healthcare workflow automation.
-          </h1>
-          <div
-            style={{
-              width: 60,
-              height: 3,
-              backgroundColor: "var(--accent)",
-              marginBottom: "1.5rem",
-            }}
-          />
-          <p
-            style={{
-              fontSize: "1rem",
-              color: "var(--text-secondary)",
-              lineHeight: 1.7,
-              maxWidth: 460,
-            }}
-          >
-            HELIX applies the COSMIC reasoning substrate to healthcare workflow —
-            clinical routing, documentation assistance, and pharmacovigilance-grade
-            signal detection. Built for the regulatory reality of healthcare, not
-            against it.
-          </p>
-        </div>
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <Image
-            src="/division-helix.png"
-            alt="HELIX DNA artifact"
-            width={420}
-            height={400}
-            style={{ objectFit: "contain" }}
-          />
-        </div>
-      </section>
-
-      {/* Products */}
-      <section
-        style={{
-          backgroundColor: "var(--bg-muted)",
-          padding: "4rem 2rem",
-        }}
-      >
-        <div style={{ maxWidth: 1120, margin: "0 auto" }}>
-          <span
-            style={{
-              fontFamily: "var(--font-geist-mono), monospace",
-              fontSize: "0.6875rem",
-              fontWeight: 600,
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-              color: "var(--accent)",
-              display: "block",
-              marginBottom: "1.5rem",
-            }}
-          >
-            Products
-          </span>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "1rem",
-            }}
-          >
-            {/* HELIX */}
-            <div
-              style={{
-                backgroundColor: "var(--bg-card)",
-                padding: "2rem",
-                borderRadius: "8px",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                  marginBottom: "1rem",
-                }}
-              >
-                <span
-                  style={{
-                    fontFamily: "var(--font-geist-mono), monospace",
-                    fontSize: "1.25rem",
-                    fontWeight: 700,
-                    color: "var(--text-primary)",
-                    letterSpacing: "0.04em",
-                  }}
-                >
-                  HELIX
-                </span>
-                <span
-                  style={{
-                    fontSize: "0.625rem",
-                    fontWeight: 600,
-                    letterSpacing: "0.06em",
-                    textTransform: "uppercase",
-                    color: "#fff",
-                    backgroundColor: "var(--accent)",
-                    padding: "0.25rem 0.5rem",
-                    borderRadius: "4px",
-                    fontFamily: "var(--font-geist-mono), monospace",
-                  }}
-                >
-                  TestFlight
-                </span>
-              </div>
-              <p
-                style={{
-                  fontSize: "0.875rem",
-                  color: "var(--text-secondary)",
-                  lineHeight: 1.7,
-                  marginBottom: "1.5rem",
-                }}
-              >
-                Clinical workflow automation application. Task routing,
-                documentation triage, and care coordination support. Currently in
-                TestFlight evaluation with clinical partners.
-              </p>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.5rem",
-                  paddingTop: "1rem",
-                  borderTop: "1px solid var(--bg-border)",
-                }}
-              >
-                <span
-                  style={{
-                    fontSize: "0.6875rem",
-                    fontFamily: "var(--font-geist-mono), monospace",
-                    color: "var(--text-tertiary)",
-                    letterSpacing: "0.06em",
-                  }}
-                >
-                  VANTAGE SCORE:
-                </span>
-                <span
-                  style={{
-                    fontSize: "0.875rem",
-                    fontFamily: "var(--font-geist-mono), monospace",
-                    color: "var(--accent)",
-                    fontWeight: 600,
-                  }}
-                >
-                  81.5%
-                </span>
-              </div>
+    <>
+      <section style={{ padding: "6rem 0 4rem", borderBottom: "1px solid var(--bg-border)", borderTop: `2px solid ${accent}` }}>
+        <div style={S.container}>
+          <div style={{ maxWidth: 680 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.25rem" }}>
+              <Link href="/divisions" style={{ fontSize: "0.8125rem", color: "var(--text-tertiary)" }}>← Divisions</Link>
             </div>
-
-            {/* PHAROS */}
-            <div
-              style={{
-                backgroundColor: "var(--bg-card)",
-                padding: "2rem",
-                borderRadius: "8px",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                  marginBottom: "1rem",
-                }}
-              >
-                <span
-                  style={{
-                    fontFamily: "var(--font-geist-mono), monospace",
-                    fontSize: "1.25rem",
-                    fontWeight: 700,
-                    color: "var(--text-primary)",
-                    letterSpacing: "0.04em",
-                  }}
-                >
-                  PHAROS
-                </span>
-                <span
-                  style={{
-                    fontSize: "0.625rem",
-                    fontWeight: 600,
-                    letterSpacing: "0.06em",
-                    textTransform: "uppercase",
-                    color: "var(--text-tertiary)",
-                    backgroundColor: "var(--bg-muted)",
-                    padding: "0.25rem 0.5rem",
-                    borderRadius: "4px",
-                    fontFamily: "var(--font-geist-mono), monospace",
-                    border: "1px solid var(--bg-border)",
-                  }}
-                >
-                  In Development
-                </span>
-              </div>
-              <p
-                style={{
-                  fontSize: "0.875rem",
-                  color: "var(--text-secondary)",
-                  lineHeight: 1.7,
-                }}
-              >
-                Pharmacovigilance signal detection for clinical environments. Built
-                on the SIGNAL benchmark research track. Designed for regulatory
-                submission requirements.
-              </p>
-            </div>
+            <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.6875rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: accent, display: "block", marginBottom: "1rem" }}>HELIX</span>
+            <h1 style={{ fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, letterSpacing: "-0.035em", lineHeight: 1.1, color: "var(--text-primary)", marginBottom: "1.25rem" }}>
+              Health and human performance.
+            </h1>
+            <p style={{ fontSize: "1.0625rem", color: "var(--text-secondary)", lineHeight: 1.7, maxWidth: 560 }}>
+              HELIX applies the COSMIC reasoning substrate to health and human performance —
+              adaptive training intelligence for athletes and coaches, with Apple Watch and WHOOP
+              integration. PHAROS extends the same architecture into pharmacovigilance.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Thesis */}
-      <section
-        style={{
-          maxWidth: 1120,
-          margin: "0 auto",
-          padding: "4rem 2rem",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "3rem",
-          alignItems: "center",
-        }}
-      >
-        <div>
-          <span
-            style={{
-              fontFamily: "var(--font-geist-mono), monospace",
-              fontSize: "0.6875rem",
-              fontWeight: 600,
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-              color: "var(--accent)",
-              display: "block",
-              marginBottom: "0.75rem",
-            }}
-          >
-            Thesis
-          </span>
-          <h2
-            style={{
-              fontSize: "1.75rem",
-              fontWeight: 700,
-              letterSpacing: "-0.02em",
-              color: "var(--text-primary)",
-              marginBottom: "1rem",
-            }}
-          >
-            Healthcare requires honest refusal.
-          </h2>
-          <p
-            style={{
-              fontSize: "0.9375rem",
-              color: "var(--text-secondary)",
-              lineHeight: 1.75,
-              marginBottom: "1rem",
-            }}
-          >
-            Healthcare AI that guesses confidently about clinical decisions is not
-            better than no AI — it is actively dangerous. The AURORA confidence
-            gate is especially important in clinical contexts: HELIX refuses to
-            route or classify when aggregate confidence falls below threshold,
-            surfacing the ambiguous case to a human clinician rather than emitting
-            a verdict.
-          </p>
-          <p
-            style={{
-              fontSize: "0.9375rem",
-              color: "var(--text-secondary)",
-              lineHeight: 1.75,
-            }}
-          >
-            PHAROS extends this posture to pharmacovigilance: adverse drug event
-            signals require SHA-verified chain of custody from source document to
-            regulatory submission.
-          </p>
-        </div>
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <Image
-            src="/aurora-lockbox.jpg"
-            alt="AURORA confidence gate"
-            width={320}
-            height={280}
-            style={{ objectFit: "contain" }}
-          />
+      <section style={S.section}>
+        <div style={S.container}>
+          <span style={S.label}>Products</span>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "1px", backgroundColor: "var(--bg-border)", border: "1px solid var(--bg-border)" }}>
+            {[
+              {
+                name: "HELIX",
+                status: "TestFlight",
+                description: "Adaptive training intelligence for athletes and coaches. Integrates with Apple Watch and WHOOP to deliver deterministic training recommendations grounded in sealed performance corpora. No LLM guessing on load prescription.",
+              },
+              {
+                name: "PHAROS",
+                status: "In development",
+                description: "Pharmacovigilance signal detection. Built on the SIGNAL benchmark research track (F1 0.639, 24.3-month median lead time). Designed for regulatory submission requirements — SHA-verified chain of custody from source document to finding.",
+              },
+            ].map((product) => (
+              <div key={product.name} style={{ backgroundColor: "var(--bg-card)", padding: "1.75rem" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.75rem" }}>
+                  <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.75rem", fontWeight: 700, color: accent }}>{product.name}</span>
+                  <span style={{ fontSize: "0.625rem", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: product.status === "TestFlight" ? accent : "var(--text-tertiary)", border: `1px solid ${product.status === "TestFlight" ? accent : "var(--bg-border)"}`, padding: "0.125rem 0.5rem", fontFamily: "var(--font-geist-mono), monospace" }}>{product.status}</span>
+                </div>
+                <p style={{ fontSize: "0.8125rem", color: "var(--text-secondary)", lineHeight: 1.6, margin: 0 }}>{product.description}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section
-        style={{
-          borderTop: "1px solid var(--bg-border)",
-          borderBottom: "1px solid var(--bg-border)",
-          padding: "2rem",
-        }}
-      >
-        <div
-          style={{
-            maxWidth: 1120,
-            margin: "0 auto",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <Link
-            href="/benchmarks/signal"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "0.5rem",
-              padding: "1rem 2rem",
-              border: "1px solid var(--accent)",
-              color: "var(--accent)",
-              fontSize: "0.875rem",
-              fontWeight: 500,
-              letterSpacing: "0.02em",
-            }}
-          >
-            See SIGNAL benchmark
-            <span>→</span>
+      <section style={{ padding: "5rem 0", borderBottom: "1px solid var(--bg-border)" }}>
+        <div style={S.containerSm}>
+          <span style={S.label}>Why deterministic matters in performance training</span>
+          <p style={S.p}>
+            Training load recommendations that hallucinate — recommending intensity a body can't handle,
+            or under-loading an athlete who needs progression — cause real physical harm. HELIX grounds
+            every recommendation in the athlete's own sealed performance history. The AURORA gate refuses
+            to prescribe when confidence is insufficient rather than defaulting to a generic protocol.
+          </p>
+          <p style={{ ...S.p, marginBottom: "2rem" }}>
+            PHAROS applies the same refusal posture to pharmacovigilance: adverse event signals require
+            a SHA-verified chain of custody from source document to regulatory submission. The underlying
+            benchmark — SIGNAL — has an F1 of 0.639 and a 24.3-month median detection lead time.
+          </p>
+          <Link href="/crucible/benchmarks/signal" style={{ fontSize: "0.875rem", color: accent }}>
+            See SIGNAL benchmark — F1 0.639, 24.3mo median lead time →
           </Link>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer
-        style={{
-          borderTop: "1px solid var(--bg-border)",
-          padding: "1.25rem 2rem",
-          backgroundColor: "var(--bg)",
-        }}
-      >
-        <div
-          style={{
-            maxWidth: 1120,
-            margin: "0 auto",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            fontSize: "0.75rem",
-            color: "var(--text-secondary)",
-          }}
-        >
-          <span style={{ fontWeight: 600, letterSpacing: "0.04em" }}>
-            JOURDANLABS / HOUSTON, TX
-          </span>
-          <span>Six benchmarks. Publicly reproducible.</span>
-          <a
-            href="mailto:leland@jourdanlabs.com"
-            style={{ color: "var(--text-secondary)" }}
-          >
-            leland@jourdanlabs.com
-          </a>
+      <section style={{ padding: "5rem 0" }}>
+        <div style={S.containerSm}>
+          <span style={S.label}>Status</span>
+          <p style={S.p}>
+            The HELIX app is currently in TestFlight. Apple Watch and WHOOP integrations are live in the
+            TestFlight build. PHAROS is in development and has not shipped.
+          </p>
         </div>
-      </footer>
-
-      <style>{`
-        @media (max-width: 900px) {
-          section[style*="grid-template-columns: 1fr 1fr"] {
-            grid-template-columns: 1fr !important;
-          }
-        }
-      `}</style>
-    </article>
+      </section>
+    </>
   );
 }

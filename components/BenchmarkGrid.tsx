@@ -49,23 +49,26 @@ export const BENCHMARKS: BenchmarkCell[] = [
 export default function BenchmarkGrid() {
   return (
     <div
+      className="benchmark-grid"
       style={{
         display: "grid",
         gridTemplateColumns: "repeat(3, 1fr)",
-        border: "1px solid var(--bg-border)",
+        gap: "0.85rem",
       }}
     >
-      {BENCHMARKS.map((b, i) => (
+      {BENCHMARKS.map((b) => (
         <Link
           key={b.name}
           href={b.href}
           style={{
             display: "block",
-            padding: "1.75rem",
-            borderRight: (i + 1) % 3 !== 0 ? "1px solid var(--bg-border)" : "none",
-            borderBottom: i < 3 ? "1px solid var(--bg-border)" : "none",
+            padding: "1.15rem",
+            border: "1px solid var(--bg-border)",
+            borderRadius: 18,
+            background: "var(--bg-card)",
+            boxShadow: "0 10px 28px rgba(63, 36, 143, 0.08)",
             textDecoration: "none",
-            transition: "background 0.15s",
+            transition: "background 0.15s, transform 0.15s",
           }}
           className="benchmark-cell"
         >
@@ -76,7 +79,7 @@ export default function BenchmarkGrid() {
               fontWeight: 600,
               letterSpacing: "0.1em",
               textTransform: "uppercase",
-              color: "var(--text-tertiary)",
+              color: "var(--purple-700)",
               marginBottom: "0.75rem",
             }}
           >
@@ -86,7 +89,7 @@ export default function BenchmarkGrid() {
             style={{
               fontFamily: "var(--font-geist-mono), monospace",
               fontSize: "2rem",
-              fontWeight: 700,
+              fontWeight: 950,
               color: "var(--accent)",
               letterSpacing: "-0.02em",
               lineHeight: 1,
@@ -98,7 +101,7 @@ export default function BenchmarkGrid() {
           <div
             style={{
               fontSize: "0.75rem",
-              color: "var(--text-tertiary)",
+              color: "var(--text-secondary)",
               lineHeight: 1.5,
             }}
           >

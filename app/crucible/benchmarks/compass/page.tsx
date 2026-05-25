@@ -1,347 +1,98 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
-import Reveal from "@/components/Reveal";
 
 export const metadata: Metadata = {
   title: "COMPASS — Reading-Level Calibration",
   description:
-    "Reading-level complexity calibration on research papers. 15/15 within-1-tier.",
+    "Calibrated reading-level assessment. 15/15 within-1-tier on the research-paper category.",
 };
 
-const container: React.CSSProperties = {
-  width: "92%",
-  maxWidth: 1600,
-  margin: "0 auto",
+const S: Record<string, React.CSSProperties> = {
+  container: { maxWidth: 760, margin: "0 auto", padding: "0 2rem" },
+  label: { fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.6875rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "var(--text-tertiary)", display: "block" },
+  sectionTitle: { fontSize: "1.125rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.875rem" },
+  p: { color: "var(--text-secondary)", lineHeight: 1.75, marginBottom: "1rem" },
+  divider: { border: "none", borderTop: "1px solid var(--bg-border)", margin: "3rem 0" },
 };
 
 export default function CompassPage() {
   return (
-    <>
-      {/* Breadcrumb */}
-      <div style={{ ...container, paddingTop: "1.5rem" }}>
-        <Link
-          href="/crucible/benchmarks"
-          style={{
-            fontSize: "0.75rem",
-            color: "var(--text-tertiary)",
-          }}
-        >
-          ← BENCHMARKS / COMPASS · READING COMPLEXITY
-        </Link>
-      </div>
-
-      {/* Hero */}
-      <section style={{ padding: "3rem 0 4rem" }}>
-        <div style={container}>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "3rem",
-              alignItems: "center",
-            }}
-            className="hero-grid"
-          >
-            <Reveal>
-              <div className="smallcaps" style={{ marginBottom: "1rem" }}>
-                COMPASS · READING COMPLEXITY
-              </div>
-              <h1
-                style={{
-                  fontSize: "clamp(3rem, 8vw, 6rem)",
-                  fontWeight: 900,
-                  letterSpacing: "-0.03em",
-                  lineHeight: 0.95,
-                  color: "var(--text-primary)",
-                  marginBottom: "1.5rem",
-                }}
-              >
-                COMPASS
-              </h1>
-              <p
-                style={{
-                  fontSize: "clamp(1.125rem, 2.5vw, 1.5rem)",
-                  fontWeight: 600,
-                  lineHeight: 1.4,
-                  color: "var(--text-secondary)",
-                  maxWidth: 700,
-                }}
-              >
-                Reading-level calibration.
-              </p>
-            </Reveal>
-
-            <Reveal delay={150}>
-              <div style={{ position: "relative", width: "100%", height: 400 }}>
-                <Image
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Remove_background_from_image_with_bronze_maritime_-1777137225837-YgXr84kFEE7aazZ9yfmGUttCc4NTmG.png"
-                  alt="COMPASS navigation artifact"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  style={{ objectFit: "contain" }}
-                  priority
-                />
-              </div>
-            </Reveal>
-          </div>
+    <article style={{ padding: "5rem 0 6rem" }}>
+      <div style={S.container}>
+        <div style={{ marginBottom: "3rem" }}>
+          <Link href="/crucible/benchmarks" style={{ fontSize: "0.8125rem", color: "var(--text-tertiary)", display: "inline-flex", alignItems: "center", gap: "0.25rem", marginBottom: "2rem" }}>← Benchmarks</Link>
+          <span style={{ ...S.label, marginBottom: "1rem" }}>COMPASS · Reading-Level Calibration</span>
+          <h1 style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 700, letterSpacing: "-0.03em", lineHeight: 1.15, color: "var(--text-primary)", marginBottom: "0.75rem" }}>COMPASS</h1>
+          <p style={{ fontSize: "1rem", color: "var(--text-secondary)", lineHeight: 1.6 }}>
+            Calibrated reading-level assessment for technical documents.
+          </p>
         </div>
-      </section>
 
-      {/* Stats */}
-      <section style={{ padding: "0 0 4rem" }}>
-        <div style={container}>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
-              gap: "1.5rem",
-            }}
-            className="stats-grid"
-          >
+        <div style={{ border: "1px solid var(--bg-border)", padding: "2rem", marginBottom: "3rem", backgroundColor: "var(--bg-card)" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "2rem" }}>
             {[
-              { value: "15/15", label: "WITHIN-1-TIER" },
-              { value: "Research", label: "PAPERS" },
-              { value: "Calibrated", label: "TIER ASSIGNMENT" },
-            ].map((s, i) => (
-              <Reveal key={s.label} delay={i * 80}>
-                <div
-                  style={{
-                    backgroundColor: "var(--bg-card)",
-                    border: "1px solid var(--bg-border)",
-                    borderRadius: 8,
-                    padding: "2rem",
-                    textAlign: "center",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: "clamp(1.75rem, 4vw, 3rem)",
-                      fontWeight: 800,
-                      letterSpacing: "-0.02em",
-                      color: "var(--text-primary)",
-                      marginBottom: "0.5rem",
-                    }}
-                  >
-                    {s.value}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: "0.6875rem",
-                      fontWeight: 600,
-                      letterSpacing: "0.12em",
-                      color: "var(--text-tertiary)",
-                    }}
-                  >
-                    {s.label}
-                  </div>
-                </div>
-              </Reveal>
+              { label: "Research papers (within-1-tier)", value: "15/15" },
+              { label: "Task type", value: "Classification" },
+              { label: "Hardest category", value: "Research papers" },
+            ].map((m) => (
+              <div key={m.label}>
+                <div style={{ ...S.label, marginBottom: "0.375rem" }}>{m.label}</div>
+                <div style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "1.75rem", fontWeight: 700, color: "var(--accent)", letterSpacing: "-0.02em" }}>{m.value}</div>
+              </div>
             ))}
           </div>
         </div>
-      </section>
 
-      {/* What It Is */}
-      <section style={{ padding: "4rem 0", borderTop: "1px solid var(--bg-border)" }}>
-        <div style={{ ...container, maxWidth: 900 }}>
-          <Reveal>
-            <div className="smallcaps" style={{ marginBottom: "1rem", color: "var(--accent)" }}>
-              What It Is
-            </div>
-            <p
-              style={{
-                fontSize: "1rem",
-                lineHeight: 1.75,
-                color: "var(--text-secondary)",
-                marginBottom: "1rem",
-              }}
-            >
-              COMPASS tests reading-level complexity calibration on research papers. The system
-              must classify text complexity within one tier of the ground-truth label. Research
-              papers are the hardest category — they combine technical vocabulary,
-              discipline-specific knowledge, and high inferential demand.
+        <section style={{ marginBottom: "3rem" }}>
+          <h2 style={S.sectionTitle}>What it is</h2>
+          <p style={S.p}>
+            COMPASS calibrates reading-level assessments for documents across a complexity spectrum.
+            Existing tools (Flesch-Kincaid, Gunning Fog, Coleman-Liau) score surface features —
+            sentence length, syllable count, word frequency — and produce numbers that are easy to game
+            and poor predictors of actual comprehension difficulty for technical documents.
+          </p>
+          <p style={S.p}>
+            COSMIC's COMPASS pipeline scores documents across multiple dimensions (vocabulary complexity,
+            domain-specificity, argument structure, inferential load) and produces a calibrated tier
+            assignment rather than a raw score. The within-1-tier metric is the key performance indicator:
+            a within-1-tier error means the system assigned a tier adjacent to the correct tier, which is
+            an acceptable placement for most real-world applications.
+          </p>
+          <p style={S.p}>
+            The 15/15 result on the research-paper category is the headline number because research papers
+            are the hardest category — they combine technical vocabulary, discipline-specific knowledge,
+            and high inferential demand. Surface metrics routinely mis-classify research papers as
+            below their actual difficulty. COMPASS gets all 15 within one tier.
+          </p>
+        </section>
+
+        <hr style={S.divider} />
+
+        <section style={{ marginBottom: "3rem" }}>
+          <h2 style={S.sectionTitle}>Limitations</h2>
+          <div style={{ borderLeft: "2px solid var(--bg-border)", paddingLeft: "1.5rem" }}>
+            <p style={S.p}>
+              <strong style={{ color: "var(--text-primary)" }}>Within-1-tier, not exact.</strong> The 15/15 metric
+              counts within-1-tier matches, not exact matches. Exact-match accuracy on the research-paper
+              category is documented in the repo and is lower.
             </p>
-            <p
-              style={{
-                fontSize: "1rem",
-                lineHeight: 1.75,
-                color: "var(--text-secondary)",
-              }}
-            >
-              The 15/15 within-1-tier result means every research paper in the test set was
-              assigned a complexity tier within one level of its ground-truth classification.
-              Surface metrics (Flesch-Kincaid, Gunning Fog) routinely mis-classify research
-              papers. COMPASS gets all 15 within one tier.
+            <p style={S.p}>
+              <strong style={{ color: "var(--text-primary)" }}>English-only.</strong> The corpus and pipeline
+              are English-language only. Multilingual reading-level calibration is out of scope.
             </p>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Methodology */}
-      <section
-        style={{
-          padding: "4rem 0",
-          backgroundColor: "var(--bg-card)",
-          borderTop: "1px solid var(--bg-border)",
-          borderBottom: "1px solid var(--bg-border)",
-        }}
-      >
-        <div style={{ ...container, maxWidth: 900 }}>
-          <Reveal>
-            <div className="smallcaps" style={{ marginBottom: "1.5rem", color: "var(--accent)" }}>
-              Methodology
-            </div>
-          </Reveal>
-
-          <Reveal delay={100}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-              {[
-                { label: "Corpus", value: "Sealed research paper corpus" },
-                { label: "Baselines", value: "Flesch-Kincaid, Gunning Fog, Coleman-Liau" },
-                { label: "Pipeline", value: "Multi-dimensional complexity scoring" },
-                { label: "Metric", value: "Within-1-tier accuracy" },
-                { label: "Dimensions", value: "Vocabulary, domain-specificity, argument structure, inferential load" },
-                { label: "Reproducibility", value: "Full instructions in GitHub repo" },
-              ].map((row) => (
-                <div
-                  key={row.label}
-                  style={{
-                    display: "flex",
-                    gap: "1.5rem",
-                    fontSize: "0.875rem",
-                    padding: "0.75rem 0",
-                    borderBottom: "1px solid var(--bg-border)",
-                  }}
-                >
-                  <span
-                    style={{
-                      color: "var(--text-tertiary)",
-                      minWidth: 140,
-                      fontFamily: "var(--font-geist-mono), monospace",
-                      fontSize: "0.75rem",
-                      letterSpacing: "0.04em",
-                    }}
-                  >
-                    {row.label}
-                  </span>
-                  <span style={{ color: "var(--text-secondary)" }}>{row.value}</span>
-                </div>
-              ))}
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Reproducibility / Limitations */}
-      <section style={{ padding: "4rem 0" }}>
-        <div style={{ ...container, maxWidth: 900 }}>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "3rem",
-            }}
-            className="repro-grid"
-          >
-            <Reveal>
-              <div className="smallcaps" style={{ marginBottom: "1rem", color: "var(--accent)" }}>
-                Reproducibility
-              </div>
-              <div
-                style={{
-                  backgroundColor: "var(--bg-card)",
-                  border: "1px solid var(--bg-border)",
-                  borderRadius: 8,
-                  padding: "1.5rem",
-                  fontFamily: "var(--font-geist-mono), monospace",
-                  fontSize: "0.8125rem",
-                  lineHeight: 1.8,
-                }}
-              >
-                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
-                  <span style={{ color: "var(--text-tertiary)" }}>Corpus</span>
-                  <span style={{ color: "var(--text-secondary)" }}>15 research papers (sealed)</span>
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
-                  <span style={{ color: "var(--text-tertiary)" }}>Metric</span>
-                  <span style={{ color: "var(--text-secondary)" }}>Within-1-tier classification</span>
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                  <span style={{ color: "var(--text-tertiary)" }}>Repo</span>
-                  <span style={{ color: "var(--text-secondary)" }}>github.com/jourdanlabs/benchmarks/compass</span>
-                </div>
-              </div>
-            </Reveal>
-
-            <Reveal delay={100}>
-              <div className="smallcaps" style={{ marginBottom: "1rem", color: "var(--accent)" }}>
-                Limitations
-              </div>
-              <div style={{ fontSize: "0.9375rem", lineHeight: 1.65, color: "var(--text-secondary)" }}>
-                <p style={{ marginBottom: "0.75rem" }}>
-                  <strong style={{ color: "var(--text-primary)" }}>Within-1-tier, not exact.</strong>{" "}
-                  Metric counts within-1-tier matches, not exact matches. Exact-match
-                  accuracy is lower and documented in repo.
-                </p>
-                <p style={{ marginBottom: "0.75rem" }}>
-                  <strong style={{ color: "var(--text-primary)" }}>English-only.</strong>{" "}
-                  Corpus and pipeline are English-language only. Multilingual calibration
-                  out of scope.
-                </p>
-                <p>
-                  <strong style={{ color: "var(--text-primary)" }}>Domain coverage.</strong>{" "}
-                  Tier system designed for benchmark corpus document types. Novel document
-                  types may produce degraded calibration.
-                </p>
-              </div>
-            </Reveal>
+            <p style={{ ...S.p, marginBottom: 0 }}>
+              <strong style={{ color: "var(--text-primary)" }}>Domain coverage.</strong> The tier system was
+              designed for the document types in the benchmark corpus. Novel document types not represented
+              in the sealed corpus may produce degraded calibration.
+            </p>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Footer */}
-      <footer
-        style={{
-          borderTop: "1px solid var(--bg-border)",
-          padding: "1.25rem 2rem",
-          backgroundColor: "var(--bg)",
-        }}
-      >
-        <div
-          style={{
-            width: "92%",
-            maxWidth: 1600,
-            margin: "0 auto",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            fontSize: "0.75rem",
-            color: "var(--text-secondary)",
-            flexWrap: "wrap",
-            gap: "1rem",
-          }}
-        >
-          <span style={{ fontWeight: 600, letterSpacing: "0.04em" }}>
-            JOURDANLABS / HOUSTON, TX
-          </span>
-          <span>Six benchmarks. Publicly reproducible.</span>
-          <a
-            href="mailto:leland@jourdanlabs.com"
-            style={{ color: "var(--text-secondary)" }}
-          >
-            leland@jourdanlabs.com
-          </a>
+        <div style={{ marginTop: "3rem", paddingTop: "2rem", borderTop: "1px solid var(--bg-border)", display: "flex", gap: "1.5rem" }}>
+          <a href="https://github.com/jourdanlabs/benchmarks/tree/main/compass" target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.875rem", color: "var(--accent)" }}>GitHub →</a>
+          <Link href="/crucible/reproducibility" style={{ fontSize: "0.875rem", color: "var(--text-secondary)" }}>Reproducibility guide →</Link>
         </div>
-      </footer>
-
-      <style>{`
-        @media (max-width: 768px) {
-          .hero-grid { grid-template-columns: 1fr !important; }
-          .stats-grid { grid-template-columns: 1fr !important; }
-          .repro-grid { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
-    </>
+      </div>
+    </article>
   );
 }

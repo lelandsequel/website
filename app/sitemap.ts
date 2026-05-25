@@ -5,10 +5,11 @@ const BASE = "https://jourdanlabs.com";
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [
     { url: BASE, priority: 1.0 },
-    { url: `${BASE}/bifrost`, priority: 0.9 },
-    { url: `${BASE}/cipher`, priority: 0.85 },
-    { url: `${BASE}/comps`, priority: 0.8 },
     { url: `${BASE}/cosmic`, priority: 0.9 },
+    { url: `${BASE}/alchemist`, priority: 0.9 },
+    { url: `${BASE}/alchemist/cipher`, priority: 0.85 },
+    { url: `${BASE}/alchemist/comps`, priority: 0.8 },
+    { url: `${BASE}/alchemist/models`, priority: 0.78 },
     { url: `${BASE}/divisions`, priority: 0.9 },
     { url: `${BASE}/divisions/atlas`, priority: 0.8 },
     { url: `${BASE}/divisions/bacchus`, priority: 0.8 },

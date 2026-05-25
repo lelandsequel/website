@@ -17,7 +17,7 @@ const S: Record<string, React.CSSProperties> = {
 const DIVISIONS = [
   {
     name: "ATLAS",
-    tagline: "Commercial real estate intelligence",
+    tagline: "Real-asset intelligence — minerals, ownership, commodity flow",
     headline: "MineralLogic",
     products: "MineralLogic · PropertyGraph · NAUTILUS (dev)",
     href: "/divisions/atlas",
@@ -25,7 +25,7 @@ const DIVISIONS = [
   },
   {
     name: "BACCHUS",
-    tagline: "Beverage industry operations",
+    tagline: "Luxury hospitality market intelligence",
     headline: "COSMIX",
     products: "COSMIX (live, 1800+ venues) · BACCHUS RUSH · Trade / Cellar / Atlas (dev)",
     href: "/divisions/bacchus",
@@ -33,7 +33,7 @@ const DIVISIONS = [
   },
   {
     name: "HELIX",
-    tagline: "Healthcare workflow automation",
+    tagline: "Health and human performance — from training to pharmacovigilance",
     headline: "HELIX",
     products: "HELIX (TestFlight) · PHAROS (dev)",
     href: "/divisions/helix",
