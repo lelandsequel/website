@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
   async rewrites() {
     const cipherOrigin =
       process.env.CIPHER_WEB_ORIGIN ||
-      (process.env.VERCEL ? "https://cipher-demo-ashy.vercel.app" : "http://127.0.0.1:3001");
+      (process.env.VERCEL ? "https://cipher-demo-chi.vercel.app" : "http://127.0.0.1:3001");
 
     return {
       beforeFiles: [
