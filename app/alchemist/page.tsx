@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "ALCHEMIST - Deterministic Financial Modeling",
   description:
-    "ALCHEMIST is the JourdanLabs finance suite: CIPHER DCF, COMPS, Credit, Merger, LBO, SOTP, scenarios, and tear sheets with receipts.",
+    "ALCHEMIST is the JourdanLabs finance suite: CIPHER DCF, COMPS, Credit, Merger, LBO, SOTP, scenarios, and benchmark bakeoffs with receipts.",
 };
 
 const models = [
@@ -95,7 +95,7 @@ export default function AlchemistPage() {
           <p style={{ ...S.p, fontSize: "1.08rem", maxWidth: 820 }}>
             ALCHEMIST is the JourdanLabs deterministic finance suite. It turns DCFs,
             comps, credit screens, merger math, LBO screens, SOTP framing, scenarios,
-            and tear sheets into source-backed workflows that compute when safe and
+            and benchmark bakeoffs into source-backed workflows that compute when safe and
             refuse when the model would otherwise fabricate.
           </p>
         </div>
