@@ -213,6 +213,73 @@
   color: var(--text-tertiary);
 }
 
+.downloadPanel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: center;
+  margin-top: 1rem;
+  padding: 1.1rem;
+  border: 1px solid rgba(24, 169, 120, 0.22);
+  border-radius: 22px;
+  background:
+    linear-gradient(135deg, rgba(24, 169, 120, 0.1), rgba(111, 56, 255, 0.08)),
+    rgba(255, 255, 255, 0.88);
+  box-shadow: 0 14px 42px rgba(82, 43, 177, 0.08);
+}
+
+.downloadPanel h2 {
+  margin: 0.35rem 0 0.45rem;
+  color: var(--text-primary);
+  font-size: clamp(1.45rem, 3vw, 2.25rem);
+  font-weight: 950;
+  letter-spacing: 0;
+}
+
+.downloadPanel p {
+  max-width: 760px;
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.62;
+}
+
+.downloadPanel small {
+  display: block;
+  margin-top: 0.55rem;
+  color: var(--text-tertiary);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.68rem;
+}
+
+.downloadActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.55rem;
+}
+
+.downloadActions a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 0.85rem;
+  border: 1px solid var(--accent-border);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--purple-900);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.downloadActions a:first-child {
+  border-color: rgba(24, 169, 120, 0.3);
+  background: #14111f;
+  color: #fff;
+}
+
 .moduleGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -572,6 +639,7 @@
   }
 
   .heroPanel,
+  .downloadPanel,
   .runnerGrid,
   .moduleGrid,
   .metricRow {
@@ -604,6 +672,10 @@
   }
 
   .runnerActions {
+    justify-content: flex-start;
+  }
+
+  .downloadActions {
     justify-content: flex-start;
   }
 

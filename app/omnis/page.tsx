@@ -68,6 +68,29 @@ export default function OmnisPage() {
               </div>
             </div>
 
+            <div className={styles.downloadPanel}>
+              <div>
+                <span className={styles.kicker}>Mac download</span>
+                <h2>Run OMNIS locally.</h2>
+                <p>
+                  Download the Mac build when you want OMNIS on your machine instead of only in
+                  the public web workbench. The local app starts a private 127.0.0.1 workspace
+                  and opens VANTAGE, CADMUS, PROSPECTOR, and LUNA in your browser.
+                </p>
+                <small>
+                  Preview build · unsigned · macOS may require right-click Open the first time.
+                </small>
+              </div>
+              <div className={styles.downloadActions}>
+                <a href="/downloads/OMNIS-Mac-0.1.0.dmg" download>
+                  Download OMNIS for Mac
+                </a>
+                <a href="/downloads/OMNIS-Mac-0.1.0.dmg.sha256.txt" download>
+                  SHA-256
+                </a>
+              </div>
+            </div>
+
             <div className={styles.metricRow}>
               {metrics.map(([label, value]) => (
                 <div className={styles.metricCard} key={label}>
