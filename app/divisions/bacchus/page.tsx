@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "BACCHUS Division — Luxury Hospitality Market Intelligence",
   description:
-    "BACCHUS applies COSMIC to luxury hospitality market intelligence. COSMIX is live in 1,800+ premium venues. BACCHUS RUSH, Trade, Cellar, and Atlas are in development.",
+    "BACCHUS applies COSMIC to luxury hospitality market intelligence. COSMIX is live in 1,800+ premium venues. BACCHUS ROE is a local caviar revenue command center for luxury accounts.",
 };
 
 const accent = "#7D2348";
@@ -35,6 +35,17 @@ export default function BacchusPage() {
               intelligence, demand signals, and market positioning for premium venues.
               COSMIX is live in 1,800+ venues today.
             </p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", marginTop: "1.75rem" }}>
+              <a href="/downloads/BACCHUS-ROE-Mac-0.1.0.dmg" download style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", minHeight: 42, padding: "0 1rem", borderRadius: 8, backgroundColor: accent, color: "white", fontWeight: 800, fontSize: "0.875rem", textDecoration: "none" }}>
+                Download BACCHUS ROE for Mac
+              </a>
+              <a href="/downloads/BACCHUS-ROE-Mac-0.1.0.dmg.sha256.txt" download style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", minHeight: 42, padding: "0 1rem", borderRadius: 8, border: "1px solid var(--bg-border)", color: "var(--text-secondary)", fontWeight: 700, fontSize: "0.875rem", textDecoration: "none" }}>
+                SHA-256
+              </a>
+            </div>
+            <p style={{ color: "var(--text-tertiary)", fontSize: "0.75rem", marginTop: "0.75rem", marginBottom: 0 }}>
+              Preview build · unsigned · macOS may require right-click Open the first time.
+            </p>
           </div>
         </div>
       </section>
@@ -44,6 +55,11 @@ export default function BacchusPage() {
           <span style={S.label}>Products</span>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "1px", backgroundColor: "var(--bg-border)", border: "1px solid var(--bg-border)" }}>
             {[
+              {
+                name: "BACCHUS ROE",
+                status: "Mac build · live",
+                description: "Local caviar revenue command center. Tracks buyer programs, reorder risk, AURORA account scoring, CSV imports, account briefs, and SHA-chained proof receipts.",
+              },
               {
                 name: "COSMIX",
                 status: "Live · 1,800+ venues",
