@@ -191,12 +191,12 @@ export default function ResearchIndex() {
       {/* VANTAGE */}
       <section style={S.section}>
         <div style={S.container}>
-          <span style={S.label}>Capability Demo</span>
+          <span style={S.label}>Capability Study</span>
           <PortfolioCard
             name="VANTAGE"
-            description="Multi-engine diagnostic suite. Not a benchmark — a structured capability demonstration. VANTAGE runs CITADEL-class diagnostic workloads across the full COSMIC engine stack, producing per-engine readouts, failure-class taxonomy, and confidence attribution chains. Used internally to validate engine behavior before benchmark publication."
+            description="Multi-engine diagnostic suite. Not a benchmark — a structured capability studynstration. VANTAGE runs CITADEL-class diagnostic workloads across the full COSMIC engine stack, producing per-engine readouts, failure-class taxonomy, and confidence attribution chains. Used internally to validate engine behavior before benchmark publication."
             number="7 engines"
-            numberLabel="diagnostic capability demo"
+            numberLabel="diagnostic capability study"
             href="/research/vantage"
             isDemo
           />

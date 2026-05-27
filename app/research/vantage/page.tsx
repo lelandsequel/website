@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "VANTAGE — Multi-Engine Diagnostic Suite",
   description:
-    "VANTAGE is a capability demonstration, not a benchmark. Multi-engine diagnostic across the full COSMIC stack.",
+    "VANTAGE is a capability studynstration, not a benchmark. Multi-engine diagnostic across the full COSMIC stack.",
 };
 
 const S: Record<string, React.CSSProperties> = {
@@ -23,7 +23,7 @@ export default function VantagePage() {
           <Link href="/research" style={{ fontSize: "0.8125rem", color: "var(--text-tertiary)", display: "inline-flex", alignItems: "center", gap: "0.25rem", marginBottom: "2rem" }}>← Research</Link>
 
           <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
-            <span style={S.label}>VANTAGE · Capability Demo</span>
+            <span style={S.label}>VANTAGE · Capability Study</span>
             <span style={{ fontSize: "0.625rem", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--accent)", border: "1px solid var(--accent-border)", padding: "0.125rem 0.5rem", fontFamily: "var(--font-geist-mono), monospace" }}>
               NOT A BENCHMARK
             </span>

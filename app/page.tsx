@@ -50,26 +50,34 @@ const DIVISIONS = [
   {
     name: "CADMUS",
     tagline: "Specify",
-    headline: "Intent-to-spec compiler",
-    products: "Typed contracts for AI coding teams",
-    href: "/systems",
+    headline: "Brain dump to airtight spec",
+    products: "OMNIS workroom for buildable specs",
+    href: "/omnis/cadmus",
     accent: "#6f38ff",
   },
   {
     name: "VANTAGE",
     tagline: "Verify",
-    headline: "Deterministic code auditor",
-    products: "Sealed receipts, honest refusals, benchmark harness",
-    href: "/crucible/vantage",
+    headline: "Code fixes with release discipline",
+    products: "OMNIS workroom for code verification",
+    href: "/omnis/vantage",
     accent: "#4f2bc6",
   },
   {
     name: "PROSPECTOR",
     tagline: "Discover",
-    headline: "Software estate intelligence",
-    products: "M&A modernization and audit-hashed reports",
-    href: "/applications",
+    headline: "Messy estate to diligence map",
+    products: "OMNIS workroom for estate intelligence",
+    href: "/omnis/prospector",
     accent: "#8b5cf6",
+  },
+  {
+    name: "LUNA",
+    tagline: "Remember",
+    headline: "Computer activity to work brief",
+    products: "OMNIS workroom for persistent documentation",
+    href: "/omnis/luna",
+    accent: "#5a2ee6",
   },
   {
     name: "CIPHER",
@@ -124,12 +132,12 @@ const proofStats = [
 ];
 
 const portfolioPlays = [
-  ["VANTAGE", "Deterministic code verification with sealed receipts and honest rates."],
-  ["CADMUS", "Intent-to-spec compiler for AI coding teams and typed contracts."],
-  ["PROSPECTOR", "Software estate intelligence for modernization, M&A, and audit reports."],
+  ["OMNIS", "Engineering OS: specs, code verification, and software estate intelligence."],
+  ["VANTAGE", "Code verification with release blockers, remediation, and sealed receipts."],
+  ["CADMUS", "Brain-sprawl to airtight specs for product and engineering teams."],
+  ["PROSPECTOR", "Software estate intelligence for modernization, M&A, and diligence."],
   ["CIPHER", "Finance tools that produce valuation outputs with visible assumptions."],
   ["BIFROST", "A browser trust layer for frontier LLMs: verify, refuse, and explain."],
-  ["MAP THE SOUL", "Verifiable AI identity preserved, audited, and migrated across substrates."],
 ];
 
 export default function Home() {
@@ -243,8 +251,9 @@ export default function Home() {
             <span style={S.label}>The wedge stack</span>
             <h2>Specify {"->"} Build {"->"} Verify {"->"} Discover.</h2>
             <p>
-              JL is the deterministic substrate beneath AI-native engineering. The deck shows the same
-              wedge the website should carry: CADMUS, build tools, VANTAGE, and PROSPECTOR.
+              OMNIS is the deterministic engineering app: CADMUS turns intent into specs,
+              VANTAGE 2.0 blocks dangerous code, PROSPECTOR maps the software estate,
+              and LUNA preserves what happened before agents ever get keys.
             </p>
           </div>
 
@@ -273,11 +282,11 @@ export default function Home() {
             <h2 className="section-title">Big thesis. Knife wedge.</h2>
             <p className="section-copy">
               JourdanLabs is not one app. It is a deterministic substrate with wedge products that prove
-              the architecture in the wild: specify, build, verify, discover, finance, browser trust, and
-              AI identity continuity.
+              the architecture in the wild: ALCHEMIST for finance and accounting, OMNIS for engineering,
+              BIFROST for browser trust, and MAP THE SOUL for AI identity continuity.
             </p>
-            <Link className="secondary-button purple" href="/applications">
-              View the portfolio
+            <Link className="secondary-button purple" href="/omnis">
+              Open OMNIS
             </Link>
           </div>
           <div className="portfolio-cloud">

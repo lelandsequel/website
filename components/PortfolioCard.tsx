@@ -47,7 +47,7 @@ export default function PortfolioCard({ name, description, number, numberLabel, 
               fontFamily: "var(--font-geist-mono), monospace",
             }}
           >
-            CAPABILITY DEMO
+            CAPABILITY STUDY
           </span>
         )}
       </div>

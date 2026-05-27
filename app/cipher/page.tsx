@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import BackLink from "@/components/BackLink";
 
 export const metadata: Metadata = {
   title: "CIPHER - Deterministic DCF",
@@ -26,6 +27,7 @@ export default function CipherPage() {
     <>
       <section style={{ padding: "5.5rem 0 2rem" }}>
         <div style={S.container}>
+          <BackLink href="/alchemist/banking" label="Back to Banking" />
           <span style={S.label}>CIPHER</span>
           <h1
             style={{
@@ -44,6 +46,8 @@ export default function CipherPage() {
             A discounted cash flow model estimates what a company is worth by projecting future cash
             flows and discounting them back to today. CIPHER makes those assumptions explicit,
             recalculable, and inspectable instead of letting a black-box chat response invent a number.
+            This page embeds the deployed CIPHER finance engine inside ALCHEMIST Banking; it is
+            intentionally separate from the generic `/api/alchemist/run` packet runners.
           </p>
           <a
             href="https://cipher-demo-ashy.vercel.app/cipher"
@@ -75,7 +79,7 @@ export default function CipherPage() {
             }}
           >
             <iframe
-              title="CIPHER deterministic DCF demo"
+              title="CIPHER deterministic DCF workbench"
               src="https://cipher-demo-ashy.vercel.app/cipher"
               style={{ width: "100%", minHeight: "72vh", border: 0, display: "block" }}
             />

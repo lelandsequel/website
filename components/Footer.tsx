@@ -5,8 +5,9 @@ const footerSections = [
     label: "Platform",
     links: [
       { href: "/cosmic", label: "COSMIC" },
+      { href: "/alchemist", label: "ALCHEMIST" },
+      { href: "/omnis", label: "OMNIS" },
       { href: "/divisions", label: "Divisions" },
-      { href: "/applications", label: "Applications" },
     ],
   },
   {
@@ -34,7 +35,7 @@ export default function Footer() {
   return (
     <footer className="footer-shell">
       <div className="footer-inner">
-        <div style={{ display: "grid", gridTemplateColumns: "1fr repeat(3, auto)", gap: "3rem", marginBottom: "3rem" }}>
+        <div className="footer-grid">
           <div>
             <div style={{ fontWeight: 950, fontSize: "1.1rem", letterSpacing: "-0.04em", color: "var(--text-primary)", marginBottom: "0.5rem" }}>
               JOURDANLABS
@@ -63,7 +64,7 @@ export default function Footer() {
           ))}
         </div>
 
-        <div style={{ borderTop: "1px solid var(--bg-border)", paddingTop: "1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.75rem" }}>
+        <div className="footer-bottom">
           <span style={{ fontSize: "0.75rem", color: "var(--text-tertiary)" }}>
             © 2026 JourdanLabs. We optimize for truth: sealed corpora, audit trails, honest refusal.
           </span>

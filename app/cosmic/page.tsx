@@ -62,7 +62,7 @@ const capabilities = [
   },
   {
     title: "Benchmark harness",
-    body: "Measures reliability across products and portfolio companies instead of relying on demo-day fluency.",
+    body: "Measures reliability across products and portfolio companies instead of relying on launch-day fluency.",
   },
 ];
 

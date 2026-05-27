@@ -1,12 +1,13 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import type { CSSProperties, ElementType, ReactNode } from "react";
 
 type Props = {
-  children: React.ReactNode;
+  children: ReactNode;
   delay?: number;
-  as?: keyof React.JSX.IntrinsicElements;
+  as?: keyof HTMLElementTagNameMap;
   className?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 };
 
 export default function Reveal({
@@ -25,7 +26,7 @@ export default function Reveal({
 
     // Respect reduced motion — show immediately
     if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setVisible(true);
+      queueMicrotask(() => setVisible(true));
       return;
     }
 
@@ -44,14 +45,18 @@ export default function Reveal({
     return () => obs.disconnect();
   }, []);
 
-  const TagAny = Tag as any;
+  const TagComponent = Tag as ElementType;
+  const setRef = (node: HTMLElement | null) => {
+    ref.current = node;
+  };
+
   return (
-    <TagAny
-      ref={ref}
+    <TagComponent
+      ref={setRef}
       className={`reveal ${visible ? "in" : ""} ${className}`.trim()}
       style={{ animationDelay: `${delay}ms`, ...style }}
     >
       {children}
-    </TagAny>
+    </TagComponent>
   );
 }
