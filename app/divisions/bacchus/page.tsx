@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "BACCHUS — Luxury Hospitality Intelligence",
   description:
-    "BACCHUS applies COSMIC to luxury hospitality intelligence. COSMIX is a mixology app, BACCHUS RUSH is a restaurant training app, and BACCHUS ROE is an Altima Caviar-exclusive native Mac app for caviar account operations.",
+    "BACCHUS applies COSMIC to luxury hospitality operations: market intelligence, mixology, restaurant training, kitchen execution, and Altima Caviar-exclusive caviar account operations.",
 };
 
 const accent = "#7D2348";
@@ -37,40 +37,53 @@ const operations = [
 
 const products = [
   {
-    name: "BACCHUS ROE",
-    status: "Altima-exclusive · native Mac",
+    name: "BACCHUS Intel",
+    status: "Market intelligence",
+    href: "https://www.bacchusintel.com/",
     description:
-      "Caviar account pipeline built for Altima Caviar. Tracks buyer programs, reorder risk, AURORA account scoring, CSV imports, account briefs, and SHA-chained receipts.",
+      "Luxury hospitality intelligence layer for menus, pricing, geography, behavior, demand signals, and market-position decisions.",
   },
   {
     name: "COSMIX",
     status: "Mixology",
+    href: "https://www.bacchusintel.com/cosmix",
     description:
-      "Mixology app for cocktail programs, menu creation, ingredient logic, service notes, and bar-team execution.",
+      "Mixology and menu-intelligence product for cocktail programs, ingredient logic, pricing signals, and bar-team execution.",
   },
   {
     name: "BACCHUS RUSH",
     status: "Restaurant training",
+    href: "https://www.bacchusrush.com/",
     description:
-      "Restaurant training app for service teams, onboarding flows, station knowledge, SOP discipline, and manager-ready training receipts.",
+      "Restaurant training and service-simulation app with role tracks, station drills, ticket reading, live service pressure, and manager feedback.",
   },
   {
-    name: "BACCHUS Trade",
-    status: "In development",
+    name: "BACCHUS Festivus",
+    status: "Kitchen ops",
+    href: "https://www.bacchusfestivus.com/",
     description:
-      "Distributor-to-venue trade compliance and pricing intelligence against sealed state regulatory corpora.",
+      "Event and kitchen execution workspace for prep tasks, order guide, inventory, intelligence view, and executive operations dashboard.",
   },
   {
-    name: "BACCHUS Cellar",
-    status: "In development",
+    name: "BACCHUS Platform",
+    status: "Luxury food intelligence",
+    href: "https://bacchus-platform-web.vercel.app/dashboard",
     description:
-      "Fine wine and spirits cellar management with provenance tracking, valuation, and SHA-verified history.",
+      "Account-scoring and pipeline workspace for openings, accounts, maps, events, territory health, reports, market intel, and chef network views.",
   },
   {
-    name: "BACCHUS Atlas",
-    status: "In development",
+    name: "BACCHUS ROE",
+    status: "Altima-exclusive · native Mac",
+    href: "/downloads/BACCHUS-ROE-Mac-0.1.0.dmg",
     description:
-      "Beverage market mapping by region: venue density, pricing trends, and category performance.",
+      "Caviar account pipeline built for Altima Caviar. Tracks buyer programs, reorder risk, AURORA account scoring, CSV imports, account briefs, and SHA-chained receipts.",
+  },
+  {
+    name: "BACCHUS Training",
+    status: "Discipline engine",
+    href: "https://www.bacchustraining.com/",
+    description:
+      "Training and discipline-engine surface for hospitality teams. Sparse public surface today; tracked as part of the BACCHUS cleanup map.",
   },
 ];
 
@@ -147,17 +160,26 @@ export default function BacchusPage() {
 
       <section style={S.section}>
         <div style={S.container}>
-          <span style={{ ...S.label, marginBottom: "1rem" }}>Portfolio</span>
+          <span style={{ ...S.label, marginBottom: "1rem" }}>Product map</span>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "1px", backgroundColor: "var(--bg-border)", border: "1px solid var(--bg-border)" }}>
             {products.map((product) => (
               <div key={product.name} style={{ backgroundColor: "var(--bg-card)", padding: "1.5rem" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1rem", marginBottom: "0.75rem" }}>
                   <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.75rem", fontWeight: 800, color: accent }}>{product.name}</span>
-                  <span style={{ fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: product.status.includes("live") || product.status.includes("exclusive") ? accent : "var(--text-tertiary)", border: `1px solid ${product.status.includes("live") || product.status.includes("exclusive") ? accent : "var(--bg-border)"}`, padding: "0.125rem 0.5rem", fontFamily: "var(--font-geist-mono), monospace", whiteSpace: "nowrap" }}>
+                  <span style={{ fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: product.status.includes("exclusive") ? accent : "var(--text-tertiary)", border: `1px solid ${product.status.includes("exclusive") ? accent : "var(--bg-border)"}`, padding: "0.125rem 0.5rem", fontFamily: "var(--font-geist-mono), monospace", whiteSpace: "nowrap" }}>
                     {product.status}
                   </span>
                 </div>
-                <p style={{ fontSize: "0.8125rem", color: "var(--text-secondary)", lineHeight: 1.65, margin: 0 }}>{product.description}</p>
+                <p style={{ fontSize: "0.8125rem", color: "var(--text-secondary)", lineHeight: 1.65, margin: "0 0 1rem" }}>{product.description}</p>
+                <a
+                  href={product.href}
+                  target={product.href.startsWith("http") ? "_blank" : undefined}
+                  rel={product.href.startsWith("http") ? "noreferrer" : undefined}
+                  download={product.href.endsWith(".dmg") ? true : undefined}
+                  style={{ fontSize: "0.78rem", color: accent, fontWeight: 800, textDecoration: "none" }}
+                >
+                  Open source surface →
+                </a>
               </div>
             ))}
           </div>
@@ -168,14 +190,15 @@ export default function BacchusPage() {
         <div style={S.containerSm}>
           <span style={{ ...S.label, marginBottom: "1.25rem" }}>BACCHUS map</span>
           <p style={S.p}>
-            COSMIX handles mixology workflows. BACCHUS RUSH handles restaurant training.
-            BACCHUS ROE extends the same BACCHUS division into a client-specific Mac app for
-            Altima Caviar, where the caviar buyer workflow needs account discipline, reorder timing,
-            and proof receipts.
+            BACCHUS is a family of hospitality products, not one monolith. COSMIX handles mixology
+            and menu intelligence. BACCHUS RUSH handles restaurant training and service simulation.
+            Festivus / KNIFE handles kitchen execution. BACCHUS Intel and the platform dashboard
+            organize the market layer.
           </p>
           <p style={{ ...S.p, marginBottom: "2rem" }}>
-            The broader BACCHUS roadmap carries the same substrate into trade compliance, cellar
-            provenance, and regional market intelligence.
+            BACCHUS ROE is the Altima Caviar-exclusive operating build: the caviar account pipeline,
+            buyer cadence, reorder timing, account briefs, and receipts. It belongs inside BACCHUS,
+            but it is not the public generic product.
           </p>
           <Link href="/applications" style={{ fontSize: "0.875rem", color: accent }}>
             View deployment options →

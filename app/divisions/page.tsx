@@ -25,9 +25,9 @@ const DIVISIONS = [
   },
   {
     name: "BACCHUS",
-    tagline: "Luxury hospitality market intelligence",
-    headline: "COSMIX",
-    products: "COSMIX mixology · BACCHUS RUSH restaurant training · ROE for Altima Caviar",
+    tagline: "Luxury hospitality operations",
+    headline: "BACCHUS",
+    products: "Intel · COSMIX · RUSH · Festivus · ROE for Altima Caviar",
     href: "/bacchus",
     accent: "#7D2348",
   },

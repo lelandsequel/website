@@ -33,7 +33,7 @@ const DIVISIONS = [
   },
   {
     name: "BACCHUS",
-    desc: "Luxury hospitality intelligence. Mixology, restaurant training, and Altima-exclusive caviar operations.",
+    desc: "Luxury hospitality operations. Market intelligence, mixology, training, kitchen execution, and Altima-exclusive caviar account operations.",
     score: "—",
     href: "/bacchus",
     img: "/division-bacchus.jpg",
