@@ -47,6 +47,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/crucible/reproducibility`, priority: 0.8 },
     { url: `${BASE}/crucible/raven`, priority: 0.5 },
     { url: `${BASE}/applications`, priority: 0.75 },
+    { url: `${BASE}/northstar`, priority: 0.75 },
     { url: `${BASE}/contact`, priority: 0.6 },
   ];
 

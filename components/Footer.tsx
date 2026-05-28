@@ -5,6 +5,7 @@ const footerSections = [
     label: "Platform",
     links: [
       { href: "/cosmic", label: "COSMIC" },
+      { href: "/northstar", label: "NORTHSTAR" },
       { href: "/alchemist", label: "ALCHEMIST" },
       { href: "/omnis", label: "OMNIS" },
       { href: "/divisions", label: "Divisions" },
