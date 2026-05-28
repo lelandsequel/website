@@ -1,0 +1,20 @@
+{
+  "name": "NORTHSTAR Lite",
+  "short_name": "NORTHSTAR",
+  "description": "Small-business bookkeeping with deterministic COSMIC guardrails.",
+  "start_url": "/northstar-app",
+  "scope": "/northstar-app/",
+  "display": "standalone",
+  "background_color": "#fbfaff",
+  "theme_color": "#5A2EE6",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/northstar-app/baby-pulsar.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "finance", "productivity"]
+}
