@@ -33,9 +33,9 @@ const DIVISIONS = [
   },
   {
     name: "BACCHUS",
-    desc: "Luxury hospitality intelligence. 2 live SaaS products, 1,800+ venues.",
-    score: "88.9%",
-    href: "/divisions/bacchus",
+    desc: "Luxury hospitality intelligence. Mixology, restaurant training, and Altima-exclusive caviar operations.",
+    score: "—",
+    href: "/bacchus",
     img: "/division-bacchus.jpg",
   },
   {

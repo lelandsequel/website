@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "BACCHUS — Luxury Hospitality Intelligence",
   description:
-    "BACCHUS applies COSMIC to luxury hospitality intelligence. COSMIX is live in 1,800+ premium venues, and BACCHUS ROE is an Altima Caviar-exclusive native Mac app for caviar account operations.",
+    "BACCHUS applies COSMIC to luxury hospitality intelligence. COSMIX is a mixology app, BACCHUS RUSH is a restaurant training app, and BACCHUS ROE is an Altima Caviar-exclusive native Mac app for caviar account operations.",
 };
 
 const accent = "#7D2348";
@@ -44,15 +44,15 @@ const products = [
   },
   {
     name: "COSMIX",
-    status: "Live · 1,800+ venues",
+    status: "Mixology",
     description:
-      "Luxury hospitality intelligence platform for menu pricing, demand signals, and competitive positioning across premium venues.",
+      "Mixology app for cocktail programs, menu creation, ingredient logic, service notes, and bar-team execution.",
   },
   {
     name: "BACCHUS RUSH",
-    status: "In development",
+    status: "Restaurant training",
     description:
-      "Rapid on-premise deployment toolkit for high-volume venue operators that need cleaned signals quickly.",
+      "Restaurant training app for service teams, onboarding flows, station knowledge, SOP discipline, and manager-ready training receipts.",
   },
   {
     name: "BACCHUS Trade",
@@ -166,11 +166,12 @@ export default function BacchusPage() {
 
       <section style={{ padding: "5rem 0" }}>
         <div style={S.containerSm}>
-          <span style={{ ...S.label, marginBottom: "1.25rem" }}>Live today</span>
+          <span style={{ ...S.label, marginBottom: "1.25rem" }}>BACCHUS map</span>
           <p style={S.p}>
-            COSMIX is already operating across 1,800+ premium venues. BACCHUS ROE extends that
-            operating layer into a client-specific Mac app for Altima Caviar, where the caviar buyer
-            workflow needs account discipline, reorder timing, and proof receipts.
+            COSMIX handles mixology workflows. BACCHUS RUSH handles restaurant training.
+            BACCHUS ROE extends the same BACCHUS division into a client-specific Mac app for
+            Altima Caviar, where the caviar buyer workflow needs account discipline, reorder timing,
+            and proof receipts.
           </p>
           <p style={{ ...S.p, marginBottom: "2rem" }}>
             The broader BACCHUS roadmap carries the same substrate into trade compliance, cellar

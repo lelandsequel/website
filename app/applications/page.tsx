@@ -17,7 +17,7 @@ const S: Record<string, React.CSSProperties> = {
 
 const DIVISION_CONTACTS = [
   { name: "ATLAS", domain: "Commercial real estate intelligence", contact: "MineralLogic, PropertyGraph, NAUTILUS", href: "/divisions/atlas", accent: "#D4A574" },
-  { name: "BACCHUS", domain: "Beverage industry operations", contact: "COSMIX, BACCHUS RUSH, Trade / Cellar / Atlas", href: "/divisions/bacchus", accent: "#7D2348" },
+  { name: "BACCHUS", domain: "Luxury hospitality operations", contact: "COSMIX, BACCHUS RUSH, ROE for Altima Caviar", href: "/bacchus", accent: "#7D2348" },
   { name: "HELIX", domain: "Healthcare workflow automation", contact: "HELIX (TestFlight), PHAROS", href: "/divisions/helix", accent: "#E8735A" },
   { name: "HEIMDALL", domain: "Security operations", contact: "SENTINEL (pre-pilot access)", href: "/divisions/heimdall", accent: "#4A7BA7" },
 ];
