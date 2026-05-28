@@ -58,7 +58,7 @@ export default function NorthstarPage() {
             <div>
               <span style={{ ...S.label, marginBottom: "1rem" }}>NORTHSTAR Lite</span>
               <h1 style={{ fontSize: "clamp(2.5rem, 7vw, 5.6rem)", fontWeight: 950, letterSpacing: "-0.075em", lineHeight: 0.9, color: "var(--text-primary)", margin: "0 0 1.25rem" }}>
-                COSMIC QuickBooks for one dollar.
+                COSMIC QuickBooks for a few bucks.
               </h1>
               <p style={{ fontSize: "1.08rem", color: "var(--text-secondary)", lineHeight: 1.75, maxWidth: 680 }}>
                 QuickBooks helps you enter numbers. NORTHSTAR refuses to release books
