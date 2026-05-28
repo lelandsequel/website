@@ -24,7 +24,7 @@ const footerSections = [
     label: "Divisions",
     links: [
       { href: "/divisions/atlas", label: "ATLAS" },
-      { href: "/divisions/bacchus", label: "BACCHUS" },
+      { href: "/bacchus", label: "BACCHUS" },
       { href: "/divisions/helix", label: "HELIX" },
       { href: "/divisions/heimdall", label: "HEIMDALL" },
     ],

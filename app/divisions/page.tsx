@@ -27,8 +27,8 @@ const DIVISIONS = [
     name: "BACCHUS",
     tagline: "Luxury hospitality market intelligence",
     headline: "COSMIX",
-    products: "COSMIX (live, 1800+ venues) · BACCHUS RUSH · Trade / Cellar / Atlas (dev)",
-    href: "/divisions/bacchus",
+    products: "COSMIX (live, 1800+ venues) · ROE for Altima Caviar · Trade / Cellar / Atlas",
+    href: "/bacchus",
     accent: "#7D2348",
   },
   {

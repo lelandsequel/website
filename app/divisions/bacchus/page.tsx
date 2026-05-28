@@ -2,96 +2,162 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "BACCHUS Division — Luxury Hospitality Market Intelligence",
+  title: "BACCHUS — Luxury Hospitality Intelligence",
   description:
-    "BACCHUS applies COSMIC to luxury hospitality market intelligence. COSMIX is live in 1,800+ premium venues. BACCHUS ROE is a local caviar revenue command center for luxury accounts.",
+    "BACCHUS applies COSMIC to luxury hospitality intelligence. COSMIX is live in 1,800+ premium venues, and BACCHUS ROE is an Altima Caviar-exclusive native Mac app for caviar account operations.",
 };
 
 const accent = "#7D2348";
+const gold = "#D7B46A";
 
 const S: Record<string, React.CSSProperties> = {
-  container: { maxWidth: 900, margin: "0 auto", padding: "0 2rem" },
-  containerSm: { maxWidth: 760, margin: "0 auto", padding: "0 2rem" },
-  label: { fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.6875rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "var(--text-tertiary)", display: "block" },
+  container: { maxWidth: 1120, margin: "0 auto", padding: "0 2rem" },
+  containerSm: { maxWidth: 780, margin: "0 auto", padding: "0 2rem" },
+  label: {
+    fontFamily: "var(--font-geist-mono), monospace",
+    fontSize: "0.6875rem",
+    fontWeight: 700,
+    letterSpacing: "0.14em",
+    textTransform: "uppercase" as const,
+    color: "var(--text-tertiary)",
+    display: "block",
+  },
   p: { color: "var(--text-secondary)", lineHeight: 1.75, marginBottom: "1rem" },
   section: { padding: "5rem 0", borderBottom: "1px solid var(--bg-border)" },
+  card: { backgroundColor: "var(--bg-card)", border: "1px solid var(--bg-border)", padding: "1.5rem" },
 };
+
+const operations = [
+  ["Dashboard", "Account pipeline, surfaced targets, annual value, target volume, and reorder alerts."],
+  ["Accounts", "Venue-by-venue scoring, buyer notes, menu signals, proof flags, and next action."],
+  ["Reorders", "Purchase cadence, reorder risk, restock notes, species preference, and margin update."],
+  ["Intake", "Manual account intake and CSV import for new restaurant, hotel, club, and private dining signals."],
+  ["Receipts", "SHA-chained audit trail and copyable account briefs for operator handoff."],
+];
+
+const products = [
+  {
+    name: "BACCHUS ROE",
+    status: "Altima-exclusive · native Mac",
+    description:
+      "Caviar account pipeline built for Altima Caviar. Tracks buyer programs, reorder risk, AURORA account scoring, CSV imports, account briefs, and SHA-chained receipts.",
+  },
+  {
+    name: "COSMIX",
+    status: "Live · 1,800+ venues",
+    description:
+      "Luxury hospitality intelligence platform for menu pricing, demand signals, and competitive positioning across premium venues.",
+  },
+  {
+    name: "BACCHUS RUSH",
+    status: "In development",
+    description:
+      "Rapid on-premise deployment toolkit for high-volume venue operators that need cleaned signals quickly.",
+  },
+  {
+    name: "BACCHUS Trade",
+    status: "In development",
+    description:
+      "Distributor-to-venue trade compliance and pricing intelligence against sealed state regulatory corpora.",
+  },
+  {
+    name: "BACCHUS Cellar",
+    status: "In development",
+    description:
+      "Fine wine and spirits cellar management with provenance tracking, valuation, and SHA-verified history.",
+  },
+  {
+    name: "BACCHUS Atlas",
+    status: "In development",
+    description:
+      "Beverage market mapping by region: venue density, pricing trends, and category performance.",
+  },
+];
 
 export default function BacchusPage() {
   return (
     <>
       <section style={{ padding: "6rem 0 4rem", borderBottom: "1px solid var(--bg-border)", borderTop: `2px solid ${accent}` }}>
         <div style={S.container}>
-          <div style={{ maxWidth: 680 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.25rem" }}>
-              <Link href="/divisions" style={{ fontSize: "0.8125rem", color: "var(--text-tertiary)" }}>← Divisions</Link>
+          <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.1fr) minmax(280px, 0.9fr)", gap: "2rem", alignItems: "end" }}>
+            <div>
+              <Link href="/divisions" style={{ fontSize: "0.8125rem", color: "var(--text-tertiary)", display: "inline-block", marginBottom: "1.25rem" }}>
+                ← Divisions
+              </Link>
+              <span style={{ ...S.label, color: accent, marginBottom: "1rem" }}>BACCHUS</span>
+              <h1 style={{ fontSize: "clamp(2.35rem, 6vw, 4.35rem)", fontWeight: 800, letterSpacing: "-0.055em", lineHeight: 0.98, color: "var(--text-primary)", margin: "0 0 1.25rem" }}>
+                Luxury hospitality intelligence.
+              </h1>
+              <p style={{ fontSize: "1.1rem", color: "var(--text-secondary)", lineHeight: 1.75, maxWidth: 660, margin: 0 }}>
+                BACCHUS applies the COSMIC substrate to premium hospitality: menu pricing,
+                demand signals, buyer cadence, account operations, provenance, and market position.
+              </p>
             </div>
-            <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.6875rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: accent, display: "block", marginBottom: "1rem" }}>BACCHUS</span>
-            <h1 style={{ fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, letterSpacing: "-0.035em", lineHeight: 1.1, color: "var(--text-primary)", marginBottom: "1.25rem" }}>
-              Luxury hospitality market intelligence.
-            </h1>
-            <p style={{ fontSize: "1.0625rem", color: "var(--text-secondary)", lineHeight: 1.7, maxWidth: 560 }}>
-              BACCHUS applies the COSMIC reasoning substrate to luxury hospitality — menu pricing
-              intelligence, demand signals, and market positioning for premium venues.
-              COSMIX is live in 1,800+ venues today.
-            </p>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", marginTop: "1.75rem" }}>
-              <a href="/downloads/BACCHUS-ROE-Mac-0.1.0.dmg" download style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", minHeight: 42, padding: "0 1rem", borderRadius: 8, backgroundColor: accent, color: "white", fontWeight: 800, fontSize: "0.875rem", textDecoration: "none" }}>
-                Download BACCHUS ROE for Mac
-              </a>
-              <a href="/downloads/BACCHUS-ROE-Mac-0.1.0.dmg.sha256.txt" download style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", minHeight: 42, padding: "0 1rem", borderRadius: 8, border: "1px solid var(--bg-border)", color: "var(--text-secondary)", fontWeight: 700, fontSize: "0.875rem", textDecoration: "none" }}>
-                SHA-256
-              </a>
+
+            <div style={{ ...S.card, borderTop: `3px solid ${accent}` }}>
+              <span style={{ ...S.label, color: accent, marginBottom: "0.75rem" }}>Client build</span>
+              <h2 style={{ fontSize: "1.35rem", margin: "0 0 0.75rem", color: "var(--text-primary)" }}>ROE is exclusive to Altima Caviar.</h2>
+              <p style={{ ...S.p, fontSize: "0.925rem", marginBottom: "1.25rem" }}>
+                BACCHUS ROE is the native Mac operating build for Altima Caviar's caviar account pipeline.
+                It is not the generic BACCHUS SKU.
+              </p>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.65rem" }}>
+                <a href="/downloads/BACCHUS-ROE-Mac-0.1.0.dmg" download style={primaryButton}>
+                  Download Mac build
+                </a>
+                <a href="https://altimacaviar.com" target="_blank" rel="noreferrer" style={secondaryButton}>
+                  Altima Caviar
+                </a>
+                <a href="/downloads/BACCHUS-ROE-Mac-0.1.0.dmg.sha256.txt" download style={secondaryButton}>
+                  SHA-256
+                </a>
+              </div>
+              <p style={{ color: "var(--text-tertiary)", fontSize: "0.72rem", marginTop: "0.8rem", marginBottom: 0 }}>
+                Native Mac build · unsigned · macOS may require right-click Open the first time.
+              </p>
             </div>
-            <p style={{ color: "var(--text-tertiary)", fontSize: "0.75rem", marginTop: "0.75rem", marginBottom: 0 }}>
-              Preview build · unsigned · macOS may require right-click Open the first time.
-            </p>
           </div>
         </div>
       </section>
 
       <section style={S.section}>
         <div style={S.container}>
-          <span style={S.label}>Products</span>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "1px", backgroundColor: "var(--bg-border)", border: "1px solid var(--bg-border)" }}>
-            {[
-              {
-                name: "BACCHUS ROE",
-                status: "Mac build · live",
-                description: "Local caviar revenue command center. Tracks buyer programs, reorder risk, AURORA account scoring, CSV imports, account briefs, and SHA-chained proof receipts.",
-              },
-              {
-                name: "COSMIX",
-                status: "Live · 1,800+ venues",
-                description: "Luxury hospitality intelligence platform. Menu pricing, demand signals, and competitive positioning for premium venues. Deployed and scaling.",
-              },
-              {
-                name: "BACCHUS RUSH",
-                status: "In development",
-                description: "Rapid on-premise deployment toolkit. Streamlined COSMIX onboarding for high-volume venue operators.",
-              },
-              {
-                name: "BACCHUS Trade",
-                status: "In development",
-                description: "Distributor-to-venue trade compliance and pricing intelligence. Deterministic compliance checking against sealed state regulatory corpora.",
-              },
-              {
-                name: "BACCHUS Cellar",
-                status: "In development",
-                description: "Fine wine and spirits cellar management with provenance tracking and valuation. SHA-verified provenance chains.",
-              },
-              {
-                name: "BACCHUS Atlas",
-                status: "In development",
-                description: "Beverage market mapping and competitive intelligence. Venue density, pricing trends, and category performance by region.",
-              },
-            ].map((product) => (
-              <div key={product.name} style={{ backgroundColor: "var(--bg-card)", padding: "1.75rem" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.75rem" }}>
-                  <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.75rem", fontWeight: 700, color: accent }}>{product.name}</span>
-                  <span style={{ fontSize: "0.625rem", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: product.status.startsWith("Live") ? accent : "var(--text-tertiary)", border: `1px solid ${product.status.startsWith("Live") ? accent : "var(--bg-border)"}`, padding: "0.125rem 0.5rem", fontFamily: "var(--font-geist-mono), monospace", whiteSpace: "nowrap" }}>{product.status}</span>
+          <span style={{ ...S.label, marginBottom: "1rem" }}>BACCHUS ROE</span>
+          <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 0.75fr) minmax(0, 1.25fr)", gap: "1px", backgroundColor: "var(--bg-border)", border: "1px solid var(--bg-border)" }}>
+            <div style={{ ...S.card, border: 0 }}>
+              <h2 style={{ fontSize: "1.65rem", letterSpacing: "-0.035em", margin: "0 0 1rem", color: "var(--text-primary)" }}>
+                Account operations for caviar buyers.
+              </h2>
+              <p style={{ ...S.p, marginBottom: 0 }}>
+                ROE gives an operator one place to track target accounts, purchasing cadence, menu
+                signals, buyer identity, account value, and the receipt trail behind every decision.
+              </p>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1px" }}>
+              {operations.map(([name, description]) => (
+                <div key={name} style={{ backgroundColor: "var(--bg-card)", padding: "1.25rem" }}>
+                  <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.72rem", color: gold, fontWeight: 800 }}>{name}</span>
+                  <p style={{ color: "var(--text-secondary)", fontSize: "0.82rem", lineHeight: 1.6, margin: "0.65rem 0 0" }}>{description}</p>
                 </div>
-                <p style={{ fontSize: "0.8125rem", color: "var(--text-secondary)", lineHeight: 1.6, margin: 0 }}>{product.description}</p>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section style={S.section}>
+        <div style={S.container}>
+          <span style={{ ...S.label, marginBottom: "1rem" }}>Portfolio</span>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "1px", backgroundColor: "var(--bg-border)", border: "1px solid var(--bg-border)" }}>
+            {products.map((product) => (
+              <div key={product.name} style={{ backgroundColor: "var(--bg-card)", padding: "1.5rem" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1rem", marginBottom: "0.75rem" }}>
+                  <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.75rem", fontWeight: 800, color: accent }}>{product.name}</span>
+                  <span style={{ fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: product.status.includes("live") || product.status.includes("exclusive") ? accent : "var(--text-tertiary)", border: `1px solid ${product.status.includes("live") || product.status.includes("exclusive") ? accent : "var(--bg-border)"}`, padding: "0.125rem 0.5rem", fontFamily: "var(--font-geist-mono), monospace", whiteSpace: "nowrap" }}>
+                    {product.status}
+                  </span>
+                </div>
+                <p style={{ fontSize: "0.8125rem", color: "var(--text-secondary)", lineHeight: 1.65, margin: 0 }}>{product.description}</p>
               </div>
             ))}
           </div>
@@ -100,16 +166,15 @@ export default function BacchusPage() {
 
       <section style={{ padding: "5rem 0" }}>
         <div style={S.containerSm}>
-          <span style={S.label}>Live today</span>
+          <span style={{ ...S.label, marginBottom: "1.25rem" }}>Live today</span>
           <p style={S.p}>
-            COSMIX is the furthest-deployed product in the JourdanLabs portfolio — live in 1,800+ premium
-            venues with active usage data. It is the proof that the COSMIC substrate works at operational
-            scale in a high-value, demand-sensitive environment.
+            COSMIX is already operating across 1,800+ premium venues. BACCHUS ROE extends that
+            operating layer into a client-specific Mac app for Altima Caviar, where the caviar buyer
+            workflow needs account discipline, reorder timing, and proof receipts.
           </p>
           <p style={{ ...S.p, marginBottom: "2rem" }}>
-            The BACCHUS roadmap extends that foundation: trade compliance (state-specific regulatory corpora),
-            cellar provenance, and market intelligence all built on the same deterministic, no-LLM-at-runtime
-            architecture.
+            The broader BACCHUS roadmap carries the same substrate into trade compliance, cellar
+            provenance, and regional market intelligence.
           </p>
           <Link href="/applications" style={{ fontSize: "0.875rem", color: accent }}>
             View deployment options →
@@ -119,3 +184,31 @@ export default function BacchusPage() {
     </>
   );
 }
+
+const primaryButton: React.CSSProperties = {
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  minHeight: 42,
+  padding: "0 1rem",
+  borderRadius: 8,
+  backgroundColor: accent,
+  color: "white",
+  fontWeight: 800,
+  fontSize: "0.875rem",
+  textDecoration: "none",
+};
+
+const secondaryButton: React.CSSProperties = {
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  minHeight: 42,
+  padding: "0 1rem",
+  borderRadius: 8,
+  border: "1px solid var(--bg-border)",
+  color: "var(--text-secondary)",
+  fontWeight: 700,
+  fontSize: "0.875rem",
+  textDecoration: "none",
+};
