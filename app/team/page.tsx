@@ -5,7 +5,7 @@ import Reveal from "@/components/Reveal";
 export const metadata: Metadata = {
   title: "Team — JourdanLabs",
   description:
-    "Five people. Five disciplines. One shared methodology. Meet the JourdanLabs leadership team.",
+    "Founder-led deterministic AI infrastructure from JourdanLabs.",
 };
 
 const container: React.CSSProperties = {
@@ -26,12 +26,6 @@ const TEAM = [
     title: "CTO",
     bio: "Executive Director at JPMorgan, 20 years software architecture. Joining JourdanLabs full-time post-funding.",
     img: "/team-cto.png",
-  },
-  {
-    name: "Colton Williams",
-    title: "CFO",
-    bio: "Purdue Finance. 10-year oil & gas finance veteran. Leads finance, contracts, and capital strategy.",
-    img: "/team-cfo.png",
   },
   {
     name: "Charles Jourdan",
@@ -77,7 +71,7 @@ export default function TeamPage() {
                 lineHeight: 1.6,
               }}
             >
-              Five people. Five disciplines. One shared methodology.
+              Founder-led, Houston-built, and backed by a small circle of technical and strategic operators.
             </p>
           </Reveal>
         </div>
@@ -90,7 +84,7 @@ export default function TeamPage() {
             className="team-grid"
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(5, 1fr)",
+              gridTemplateColumns: "repeat(4, 1fr)",
               gap: "2rem",
             }}
           >

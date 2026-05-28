@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Applications — JourdanLabs",
   description:
-    "JourdanLabs products are available directly and through C&L Strategy, a select advisory partnership.",
+    "JourdanLabs products are available directly through JourdanLabs.",
 };
 
 const S: Record<string, React.CSSProperties> = {
@@ -33,8 +33,8 @@ export default function ApplicationsPage() {
               Deployment options.
             </h1>
             <p style={{ fontSize: "1.0625rem", color: "var(--text-secondary)", lineHeight: 1.7 }}>
-              JourdanLabs products are available directly and through C&amp;L Strategy, a select advisory
-              partnership focused on deploying deterministic AI in regulated industry contexts.
+              JourdanLabs products are available directly through JourdanLabs. We scope the domain,
+              configure the corpus, wire the workflow, and ship deterministic systems with receipts.
             </p>
           </div>
         </div>
@@ -72,28 +72,6 @@ export default function ApplicationsPage() {
               }}
             >
               Contact for access →
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <section style={S.section}>
-        <div style={S.containerSm}>
-          <span style={S.label}>C&amp;L Strategy</span>
-          <p style={S.p}>
-            C&amp;L Strategy is an advisory partnership that deploys JourdanLabs products in regulated
-            industry engagements. C&amp;L handles implementation scoping, stakeholder alignment, and
-            deployment coordination for clients where direct engagement with JourdanLabs is not the
-            right fit.
-          </p>
-          <p style={{ ...S.p, marginBottom: "1.75rem" }}>
-            C&amp;L engagements are appropriate for clients who need advisory support alongside the
-            technology — regulatory strategy, procurement navigation, and change management in
-            compliance-heavy environments.
-          </p>
-          <div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap" }}>
-            <a href="mailto:leland@jourdanlabs.com?subject=C%26L Strategy Inquiry" style={{ fontSize: "0.875rem", color: "var(--accent)" }}>
-              Inquire about C&amp;L →
             </a>
           </div>
         </div>

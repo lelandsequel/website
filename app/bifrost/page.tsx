@@ -18,7 +18,7 @@ const purple = "#6D45C7";
 const pageBg = "#FBFAF7";
 const softBg = "#F6F2EA";
 const asset = "/assets/bifrost";
-const githubUrl = "https://github.com/lelandsequel/website";
+const githubUrl = "https://github.com/jourdanlabs/bifrost";
 
 const useCases = [
   { title: "Developers", body: "Catch edge cases before shipping" },
