@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "NORTHSTAR - COSMIC Bookkeeping",
   description:
-    "NORTHSTAR Lite is the JourdanLabs small-business bookkeeping app: ledger, bank match queue, tax-prep packet, accountant export, and COSMIC refusal rules.",
+    "NORTHSTAR Lite is the JourdanLabs small-business bookkeeping app: ledger, bank match queue, tax-prep packet, owner alerts, charity giving, accountant export, and COSMIC refusal rules.",
 };
 
 const S: Record<string, React.CSSProperties> = {
@@ -27,6 +27,7 @@ const modules = [
   ["Bank", "Match imported bank activity before the month can release."],
   ["Tax Prep", "Schedule C-style category rollup, 1099/W-9 watchlist, and evidence blockers."],
   ["Owner Sentinel", "Owner-only anomaly queue when a separate accountant or bookkeeper touches the books."],
+  ["NORTHSTAR Gives", "$1/month and $2.50 reinstall donations routed to the customer-selected charity."],
   ["Close", "COSMIC gate refuses release when bank, ledger, or tax-prep evidence does not tie."],
   ["Packet", "JSON accountant packet with trial balance, entries, bank queue, tax packet, and refusal log."],
   ["Local-first", "Browser storage today; desktop and paid download packaging next."],
@@ -62,18 +63,19 @@ export default function NorthstarPage() {
               <p style={{ fontSize: "1.08rem", color: "var(--text-secondary)", lineHeight: 1.75, maxWidth: 680 }}>
                 QuickBooks helps you enter numbers. NORTHSTAR refuses to release books
                 that do not tie. Small-business bookkeeping, tax-prep packets,
-                accountant exports, and deterministic guardrails from JourdanLabs.
+                owner-only alerts, accountant exports, and deterministic guardrails from JourdanLabs.
               </p>
             </div>
 
             <div style={{ background: "var(--bg-card)", border: "1px solid var(--bg-border)", padding: "1.5rem", boxShadow: "var(--shadow-sm)" }}>
               <span style={{ ...S.label, marginBottom: "0.75rem" }}>Current build</span>
               <h2 style={{ margin: "0 0 0.75rem", color: "var(--text-primary)", fontSize: "1.45rem", letterSpacing: "-0.035em" }}>
-                Local-first browser workbench.
+                $9.99 purchase. $1.99/month.
               </h2>
               <p style={{ ...S.p, fontSize: "0.92rem", marginBottom: "1.25rem" }}>
-                The workbench stores data in your browser for now. Paid download and
-                desktop packaging come next; the accounting posture is already live.
+                Every active subscriber routes $1/month to one of four customer-selected
+                charities. If a subscription lapses, reinstall is $5, with $2.50 routed
+                to the selected charity too.
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "0.65rem" }}>
                 <a href="/northstar-app/" target="_blank" rel="noreferrer" style={primaryButton}>
@@ -99,6 +101,30 @@ export default function NorthstarPage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section style={S.section}>
+        <div style={S.container}>
+          <span style={{ ...S.label, marginBottom: "1rem" }}>NORTHSTAR Gives</span>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "1px", background: "var(--bg-border)", border: "1px solid var(--bg-border)" }}>
+            {[
+              ["Purchase", "$9.99"],
+              ["Monthly", "$1.99"],
+              ["Monthly donation", "$1.00"],
+              ["Reinstall after lapse", "$5.00"],
+              ["Reinstall donation", "$2.50"],
+            ].map(([label, value]) => (
+              <div key={label} style={{ background: "var(--bg-card)", padding: "1.25rem" }}>
+                <span style={{ ...S.label, color: "var(--text-tertiary)", marginBottom: "0.5rem" }}>{label}</span>
+                <strong style={{ display: "block", fontSize: "1.8rem", letterSpacing: "-0.055em", color: "var(--text-primary)" }}>{value}</strong>
+              </div>
+            ))}
+          </div>
+          <p style={{ ...S.p, fontSize: "0.82rem", marginTop: "1rem" }}>
+            Donations are made by JourdanLabs to eligible selected charities. Final public launch will
+            include named charities, consent, receipts, timing, and any required giving disclosures.
+          </p>
         </div>
       </section>
 
