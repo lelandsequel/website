@@ -75,7 +75,8 @@ export default function NorthstarPage() {
               <p style={{ ...S.p, fontSize: "0.92rem", marginBottom: "1.25rem" }}>
                 Every active subscriber routes $1/month to one of four customer-selected
                 charities. If a subscription lapses, reinstall is $5, with $2.50 routed
-                to the selected charity too.
+                to the selected charity too. Reinstall covers re-onboarding, restore checks,
+                and payment-state reset.
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "0.65rem" }}>
                 <a href="/northstar-app/" target="_blank" rel="noreferrer" style={primaryButton}>
@@ -123,7 +124,8 @@ export default function NorthstarPage() {
           </div>
           <p style={{ ...S.p, fontSize: "0.82rem", marginTop: "1rem" }}>
             Donations are made by JourdanLabs to eligible selected charities. Final public launch will
-            include named charities, consent, receipts, timing, and any required giving disclosures.
+            include mandatory charity selection, equal-split default before onboarding completes,
+            named charities, consent, receipts, timing, and required giving disclosures.
           </p>
         </div>
       </section>
