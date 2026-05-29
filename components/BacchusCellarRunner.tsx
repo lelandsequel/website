@@ -138,6 +138,7 @@ export default function BacchusCellarRunner() {
               setSampleId("custom");
             }}
             spellCheck={false}
+            style={{ minHeight: 260 }}
           />
           <small>
             Useful packets include account type, buyer, current beverage program, distributor goal,
@@ -180,6 +181,8 @@ function ResultView({ result }: { result: BacchusCellarResult }) {
           <small>{result.accountType} · {result.lane}</small>
         </div>
       </div>
+
+      <DeliverableGrid result={result} />
 
       <div className="live-runner-rows" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))" }}>
         {result.metrics.map((metric) => (
@@ -226,6 +229,72 @@ function ResultView({ result }: { result: BacchusCellarResult }) {
         </div>
       </div>
     </>
+  );
+}
+
+function DeliverableGrid({ result }: { result: BacchusCellarResult }) {
+  const deliverables = [
+    {
+      title: "Placement strategy",
+      status: `${result.placementPlan.length} moves`,
+      items: result.placementPlan,
+    },
+    {
+      title: "Staff packet",
+      status: `${result.trainingPacket.length} drills`,
+      items: result.trainingPacket,
+    },
+    {
+      title: "Depletion plan",
+      status: `${result.depletionPlan.length} controls`,
+      items: result.depletionPlan,
+    },
+  ];
+
+  return (
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(190px, 1fr))",
+        gap: "0.7rem",
+        marginTop: "1rem",
+      }}
+    >
+      {deliverables.map((deliverable) => (
+        <div
+          key={deliverable.title}
+          style={{
+            border: "1px solid rgba(124, 58, 237, 0.16)",
+            borderRadius: 16,
+            background: "rgba(255,255,255,0.78)",
+            padding: "0.85rem",
+          }}
+        >
+          <span
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              gap: "0.6rem",
+              color: "var(--accent)",
+              fontFamily: "var(--font-geist-mono), monospace",
+              fontSize: "0.66rem",
+              fontWeight: 950,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+            }}
+          >
+            {deliverable.title}
+            <em style={{ color: "var(--text-tertiary)", fontStyle: "normal", whiteSpace: "nowrap" }}>{deliverable.status}</em>
+          </span>
+          <strong style={{ display: "block", margin: "0.7rem 0 0.35rem", color: "var(--text-primary)" }}>
+            {deliverable.items[0]?.title ?? "Held"}
+          </strong>
+          <p style={{ color: "var(--text-secondary)", fontSize: "0.82rem", lineHeight: 1.55, margin: 0 }}>
+            {deliverable.items[0]?.detail ?? "No action released."}
+          </p>
+        </div>
+      ))}
+    </div>
   );
 }
 
