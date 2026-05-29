@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import BackLink from "@/components/BackLink";
+import CipherFinanceRunner from "@/components/CipherFinanceRunner";
 
 export const metadata: Metadata = {
   title: "CIPHER - Deterministic DCF",
@@ -22,7 +23,14 @@ const S: Record<string, React.CSSProperties> = {
   p: { color: "var(--text-secondary)", lineHeight: 1.75 },
 };
 
-export default function CipherPage() {
+type PageProps = {
+  searchParams?: Promise<{ ticker?: string; target?: string }>;
+};
+
+export default async function CipherPage({ searchParams }: PageProps) {
+  const resolvedSearchParams = await searchParams;
+  const initialTicker = resolvedSearchParams?.ticker ?? resolvedSearchParams?.target ?? "NVDA";
+
   return (
     <>
       <section style={{ padding: "5.5rem 0 2rem" }}>
@@ -46,44 +54,15 @@ export default function CipherPage() {
             A discounted cash flow model estimates what a company is worth by projecting future cash
             flows and discounting them back to today. CIPHER makes those assumptions explicit,
             recalculable, and inspectable instead of letting a black-box chat response invent a number.
-            This page embeds the deployed CIPHER finance engine inside ALCHEMIST Banking; it is
-            intentionally separate from the generic `/api/alchemist/run` packet runners.
+            This page now runs the local CIPHER workbench directly from SEC Company Facts and market
+            snapshots. No external iframe, no hidden fallback company.
           </p>
-          <a
-            href="https://cipher-demo-ashy.vercel.app/cipher"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: "inline-flex",
-              marginTop: "1rem",
-              color: "var(--accent)",
-              fontWeight: 850,
-              fontSize: "0.9rem",
-            }}
-          >
-            Open full-screen fallback -&gt;
-          </a>
         </div>
       </section>
 
       <section style={{ padding: "0 0 5.5rem" }}>
         <div style={S.container}>
-          <div
-            style={{
-              minHeight: "72vh",
-              border: "1px solid var(--bg-border)",
-              borderRadius: 24,
-              overflow: "hidden",
-              background: "var(--bg-card)",
-              boxShadow: "var(--soft-shadow)",
-            }}
-          >
-            <iframe
-              title="CIPHER deterministic DCF workbench"
-              src="https://cipher-demo-ashy.vercel.app/cipher"
-              style={{ width: "100%", minHeight: "72vh", border: 0, display: "block" }}
-            />
-          </div>
+          <CipherFinanceRunner mode="dcf" initialTicker={initialTicker} />
         </div>
       </section>
     </>

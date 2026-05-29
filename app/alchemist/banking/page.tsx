@@ -6,7 +6,7 @@ import { BringYourOwnPacketChallenge, CopyableDemoPacket } from "@/components/Ac
 export const metadata: Metadata = {
   title: "ALCHEMIST Banking - Models With Receipts",
   description:
-    "ALCHEMIST Banking includes embedded CIPHER and COMPS workbenches plus API-backed Credit, Merger, LBO, SOTP, scenarios, and benchmark workbenches with receipts.",
+    "ALCHEMIST Banking includes local CIPHER and COMPS workbenches plus API-backed Credit, Merger, LBO, SOTP, scenarios, and benchmark workbenches with receipts.",
 };
 
 const models = [
@@ -137,8 +137,9 @@ export default function BankingPage() {
           <p style={{ ...S.p, fontSize: "1.08rem", maxWidth: 820 }}>
             Banking models compute when source-backed assumptions are available and
             refuse when the model would otherwise fabricate. This is the valuation and
-            transaction side of ALCHEMIST. CIPHER and COMPS embed the live deployed finance
-            engines; the remaining workbenches run through the local deterministic ALCHEMIST API.
+            transaction side of ALCHEMIST. CIPHER and COMPS now run through local deterministic
+            JourdanLabs routes instead of external embeds; the remaining workbenches run through
+            the ALCHEMIST packet API.
           </p>
           <div className="hero-actions">
             <a className="primary-button" href="#banking-demo-packets">

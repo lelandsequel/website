@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import BackLink from "@/components/BackLink";
+import CipherFinanceRunner from "@/components/CipherFinanceRunner";
 
 export const metadata: Metadata = {
   title: "COMPS - Deterministic Comparable Companies",
@@ -22,7 +23,14 @@ const S: Record<string, React.CSSProperties> = {
   p: { color: "var(--text-secondary)", lineHeight: 1.75 },
 };
 
-export default function CompsPage() {
+type PageProps = {
+  searchParams?: Promise<{ ticker?: string; target?: string }>;
+};
+
+export default async function CompsPage({ searchParams }: PageProps) {
+  const resolvedSearchParams = await searchParams;
+  const initialTicker = resolvedSearchParams?.ticker ?? resolvedSearchParams?.target ?? "NVDA";
+
   return (
     <>
       <section style={{ padding: "5.5rem 0 2rem" }}>
@@ -45,45 +53,15 @@ export default function CompsPage() {
           <p style={{ ...S.p, fontSize: "1.05rem", maxWidth: 780 }}>
             Comps estimate value by comparing a company to similar public companies or transactions.
             The hard part is not the arithmetic - it is choosing the right peer set, normalizing the
-            metrics, and preserving the assumptions. COMPS keeps that chain visible. This page embeds
-            the deployed COMPS finance engine inside ALCHEMIST Banking; it is intentionally separate
-            from the generic `/api/alchemist/run` packet runners.
+            metrics, and preserving the assumptions. COMPS keeps that chain visible. This page now runs
+            the local CIPHER COMPS workbench directly from SEC Company Facts and market snapshots.
           </p>
-          <a
-            href="https://cipher-demo-ashy.vercel.app/cipher/comps"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: "inline-flex",
-              marginTop: "1rem",
-              color: "var(--accent)",
-              fontWeight: 850,
-              fontSize: "0.9rem",
-            }}
-          >
-            Open full-screen fallback -&gt;
-          </a>
         </div>
       </section>
 
       <section style={{ padding: "0 0 5.5rem" }}>
         <div style={S.container}>
-          <div
-            style={{
-              minHeight: "72vh",
-              border: "1px solid var(--bg-border)",
-              borderRadius: 24,
-              overflow: "hidden",
-              background: "var(--bg-card)",
-              boxShadow: "var(--soft-shadow)",
-            }}
-          >
-            <iframe
-              title="COMPS deterministic comparable-company workbench"
-              src="https://cipher-demo-ashy.vercel.app/cipher/comps"
-              style={{ width: "100%", minHeight: "72vh", border: 0, display: "block" }}
-            />
-          </div>
+          <CipherFinanceRunner mode="comps" initialTicker={initialTicker} />
         </div>
       </section>
     </>
