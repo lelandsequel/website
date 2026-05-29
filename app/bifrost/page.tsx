@@ -62,10 +62,22 @@ const pipeline = [
 ];
 
 const operatingRules = [
-  "Do not label the user's question as verified output",
-  "Do not turn unavailable into approved",
-  "Do not reward confident claims without enough support",
-  "Do make refusal visible when the answer crosses the line",
+  {
+    title: "Do not label the user's question as verified output",
+    body: "Only model answers get evaluated. Prompts and user questions stay outside the verdict layer.",
+  },
+  {
+    title: "Do not turn unavailable into approved",
+    body: "If the verifier is offline or the page cannot be parsed, BIFROST shows unavailable instead of green-lighting.",
+  },
+  {
+    title: "Do not reward confident claims without enough support",
+    body: "Hedges, missing sources, and ungrounded certainty lower the verdict. Confidence has to be earned.",
+  },
+  {
+    title: "Do make refusal visible when the answer crosses the line",
+    body: "When an answer violates the boundary, BIFROST surfaces the reason instead of smoothing it away.",
+  },
 ];
 
 function ExternalLink({
@@ -614,14 +626,11 @@ export default function BifrostPage() {
           </Reveal>
           <div className="bifrost-card-grid">
             {operatingRules.map((rule, index) => (
-              <Reveal delay={80 * index} key={rule}>
+              <Reveal delay={80 * index} key={rule.title}>
                 <div className="bifrost-card">
                   <span>{String(index + 1).padStart(2, "0")}</span>
-                  <strong>{rule}</strong>
-                  <p>
-                    BIFROST treats verification as a separate control surface, not
-                    a second chatbot trying to sound helpful.
-                  </p>
+                  <strong>{rule.title}</strong>
+                  <p>{rule.body}</p>
                 </div>
               </Reveal>
             ))}
