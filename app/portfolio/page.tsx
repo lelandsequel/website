@@ -6,7 +6,7 @@ import Reveal from "@/components/Reveal";
 export const metadata: Metadata = {
   title: "Portfolio — JourdanLabs",
   description:
-    "Five industry divisions applying the COSMIC reasoning substrate: ATLAS, BACCHUS, HELIX, HEIMDALL, and CRUCIBLE.",
+    "Six industry divisions applying the COSMIC reasoning substrate: ATLAS, BACCHUS, HELIX, HYGEIA, HEIMDALL, and CRUCIBLE.",
 };
 
 const container: React.CSSProperties = {
@@ -40,11 +40,18 @@ const DIVISIONS = [
   },
   {
     name: "HELIX",
-    desc: "Healthcare workflow automation. Clinical routing, documentation, pharmacovigilance.",
+    desc: "Wellness and human performance. Adaptive training intelligence for athletes and coaches.",
     score: "81.5%",
     href: "/divisions/helix",
     img: "/division-helix.png",
     highlight: true,
+  },
+  {
+    name: "HYGEIA",
+    desc: "Clinical safety intelligence. Pharmacovigilance signal triage with refusal discipline.",
+    score: "63.9%",
+    href: "/divisions/hygeia",
+    img: "/brand/baby-pulsar-flag.png",
   },
   {
     name: "HEIMDALL",
@@ -83,7 +90,7 @@ export default function PortfolioPage() {
                 maxWidth: 800,
               }}
             >
-              Five industry verticals.
+              Six industry verticals.
               <br />
               One substrate.
             </h1>

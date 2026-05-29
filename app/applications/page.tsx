@@ -19,7 +19,8 @@ const DIVISION_CONTACTS = [
   { name: "NORTHSTAR", domain: "Small-business bookkeeping", contact: "$1 COSMIC books, tax-prep packet, accountant export", href: "/northstar", accent: "#5A2EE6" },
   { name: "ATLAS", domain: "Commercial real estate intelligence", contact: "MineralLogic, PropertyGraph, NAUTILUS", href: "/divisions/atlas", accent: "#D4A574" },
   { name: "BACCHUS", domain: "Luxury hospitality operations", contact: "Intel, COSMIX, RUSH, Festivus, ROE for Altima Caviar", href: "/bacchus", accent: "#7D2348" },
-  { name: "HELIX", domain: "Healthcare workflow automation", contact: "HELIX (TestFlight), PHAROS", href: "/divisions/helix", accent: "#E8735A" },
+  { name: "HELIX", domain: "Wellness and human performance", contact: "HELIX TestFlight for training intelligence", href: "/divisions/helix", accent: "#E8735A" },
+  { name: "HYGEIA", domain: "Clinical safety intelligence", contact: "PHAROS pharmacovigilance signal workbench", href: "/divisions/hygeia", accent: "#18A978" },
   { name: "HEIMDALL", domain: "Security operations", contact: "SENTINEL (pre-pilot access)", href: "/divisions/heimdall", accent: "#4A7BA7" },
 ];
 

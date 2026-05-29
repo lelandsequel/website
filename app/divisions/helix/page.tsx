@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "HELIX Division — Health and Human Performance",
+  title: "HELIX Division — Wellness and Human Performance",
   description:
-    "HELIX applies COSMIC to health and human performance — adaptive training for athletes and coaches, plus PHAROS pharmacovigilance. HELIX app is in TestFlight.",
+    "HELIX applies COSMIC to wellness and human performance: adaptive training intelligence for athletes and coaches.",
 };
 
 const accent = "#E8735A";
@@ -17,6 +17,14 @@ const S: Record<string, React.CSSProperties> = {
   section: { padding: "5rem 0", borderBottom: "1px solid var(--bg-border)" },
 };
 
+const PRODUCTS: Array<{ name: string; status: string; description: string; href?: string }> = [
+  {
+    name: "HELIX",
+    status: "TestFlight",
+    description: "Adaptive training intelligence for athletes and coaches. Integrates with Apple Watch and WHOOP to deliver deterministic training recommendations grounded in sealed performance corpora. No LLM guessing on load prescription.",
+  },
+];
+
 export default function HelixPage() {
   return (
     <>
@@ -28,12 +36,12 @@ export default function HelixPage() {
             </div>
             <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.6875rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: accent, display: "block", marginBottom: "1rem" }}>HELIX</span>
             <h1 style={{ fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, letterSpacing: "-0.035em", lineHeight: 1.1, color: "var(--text-primary)", marginBottom: "1.25rem" }}>
-              Health and human performance.
+              Wellness and human performance.
             </h1>
             <p style={{ fontSize: "1.0625rem", color: "var(--text-secondary)", lineHeight: 1.7, maxWidth: 560 }}>
-              HELIX applies the COSMIC reasoning substrate to health and human performance —
+              HELIX applies the COSMIC reasoning substrate to wellness and human performance —
               adaptive training intelligence for athletes and coaches, with Apple Watch and WHOOP
-              integration. PHAROS extends the same architecture into pharmacovigilance.
+              integration. It is not HYGEIA; regulated clinical safety work lives under HYGEIA.
             </p>
           </div>
         </div>
@@ -43,24 +51,18 @@ export default function HelixPage() {
         <div style={S.container}>
           <span style={S.label}>Products</span>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "1px", backgroundColor: "var(--bg-border)", border: "1px solid var(--bg-border)" }}>
-            {[
-              {
-                name: "HELIX",
-                status: "TestFlight",
-                description: "Adaptive training intelligence for athletes and coaches. Integrates with Apple Watch and WHOOP to deliver deterministic training recommendations grounded in sealed performance corpora. No LLM guessing on load prescription.",
-              },
-              {
-                name: "PHAROS",
-                status: "In development",
-                description: "Pharmacovigilance signal detection. Built on the SIGNAL benchmark research track (F1 0.639, 24.3-month median lead time). Designed for regulatory submission requirements — SHA-verified chain of custody from source document to finding.",
-              },
-            ].map((product) => (
+            {PRODUCTS.map((product) => (
               <div key={product.name} style={{ backgroundColor: "var(--bg-card)", padding: "1.75rem" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.75rem" }}>
                   <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.75rem", fontWeight: 700, color: accent }}>{product.name}</span>
-                  <span style={{ fontSize: "0.625rem", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: product.status === "TestFlight" ? accent : "var(--text-tertiary)", border: `1px solid ${product.status === "TestFlight" ? accent : "var(--bg-border)"}`, padding: "0.125rem 0.5rem", fontFamily: "var(--font-geist-mono), monospace" }}>{product.status}</span>
+                  <span style={{ fontSize: "0.625rem", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: product.status !== "In development" ? accent : "var(--text-tertiary)", border: `1px solid ${product.status !== "In development" ? accent : "var(--bg-border)"}`, padding: "0.125rem 0.5rem", fontFamily: "var(--font-geist-mono), monospace" }}>{product.status}</span>
                 </div>
                 <p style={{ fontSize: "0.8125rem", color: "var(--text-secondary)", lineHeight: 1.6, margin: 0 }}>{product.description}</p>
+                {product.href ? (
+                  <Link href={product.href} style={{ display: "inline-flex", marginTop: "1rem", fontSize: "0.8125rem", color: accent }}>
+                    Open PHAROS →
+                  </Link>
+                ) : null}
               </div>
             ))}
           </div>
@@ -76,14 +78,10 @@ export default function HelixPage() {
             every recommendation in the athlete's own sealed performance history. The AURORA gate refuses
             to prescribe when confidence is insufficient rather than defaulting to a generic protocol.
           </p>
-          <p style={{ ...S.p, marginBottom: "2rem" }}>
-            PHAROS applies the same refusal posture to pharmacovigilance: adverse event signals require
-            a SHA-verified chain of custody from source document to regulatory submission. The underlying
-            benchmark — SIGNAL — has an F1 of 0.639 and a 24.3-month median detection lead time.
+          <p style={{ ...S.p, marginBottom: 0 }}>
+            The division boundary matters: HELIX is fitness, wellness, and human performance.
+            PHAROS is clinical safety and pharmacovigilance, so it now lives under HYGEIA.
           </p>
-          <Link href="/crucible/benchmarks/signal" style={{ fontSize: "0.875rem", color: accent }}>
-            See SIGNAL benchmark — F1 0.639, 24.3mo median lead time →
-          </Link>
         </div>
       </section>
 
@@ -92,7 +90,7 @@ export default function HelixPage() {
           <span style={S.label}>Status</span>
           <p style={S.p}>
             The HELIX app is currently in TestFlight. Apple Watch and WHOOP integrations are live in the
-            TestFlight build. PHAROS is in development and has not shipped.
+            TestFlight build.
           </p>
         </div>
       </section>

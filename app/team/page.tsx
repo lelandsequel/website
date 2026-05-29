@@ -30,7 +30,7 @@ const TEAM = [
   {
     name: "Charles Jourdan",
     title: "CSO",
-    bio: "Leads the HELIX health and human performance division. Twenty years in holistic wellness and athlete performance. Houston, TX.",
+    bio: "Leads the HELIX wellness and human performance division. Twenty years in holistic wellness and athlete performance. Houston, TX.",
     img: "/team-cso.png",
   },
   {

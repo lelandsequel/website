@@ -28,6 +28,7 @@ const footerSections = [
       { href: "/divisions/atlas", label: "ATLAS" },
       { href: "/bacchus", label: "BACCHUS" },
       { href: "/divisions/helix", label: "HELIX" },
+      { href: "/divisions/hygeia", label: "HYGEIA" },
       { href: "/divisions/heimdall", label: "HEIMDALL" },
     ],
   },

@@ -4,7 +4,7 @@ import DivisionCard from "@/components/DivisionCard";
 export const metadata: Metadata = {
   title: "Divisions — JourdanLabs",
   description:
-    "Five industry divisions applying the COSMIC reasoning substrate: ATLAS, BACCHUS, HELIX, HEIMDALL, and CRUCIBLE.",
+    "Six industry divisions applying the COSMIC reasoning substrate: ATLAS, BACCHUS, HELIX, HYGEIA, HEIMDALL, and CRUCIBLE.",
 };
 
 const S: Record<string, React.CSSProperties> = {
@@ -33,11 +33,19 @@ const DIVISIONS = [
   },
   {
     name: "HELIX",
-    tagline: "Health and human performance — from training to pharmacovigilance",
+    tagline: "Wellness and human performance",
     headline: "HELIX",
-    products: "HELIX (TestFlight) · PHAROS (dev)",
+    products: "HELIX (TestFlight)",
     href: "/divisions/helix",
     accent: "#E8735A",
+  },
+  {
+    name: "HYGEIA",
+    tagline: "Clinical safety intelligence and pharmacovigilance",
+    headline: "PHAROS",
+    products: "PHAROS pharmacovigilance signal workbench",
+    href: "/divisions/hygeia",
+    accent: "#18A978",
   },
   {
     name: "HEIMDALL",
@@ -65,7 +73,7 @@ export default function DivisionsPage() {
           <div style={{ maxWidth: 640 }}>
             <span style={{ ...S.label, marginBottom: "1rem" }}>Divisions</span>
             <h1 style={{ fontSize: "clamp(2rem, 5vw, 3.25rem)", fontWeight: 700, letterSpacing: "-0.035em", lineHeight: 1.1, color: "var(--text-primary)", marginBottom: "1.25rem" }}>
-              Five industry verticals. One substrate.
+              Six industry verticals. One substrate.
             </h1>
             <p style={{ fontSize: "1.0625rem", color: "var(--text-secondary)", lineHeight: 1.7 }}>
               Each JourdanLabs division applies the COSMIC reasoning substrate to a regulated industry
@@ -104,7 +112,7 @@ export default function DivisionsPage() {
             the engine architecture.
           </p>
           <p style={S.p}>
-            This means CRUCIBLE's benchmark program validates all five divisions simultaneously.
+            This means CRUCIBLE's benchmark program validates all six divisions simultaneously.
             When VANTAGE runs a diagnostic scan across division domains, the same pipeline architecture
             is being tested — just against different sealed corpora.
           </p>
