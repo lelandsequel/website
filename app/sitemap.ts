@@ -32,6 +32,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/divisions`, priority: 0.9 },
     { url: `${BASE}/divisions/atlas`, priority: 0.8 },
     { url: `${BASE}/divisions/bacchus`, priority: 0.8 },
+    { url: `${BASE}/bacchus`, priority: 0.82 },
+    { url: `${BASE}/bacchus/cellar`, priority: 0.8 },
     { url: `${BASE}/divisions/helix`, priority: 0.8 },
     { url: `${BASE}/divisions/heimdall`, priority: 0.8 },
     { url: `${BASE}/crucible`, priority: 0.9 },

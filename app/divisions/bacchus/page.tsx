@@ -37,6 +37,13 @@ const operations = [
 
 const products = [
   {
+    name: "BACCHUS Cellar Intelligence",
+    status: "Distributor workbench",
+    href: "/bacchus/cellar",
+    description:
+      "Premium spirits distribution workbench for account fit, first move, staff education, depletion cadence, proof rows, and refusal boundaries.",
+  },
+  {
     name: "BACCHUS Intel",
     status: "Market intelligence",
     href: "https://www.bacchusintel.com/",
@@ -115,6 +122,9 @@ export default function BacchusPage() {
                 It is not the generic BACCHUS SKU.
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "0.65rem" }}>
+                <Link href="/bacchus/cellar" style={primaryButton}>
+                  Open Cellar Intelligence
+                </Link>
                 <a href="/downloads/BACCHUS-ROE-Mac-0.1.0.dmg" download style={primaryButton}>
                   Download Mac build
                 </a>
@@ -178,7 +188,7 @@ export default function BacchusPage() {
                   download={product.href.endsWith(".dmg") ? true : undefined}
                   style={{ fontSize: "0.78rem", color: accent, fontWeight: 800, textDecoration: "none" }}
                 >
-                  Open source surface →
+                  {product.href === "/bacchus/cellar" ? "Open workbench →" : product.href.endsWith(".dmg") ? "Download build →" : "Open source surface →"}
                 </a>
               </div>
             ))}
