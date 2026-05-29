@@ -728,6 +728,31 @@ pre code { background: none; padding: 0; color: inherit; }
   color: var(--accent);
 }
 
+@media (max-width: 900px) {
+  .nav-inner {
+    align-items: flex-start;
+    flex-direction: column;
+    padding-top: 0.85rem;
+    padding-bottom: 0.85rem;
+  }
+
+  .nav-links {
+    display: grid;
+    grid-template-columns: repeat(4, max-content);
+    max-width: 100%;
+    min-width: 0;
+    width: 100%;
+    column-gap: 0.25rem;
+    row-gap: 0.35rem;
+    justify-content: flex-start;
+  }
+
+  .nav-link {
+    font-size: 0.76rem;
+    padding: 0.46rem 0.58rem;
+  }
+}
+
 .footer-shell {
   border-top: 1px solid var(--bg-border);
   padding: 3.5rem 0;
@@ -1976,17 +2001,6 @@ pre code { background: none; padding: 0; color: inherit; }
   }
 
   .hero-proof-links {
-    justify-content: flex-start;
-  }
-
-  .nav-inner {
-    align-items: flex-start;
-    flex-direction: column;
-    padding-top: 0.85rem;
-    padding-bottom: 0.85rem;
-  }
-
-  .nav-links {
     justify-content: flex-start;
   }
 

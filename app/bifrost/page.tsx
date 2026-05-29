@@ -4,481 +4,703 @@ import Link from "next/link";
 import Reveal from "@/components/Reveal";
 
 export const metadata: Metadata = {
-  title: "BIFROST — AI Verification Layer",
-  description: "AI generates. BIFROST verifies. A universal verification layer for AI output.",
+  title: "BIFROST - Browser Verification for Frontier LLMs",
+  description:
+    "BIFROST is the JourdanLabs Chrome extension that adds deterministic verification signals to frontier LLMs online.",
 };
 
-const container: React.CSSProperties = {
-  width: "92%",
-  maxWidth: 1600,
-  margin: "0 auto",
-};
-
-const purple = "#6D45C7";
-const pageBg = "#FBFAF7";
-const softBg = "#F6F2EA";
-const asset = "/assets/bifrost";
 const githubUrl = "https://github.com/jourdanlabs/bifrost";
+const chromeExtensionUrl = `${githubUrl}#chrome-extension`;
 
-const useCases = [
-  { title: "Developers", body: "Catch edge cases before shipping" },
-  { title: "AI Users", body: "Know when to trust responses" },
-  { title: "Teams", body: "Standardize AI reliability" },
-  { title: "Enterprises", body: "Add a verification layer to workflows" },
+const S: Record<string, React.CSSProperties> = {
+  container: { width: "100%", maxWidth: 1180, margin: "0 auto", padding: "0 1.25rem" },
+  label: {
+    display: "block",
+    marginBottom: "1rem",
+    color: "var(--accent)",
+    fontFamily: "var(--font-geist-mono), monospace",
+    fontSize: "0.72rem",
+    fontWeight: 850,
+    letterSpacing: "0.12em",
+    textTransform: "uppercase",
+  },
+  p: { color: "var(--text-secondary)", lineHeight: 1.72 },
+};
+
+const targets = ["ChatGPT", "Claude", "Gemini", "Grok", "Kimi", "DeepSeek", "MiniMax", "Genspark"];
+
+const states = [
+  {
+    name: "Verified",
+    label: "Evidence supports the answer",
+    tone: "pass",
+  },
+  {
+    name: "Review",
+    label: "Usable only with a source check",
+    tone: "warn",
+  },
+  {
+    name: "Rejected",
+    label: "Contradiction, overclaim, or unsafe confidence",
+    tone: "fail",
+  },
+  {
+    name: "Unavailable",
+    label: "Verifier unreachable; never treated as approval",
+    tone: "neutral",
+  },
 ];
 
-const engines = [
-  ["ASTRAL", "Normalize"],
-  ["METEOR", "Extract claims"],
-  ["NEBULA", "Detect uncertainty"],
-  ["PULSAR", "Probe failures"],
-  ["QUASAR", "Score confidence"],
-  ["AURORA", "Final verdict"],
+const pipeline = [
+  ["ASTRAL", "Normalize the model response"],
+  ["METEOR", "Extract claims and implied claims"],
+  ["NEBULA", "Detect uncertainty and hedging"],
+  ["PULSAR", "Probe for failure modes"],
+  ["QUASAR", "Score confidence and risk"],
+  ["AURORA", "Return the visible verdict"],
 ];
 
-function Button({
+const operatingRules = [
+  "Do not label the user's question as verified output",
+  "Do not turn unavailable into approved",
+  "Do not reward confident claims without enough support",
+  "Do make refusal visible when the answer crosses the line",
+];
+
+function ExternalLink({
   href,
   children,
-  variant = "primary",
+  className,
 }: {
   href: string;
   children: React.ReactNode;
-  variant?: "primary" | "secondary";
+  className: string;
 }) {
-  const style: React.CSSProperties = {
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    minHeight: 44,
-    padding: "0.875rem 1.5rem",
-    backgroundColor: variant === "primary" ? "var(--text-primary)" : "transparent",
-    border: variant === "primary" ? "1px solid var(--text-primary)" : "1px solid var(--accent)",
-    color: variant === "primary" ? "var(--bg)" : "var(--accent)",
-    fontWeight: 650,
-    fontSize: "0.75rem",
-    letterSpacing: "0.14em",
-    textTransform: "uppercase",
-  };
-
-  if (href.startsWith("http")) {
-    return (
-      <a href={href} target="_blank" rel="noopener noreferrer" style={style}>
-        {children}
-      </a>
-    );
-  }
-
   return (
-    <Link href={href} style={style}>
+    <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
       {children}
-    </Link>
-  );
-}
-
-function InlineAsset({
-  src,
-  alt,
-  ratio,
-  priority,
-}: {
-  src: string;
-  alt: string;
-  ratio: string;
-  priority?: boolean;
-}) {
-  return (
-    <div style={{ position: "relative", width: "100%", aspectRatio: ratio }}>
-      <Image
-        src={`${asset}/${src}`}
-        alt={alt}
-        fill
-        priority={priority}
-        sizes="(max-width: 900px) 100vw, 52vw"
-        style={{ objectFit: "contain" }}
-      />
-    </div>
+    </a>
   );
 }
 
 export default function BifrostPage() {
   return (
-    <>
+    <main className="bifrost-page">
       <style>{`
-        .bifrost-grid {
-          display: grid;
-          grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
-          gap: 4rem;
-          align-items: center;
+        .bifrost-page {
+          min-height: 100vh;
+          overflow-x: hidden;
+          background:
+            linear-gradient(90deg, rgba(111, 56, 255, 0.06) 1px, transparent 1px),
+            linear-gradient(180deg, rgba(111, 56, 255, 0.06) 1px, transparent 1px),
+            radial-gradient(circle at 12% 0%, rgba(111, 56, 255, 0.18), transparent 34rem),
+            var(--bg);
+          background-size: 44px 44px, 44px 44px, auto, auto;
         }
 
-        .bifrost-flow-grid {
+        .bifrost-hero {
           display: grid;
-          grid-template-columns: repeat(3, minmax(0, 1fr));
-          gap: 1px;
-          background: var(--bg-border);
+          grid-template-columns: minmax(0, 1.02fr) minmax(320px, 0.72fr);
+          gap: 1.25rem;
+          align-items: stretch;
+          padding: 5.5rem 0 2.25rem;
+          max-width: 100%;
+          min-width: 0;
+        }
+
+        .bifrost-hero-panel,
+        .bifrost-visual-panel,
+        .bifrost-card,
+        .bifrost-wide-panel,
+        .bifrost-install-card {
           border: 1px solid var(--bg-border);
+          background:
+            linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(248, 244, 255, 0.74)),
+            var(--bg-card);
+          box-shadow: var(--soft-shadow);
+          max-width: 100%;
+          min-width: 0;
         }
 
-        .bifrost-engine-grid,
-        .bifrost-use-grid {
+        .bifrost-hero-panel {
+          min-height: 560px;
+          border-radius: 28px;
+          padding: clamp(1.4rem, 4vw, 2.8rem);
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          overflow: hidden;
+          position: relative;
+        }
+
+        .bifrost-hero-panel::after {
+          content: "";
+          position: absolute;
+          inset: auto -10rem -13rem auto;
+          width: 28rem;
+          height: 28rem;
+          border-radius: 50%;
+          background: rgba(111, 56, 255, 0.14);
+          pointer-events: none;
+        }
+
+        .bifrost-hero-panel h1 {
+          color: var(--text-primary);
+          font-size: clamp(3.4rem, 9vw, 7.2rem);
+          font-weight: 950;
+          letter-spacing: -0.075em;
+          line-height: 0.86;
+          margin: 0 0 1.1rem;
+          max-width: 760px;
+          position: relative;
+          z-index: 1;
+        }
+
+        .bifrost-hero-panel h1 span {
+          display: block;
+        }
+
+        .bifrost-hero-panel p {
+          max-width: 720px;
+          position: relative;
+          z-index: 1;
+          overflow-wrap: anywhere;
+        }
+
+        .bifrost-actions {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.75rem;
+          margin-top: 2rem;
+          position: relative;
+          z-index: 1;
+        }
+
+        .bifrost-proof-strip {
           display: grid;
           grid-template-columns: repeat(4, minmax(0, 1fr));
-          gap: 1px;
-          background: var(--bg-border);
-          border: 1px solid var(--bg-border);
+          gap: 0.75rem;
+          margin-top: 2.4rem;
+          position: relative;
+          z-index: 1;
         }
 
-        .bifrost-engine-grid {
+        .bifrost-proof-strip div {
+          min-height: 86px;
+          border: 1px solid var(--accent-border);
+          border-radius: 16px;
+          background: rgba(255, 255, 255, 0.74);
+          padding: 0.85rem;
+        }
+
+        .bifrost-proof-strip span,
+        .bifrost-card span,
+        .bifrost-install-card span,
+        .bifrost-wide-panel span {
+          display: block;
+          color: var(--accent);
+          font-family: var(--font-geist-mono), monospace;
+          font-size: 0.68rem;
+          font-weight: 850;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+        }
+
+        .bifrost-proof-strip strong {
+          display: block;
+          margin-top: 0.45rem;
+          color: var(--text-primary);
+          font-size: 0.95rem;
+          font-weight: 900;
+          letter-spacing: -0.03em;
+          line-height: 1.15;
+          overflow-wrap: anywhere;
+        }
+
+        .bifrost-visual-panel {
+          min-height: 560px;
+          border-radius: 28px;
+          padding: 1.2rem;
+          display: grid;
+          grid-template-rows: minmax(0, 1fr) auto;
+          gap: 1rem;
+          overflow: hidden;
+        }
+
+        .bifrost-visual {
+          position: relative;
+          min-height: 360px;
+          border-radius: 22px;
+          background:
+            radial-gradient(circle at 50% 36%, rgba(111, 56, 255, 0.22), transparent 17rem),
+            rgba(255, 255, 255, 0.58);
+          overflow: hidden;
+        }
+
+        .bifrost-visual img {
+          object-fit: contain;
+        }
+
+        .bifrost-verdict-stack {
+          display: grid;
+          gap: 0.55rem;
+        }
+
+        .bifrost-verdict {
+          display: grid;
+          grid-template-columns: 92px minmax(0, 1fr);
+          gap: 0.75rem;
+          align-items: center;
+          border: 1px solid var(--bg-border);
+          border-radius: 14px;
+          background: rgba(255, 255, 255, 0.76);
+          padding: 0.7rem;
+        }
+
+        .bifrost-verdict b {
+          color: var(--text-primary);
+          font-family: var(--font-geist-mono), monospace;
+          font-size: 0.68rem;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+        }
+
+        .bifrost-verdict small {
+          color: var(--text-secondary);
+          line-height: 1.35;
+        }
+
+        .bifrost-verdict.pass b { color: #16834f; }
+        .bifrost-verdict.warn b { color: #966100; }
+        .bifrost-verdict.fail b { color: #bd263b; }
+        .bifrost-verdict.neutral b { color: var(--text-tertiary); }
+
+        .bifrost-section {
+          padding: 2.25rem 0;
+        }
+
+        .bifrost-wide-panel {
+          border-radius: 24px;
+          padding: clamp(1.2rem, 3vw, 2rem);
+        }
+
+        .bifrost-section-title {
+          display: flex;
+          justify-content: space-between;
+          align-items: end;
+          gap: 1rem;
+          margin-bottom: 1rem;
+        }
+
+        .bifrost-section-title h2 {
+          color: var(--text-primary);
+          font-size: clamp(2rem, 5vw, 4rem);
+          font-weight: 950;
+          letter-spacing: -0.06em;
+          line-height: 0.95;
+          margin: 0;
+          max-width: 820px;
+        }
+
+        .bifrost-target-grid,
+        .bifrost-card-grid,
+        .bifrost-pipeline-grid {
+          display: grid;
+          gap: 0.75rem;
+        }
+
+        .bifrost-target-grid {
+          grid-template-columns: repeat(8, minmax(0, 1fr));
+        }
+
+        .bifrost-target-grid div {
+          min-height: 74px;
+          border: 1px solid var(--bg-border);
+          border-radius: 14px;
+          background: rgba(255, 255, 255, 0.76);
+          display: grid;
+          place-items: center;
+          color: var(--text-primary);
+          font-weight: 900;
+          letter-spacing: -0.03em;
+          text-align: center;
+          padding: 0.7rem;
+        }
+
+        .bifrost-card-grid {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .bifrost-card {
+          min-height: 220px;
+          border-radius: 18px;
+          padding: 1rem;
+          display: flex;
+          flex-direction: column;
+          gap: 0.9rem;
+        }
+
+        .bifrost-card strong,
+        .bifrost-install-card strong {
+          color: var(--text-primary);
+          font-size: 1.28rem;
+          font-weight: 950;
+          letter-spacing: -0.04em;
+          line-height: 1.05;
+          overflow-wrap: anywhere;
+        }
+
+        .bifrost-card p,
+        .bifrost-install-card p {
+          margin: 0;
+          color: var(--text-secondary);
+          line-height: 1.6;
+          font-size: 0.92rem;
+        }
+
+        .bifrost-pipeline-grid {
           grid-template-columns: repeat(6, minmax(0, 1fr));
         }
 
+        .bifrost-pipeline-step {
+          min-height: 150px;
+          border: 1px solid var(--bg-border);
+          border-radius: 18px;
+          background: rgba(255, 255, 255, 0.78);
+          padding: 1rem;
+        }
+
+        .bifrost-pipeline-step em {
+          display: block;
+          margin-bottom: 1rem;
+          color: var(--text-tertiary);
+          font-family: var(--font-geist-mono), monospace;
+          font-size: 0.68rem;
+          font-style: normal;
+          font-weight: 850;
+        }
+
+        .bifrost-pipeline-step strong {
+          display: block;
+          color: var(--text-primary);
+          font-family: var(--font-geist-mono), monospace;
+          font-size: 0.75rem;
+          font-weight: 900;
+          letter-spacing: 0.08em;
+          margin-bottom: 0.55rem;
+        }
+
+        .bifrost-pipeline-step p {
+          margin: 0;
+          color: var(--text-secondary);
+          font-size: 0.84rem;
+          line-height: 1.5;
+        }
+
+        .bifrost-install-grid {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+          gap: 1rem;
+        }
+
+        .bifrost-install-card {
+          min-height: 260px;
+          border-radius: 22px;
+          padding: clamp(1.2rem, 3vw, 1.75rem);
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          gap: 1.5rem;
+        }
+
+        .bifrost-link-line {
+          display: block;
+          width: fit-content;
+          max-width: 100%;
+          overflow-wrap: anywhere;
+          color: var(--accent);
+          font-family: var(--font-geist-mono), monospace;
+          font-size: 0.76rem;
+          font-weight: 850;
+          text-decoration: none;
+        }
+
+        .bifrost-install-card .primary-button,
+        .bifrost-install-card .secondary-button {
+          width: fit-content;
+        }
+
+        @media (max-width: 1020px) {
+          .bifrost-hero,
+          .bifrost-install-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .bifrost-hero-panel,
+          .bifrost-visual-panel {
+            min-height: auto;
+          }
+
+          .bifrost-target-grid,
+          .bifrost-card-grid,
+          .bifrost-pipeline-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+        }
+
         @media (max-width: 900px) {
-          .bifrost-grid,
-          .bifrost-flow-grid,
-          .bifrost-engine-grid,
-          .bifrost-use-grid {
-            grid-template-columns: 1fr !important;
-            gap: 2.5rem !important;
-            background: transparent !important;
-            border: 0 !important;
+          .bifrost-hero {
+            padding-top: 3.5rem;
+          }
+
+          .bifrost-hero-panel,
+          .bifrost-visual-panel,
+          .bifrost-wide-panel,
+          .bifrost-install-card {
+            border-radius: 22px;
+            width: calc(100vw - 2.5rem);
+          }
+
+          .bifrost-hero-panel {
+            padding: 1.2rem;
+          }
+
+          .bifrost-hero-panel h1 {
+            font-size: clamp(2.55rem, 13vw, 3.2rem);
+            letter-spacing: -0.055em;
+            line-height: 0.9;
+            overflow-wrap: anywhere;
+          }
+
+          .bifrost-hero-panel p,
+          .bifrost-actions,
+          .bifrost-proof-strip {
+            max-width: min(calc(100vw - 4.9rem), 36rem) !important;
+          }
+
+          .bifrost-actions {
+            align-items: stretch;
+            flex-direction: column;
+          }
+
+          .bifrost-actions a {
+            width: 100%;
+          }
+
+          .bifrost-proof-strip,
+          .bifrost-target-grid,
+          .bifrost-card-grid,
+          .bifrost-pipeline-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .bifrost-section-title {
+            align-items: start;
+            flex-direction: column;
+          }
+
+          .bifrost-verdict {
+            grid-template-columns: 1fr;
           }
         }
       `}</style>
 
-      <section style={{ padding: "5rem 0 6rem", backgroundColor: pageBg }}>
-        <div style={container}>
-          <div className="bifrost-grid">
-            <Reveal>
-              <div className="smallcaps" style={{ marginBottom: "1.5rem" }}>
-                v0.1 · JourdanLabs
+      <section>
+        <div style={S.container} className="bifrost-hero">
+          <Reveal>
+            <div className="bifrost-hero-panel">
+              <div>
+                <span style={S.label}>BIFROST EDGE · Chrome extension</span>
+                <h1>
+                  <span>Browser</span>
+                  <span>trust for</span>
+                  <span>frontier</span>
+                  <span>LLMs.</span>
+                </h1>
+                <p style={{ ...S.p, fontSize: "1.08rem", maxWidth: 780 }}>
+                  BIFROST adds deterministic verification signals directly on top of
+                  the AI tools people already use. ChatGPT, Claude, Gemini, Grok,
+                  Kimi, DeepSeek, MiniMax, Genspark: same discipline, same visible
+                  refusal boundary.
+                </p>
+                <div className="bifrost-actions">
+                  <ExternalLink className="primary-button" href={chromeExtensionUrl}>
+                    Install Chrome extension
+                  </ExternalLink>
+                  <ExternalLink className="secondary-button purple" href={githubUrl}>
+                    View GitHub
+                  </ExternalLink>
+                </div>
               </div>
-              <h1
-                style={{
-                  fontSize: "clamp(3.25rem, 7vw, 6.25rem)",
-                  fontWeight: 850,
-                  letterSpacing: "-0.05em",
-                  lineHeight: 0.92,
-                  color: "var(--text-primary)",
-                  marginBottom: "1.4rem",
-                }}
-              >
-                BIFROST
-              </h1>
-              <p
-                style={{
-                  fontSize: "clamp(1.2rem, 2vw, 1.5rem)",
-                  lineHeight: 1.25,
-                  color: purple,
-                  fontWeight: 750,
-                  marginBottom: "0.75rem",
-                }}
-              >
-                AI generates. BIFROST verifies.
-              </p>
-              <p
-                style={{
-                  fontSize: "1.0625rem",
-                  lineHeight: 1.65,
-                  color: "var(--text-secondary)",
-                  maxWidth: 420,
-                  marginBottom: "2.5rem",
-                }}
-              >
-                A universal verification layer for AI output.
-              </p>
-              <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-                <Button href="#cta">Get Started</Button>
-                <Button href={githubUrl} variant="secondary">
-                  View on GitHub
-                </Button>
-              </div>
-            </Reveal>
 
-            <Reveal delay={200}>
-              <InlineAsset
-                src="hero-bridge.png"
-                alt="BIFROST bridge visual with PULSAR and approved verdict"
-                ratio="585 / 395"
-                priority
-              />
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      <section
-        style={{
-          padding: "5rem 0",
-          backgroundColor: pageBg,
-          borderTop: "1px solid var(--bg-border)",
-          borderBottom: "1px solid var(--bg-border)",
-        }}
-      >
-        <div style={container}>
-          <div className="bifrost-grid">
-            <Reveal>
-              <div className="smallcaps" style={{ marginBottom: "1rem" }}>
-                Problem
+              <div className="bifrost-proof-strip" aria-label="BIFROST proof points">
+                <div>
+                  <span>Runtime</span>
+                  <strong>Runs in Chrome on live LLM pages</strong>
+                </div>
+                <div>
+                  <span>Posture</span>
+                  <strong>Verification is never confused with generation</strong>
+                </div>
+                <div>
+                  <span>Boundary</span>
+                  <strong>Unavailable is not approval</strong>
+                </div>
+                <div>
+                  <span>Source</span>
+                  <strong>Public GitHub repo</strong>
+                </div>
               </div>
-              <h2
-                style={{
-                  fontSize: "clamp(2rem, 4vw, 3rem)",
-                  fontWeight: 800,
-                  letterSpacing: "-0.025em",
-                  lineHeight: 1.05,
-                  color: "var(--text-primary)",
-                  marginBottom: "1.75rem",
-                  maxWidth: 580,
-                }}
-              >
-                AI fails where correctness is non-negotiable
-              </h2>
-              <div style={{ display: "grid", gap: "0.85rem", color: "var(--text-secondary)", fontSize: "0.95rem" }}>
-                {[
-                  "Confident answers can still be wrong",
-                  "No reproducibility",
-                  "No audit trail",
-                  "No refusal when uncertain",
-                ].map((item) => (
-                  <div key={item} style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
-                    <span style={{ width: 6, height: 6, backgroundColor: purple, borderRadius: 999, flexShrink: 0 }} />
-                    {item}
+            </div>
+          </Reveal>
+
+          <Reveal delay={120}>
+            <div className="bifrost-visual-panel">
+              <div className="bifrost-visual" aria-label="Baby PULSAR verifying an LLM answer">
+                <Image
+                  src="/assets/bifrost/hero-bridge.png"
+                  alt="BIFROST bridge visual with Baby PULSAR and a verification verdict"
+                  fill
+                  priority
+                  sizes="(max-width: 1020px) 100vw, 420px"
+                />
+              </div>
+              <div className="bifrost-verdict-stack">
+                {states.map((state) => (
+                  <div className={`bifrost-verdict ${state.tone}`} key={state.name}>
+                    <b>{state.name}</b>
+                    <small>{state.label}</small>
                   </div>
                 ))}
               </div>
-            </Reveal>
-
-            <Reveal delay={150}>
-              <div>
-                <InlineAsset
-                  src="problem-ai-card.png"
-                  alt="AI failure card with small PULSAR probe"
-                  ratio="560 / 385"
-                />
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "1fr auto 1fr auto 1fr",
-                    gap: "0.75rem",
-                    alignItems: "center",
-                    marginTop: "1.25rem",
-                    fontFamily: "var(--font-geist-mono), monospace",
-                    fontSize: "0.76rem",
-                    color: "var(--text-secondary)",
-                  }}
-                  className="content-grid"
-                >
-                  <span>AI response</span>
-                  <span>→</span>
-                  <span>&quot;100% confident&quot;</span>
-                  <span>→</span>
-                  <span style={{ color: "#B94A4A", fontWeight: 800 }}>wrong</span>
-                </div>
-              </div>
-            </Reveal>
-          </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      <section style={{ padding: "5rem 0", backgroundColor: pageBg }}>
-        <div style={container}>
-          <div className="bifrost-grid">
-            <Reveal>
-              <div className="smallcaps" style={{ marginBottom: "1rem" }}>
-                Solution
-              </div>
-              <h2
-                style={{
-                  fontSize: "clamp(2rem, 4vw, 3rem)",
-                  fontWeight: 800,
-                  letterSpacing: "-0.025em",
-                  lineHeight: 1.05,
-                  color: "var(--text-primary)",
-                  marginBottom: "1.5rem",
-                  maxWidth: 560,
-                }}
-              >
-                BIFROST sits between AI and action
-              </h2>
-              <p style={{ fontSize: "1rem", lineHeight: 1.65, color: "var(--text-secondary)", maxWidth: 440 }}>
-                BIFROST evaluates AI output in real time and returns a verifiable confidence signal.
-              </p>
-            </Reveal>
-
-            <Reveal delay={150}>
-              <div>
-                <div className="bifrost-flow-grid" style={{ marginBottom: "1.25rem" }}>
-                  {["AI Output", "BIFROST", "Verdict"].map((item) => (
-                    <div
-                      key={item}
-                      style={{
-                        backgroundColor: item === "BIFROST" ? "rgba(109, 69, 199, 0.10)" : softBg,
-                        padding: "1.5rem",
-                        minHeight: 104,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        fontFamily: "var(--font-geist-mono), monospace",
-                        fontSize: "0.75rem",
-                        fontWeight: 700,
-                        letterSpacing: "0.08em",
-                        textTransform: "uppercase",
-                        color: item === "BIFROST" ? purple : "var(--text-primary)",
-                      }}
-                    >
-                      {item}
-                    </div>
-                  ))}
-                </div>
-                <InlineAsset
-                  src="solution-diagram.png"
-                  alt="BIFROST verification verdict diagram"
-                  ratio="570 / 210"
-                />
-                <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginTop: "1rem" }}>
-                  {["APPROVED", "LOW CONFIDENCE", "REJECTED", "UNAVAILABLE"].map((verdict) => (
-                    <span
-                      key={verdict}
-                      style={{
-                        padding: "0.55rem 0.75rem",
-                        backgroundColor: "var(--text-primary)",
-                        color: "var(--bg)",
-                        fontFamily: "var(--font-geist-mono), monospace",
-                        fontSize: "0.62rem",
-                        fontWeight: 700,
-                        letterSpacing: "0.08em",
-                      }}
-                    >
-                      {verdict}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      <section
-        style={{
-          padding: "5rem 0",
-          backgroundColor: pageBg,
-          borderTop: "1px solid var(--bg-border)",
-          borderBottom: "1px solid var(--bg-border)",
-        }}
-      >
-        <div style={container}>
+      <section className="bifrost-section">
+        <div style={S.container}>
           <Reveal>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "end", gap: "2rem", marginBottom: "2.25rem", flexWrap: "wrap" }}>
-              <div>
-                <div className="smallcaps" style={{ marginBottom: "1rem" }}>
-                  How It Works
+            <div className="bifrost-wide-panel">
+              <div className="bifrost-section-title">
+                <div>
+                  <span style={S.label}>Where it works</span>
+                  <h2>One browser layer across the tools people actually use.</h2>
                 </div>
-                <h2
-                  style={{
-                    fontSize: "clamp(2rem, 4vw, 3rem)",
-                    fontWeight: 800,
-                    letterSpacing: "-0.025em",
-                    lineHeight: 1.05,
-                    color: "var(--text-primary)",
-                  }}
-                >
-                  COSMIC-lite verification pipeline
-                </h2>
+                <Link className="secondary-button purple" href="/omnis">
+                  Open OMNIS
+                </Link>
               </div>
-              <div style={{ fontFamily: "var(--font-geist-mono), monospace", color: "var(--text-tertiary)", fontSize: "0.78rem" }}>
-                Six engines. One verdict.
+              <div className="bifrost-target-grid">
+                {targets.map((target) => (
+                  <div key={target}>{target}</div>
+                ))}
               </div>
-            </div>
-          </Reveal>
-
-          <Reveal delay={100}>
-            <InlineAsset
-              src="pipeline-engines-hires.png"
-              alt="COSMIC-lite verification pipeline engines"
-              ratio="1919 / 820"
-            />
-            <div className="bifrost-engine-grid" style={{ marginTop: "1.5rem" }}>
-              {engines.map(([name, label], index) => (
-                <div
-                  key={name}
-                  style={{
-                    backgroundColor: name === "PULSAR" ? "rgba(109, 69, 199, 0.10)" : softBg,
-                    padding: "1rem",
-                    minHeight: 112,
-                  }}
-                >
-                  <div style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.68rem", color: "var(--text-tertiary)", marginBottom: "0.75rem" }}>
-                    {String(index + 1).padStart(2, "0")}
-                  </div>
-                  <div style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.75rem", color: name === "PULSAR" ? purple : "var(--text-primary)", fontWeight: 800, marginBottom: "0.35rem" }}>
-                    {name}
-                  </div>
-                  <div style={{ color: "var(--text-secondary)", fontSize: "0.8rem" }}>{label}</div>
-                </div>
-              ))}
             </div>
           </Reveal>
         </div>
       </section>
 
-      <section id="cta" style={{ padding: "5rem 0 6rem", backgroundColor: pageBg }}>
-        <div style={container}>
+      <section className="bifrost-section">
+        <div style={S.container}>
           <Reveal>
-            <div className="smallcaps" style={{ marginBottom: "1.5rem" }}>
-              Use Cases
-            </div>
-            <div className="bifrost-use-grid" style={{ marginBottom: "3rem" }}>
-              {useCases.map((item) => (
-                <div key={item.title} style={{ backgroundColor: softBg, padding: "1.5rem", minHeight: 150 }}>
-                  <div style={{ color: purple, fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.75rem", fontWeight: 800, marginBottom: "1.2rem" }}>
-                    {item.title}
-                  </div>
-                  <p style={{ color: "var(--text-secondary)", lineHeight: 1.55 }}>{item.body}</p>
-                </div>
-              ))}
+            <div className="bifrost-section-title">
+              <div>
+                <span style={S.label}>Operating rules</span>
+                <h2>The extension has one job: keep the answer honest.</h2>
+              </div>
             </div>
           </Reveal>
+          <div className="bifrost-card-grid">
+            {operatingRules.map((rule, index) => (
+              <Reveal delay={80 * index} key={rule}>
+                <div className="bifrost-card">
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <strong>{rule}</strong>
+                  <p>
+                    BIFROST treats verification as a separate control surface, not
+                    a second chatbot trying to sound helpful.
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
 
-          <div className="bifrost-grid">
-            <Reveal>
-              <h2
-                style={{
-                  fontSize: "clamp(2rem, 4vw, 3rem)",
-                  fontWeight: 800,
-                  letterSpacing: "-0.025em",
-                  lineHeight: 1.05,
-                  color: "var(--text-primary)",
-                  marginBottom: "1rem",
-                  maxWidth: 520,
-                }}
-              >
-                Trust the output. Ship with confidence.
-              </h2>
-              <div style={{ color: "var(--text-tertiary)", fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.78rem", marginBottom: "2rem" }}>
-                jourdanlabs.com/bifrost
+      <section className="bifrost-section">
+        <div style={S.container}>
+          <Reveal>
+            <div className="bifrost-wide-panel">
+              <div className="bifrost-section-title">
+                <div>
+                  <span style={S.label}>COSMIC-lite pipeline</span>
+                  <h2>Six deterministic engines. One visible verdict.</h2>
+                </div>
               </div>
-              <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-                <Button href={githubUrl}>Install CLI</Button>
-                <Button href={githubUrl} variant="secondary">
-                  View GitHub
-                </Button>
-                <Button href={`${githubUrl}#readme`} variant="secondary">
-                  Explore API
-                </Button>
+              <div className="bifrost-pipeline-grid">
+                {pipeline.map(([name, text], index) => (
+                  <div className="bifrost-pipeline-step" key={name}>
+                    <em>{String(index + 1).padStart(2, "0")}</em>
+                    <strong>{name}</strong>
+                    <p>{text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="bifrost-section" style={{ paddingBottom: "6rem" }}>
+        <div style={S.container}>
+          <div className="bifrost-install-grid">
+            <Reveal>
+              <div className="bifrost-install-card">
+                <div>
+                  <span>Chrome extension</span>
+                  <strong>Install BIFROST EDGE from the public repo.</strong>
+                  <p>
+                    The current install path is the Chrome extension build in the
+                    GitHub repo. The website points users straight to that extension
+                    section instead of the CLI.
+                  </p>
+                </div>
+                <div>
+                  <ExternalLink className="primary-button" href={chromeExtensionUrl}>
+                    Open extension install
+                  </ExternalLink>
+                  <a className="bifrost-link-line" href={chromeExtensionUrl} target="_blank" rel="noopener noreferrer">
+                    github.com/jourdanlabs/bifrost#chrome-extension
+                  </a>
+                </div>
               </div>
             </Reveal>
 
-            <Reveal delay={150}>
-              <InlineAsset
-                src="cta-bridge.png"
-                alt="BIFROST bridge and approved verdict"
-                ratio="1180 / 410"
-              />
+            <Reveal delay={100}>
+              <div className="bifrost-install-card">
+                <div>
+                  <span>Source</span>
+                  <strong>Audit the code, fork it, or wire it into OMNIS.</strong>
+                  <p>
+                    BIFROST stays public because the methodology is the point:
+                    visible checks, visible refusal, visible source.
+                  </p>
+                </div>
+                <div>
+                  <ExternalLink className="secondary-button purple" href={githubUrl}>
+                    View GitHub
+                  </ExternalLink>
+                  <a className="bifrost-link-line" href={githubUrl} target="_blank" rel="noopener noreferrer">
+                    github.com/jourdanlabs/bifrost
+                  </a>
+                </div>
+              </div>
             </Reveal>
           </div>
         </div>
       </section>
-    </>
+    </main>
   );
 }
