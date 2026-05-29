@@ -8,6 +8,8 @@ const links = [
   { href: "/bifrost", label: "BIFROST" },
   { href: "/alchemist", label: "ALCHEMIST" },
   { href: "/omnis", label: "OMNIS" },
+  { href: "/divisions/hygeia", label: "HYGEIA" },
+  { href: "/divisions/helix", label: "HELIX" },
   { href: "/divisions", label: "Divisions" },
   { href: "/crucible", label: "Crucible" },
   { href: "/applications", label: "Applications" },
@@ -16,6 +18,10 @@ const links = [
 
 export default function Nav() {
   const pathname = usePathname();
+  const activeHref =
+    links
+      .filter((l) => pathname === l.href || pathname.startsWith(`${l.href}/`))
+      .sort((a, b) => b.href.length - a.href.length)[0]?.href ?? "";
 
   return (
     <header className="nav-shell">
@@ -27,9 +33,7 @@ export default function Nav() {
 
         <nav className="nav-links">
           {links.map((l) => {
-            const active =
-              pathname === l.href ||
-              (l.href !== "/" && pathname.startsWith(l.href));
+            const active = l.href === activeHref;
             return (
               <Link
                 key={l.href}
