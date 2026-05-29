@@ -664,7 +664,7 @@ export default function BifrostPage() {
                   <p>
                     The current install path is the Chrome extension build in the
                     GitHub repo. The website points users straight to that extension
-                    section instead of the CLI.
+                    section.
                   </p>
                 </div>
                 <div>
