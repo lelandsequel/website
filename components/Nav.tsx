@@ -10,8 +10,9 @@ const links = [
   { href: "/omnis", label: "OMNIS" },
   { href: "/divisions/hygeia", label: "HYGEIA" },
   { href: "/divisions/helix", label: "HELIX" },
+  { href: "/bacchus", label: "BACCHUS" },
+  { href: "/crucible", label: "CRUCIBLE" },
   { href: "/divisions", label: "Divisions" },
-  { href: "/crucible", label: "Crucible" },
   { href: "/applications", label: "Applications" },
   { href: "/contact", label: "Contact" },
 ];
