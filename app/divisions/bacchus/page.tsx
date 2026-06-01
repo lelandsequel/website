@@ -81,7 +81,7 @@ const products = [
   {
     name: "BACCHUS ROE",
     status: "Altima-exclusive · native Mac",
-    href: "/downloads/BACCHUS-ROE-Mac-0.1.0.dmg",
+    href: "/downloads/BACCHUS-ROE-Mac-1.0.0.dmg",
     description:
       "Caviar account pipeline built for Altima Caviar. Tracks buyer programs, reorder risk, AURORA account scoring, CSV imports, account briefs, and SHA-chained receipts.",
   },
@@ -125,18 +125,18 @@ export default function BacchusPage() {
                 <Link href="/bacchus/cellar" style={primaryButton}>
                   Open Cellar Intelligence
                 </Link>
-                <a href="/downloads/BACCHUS-ROE-Mac-0.1.0.dmg" download style={primaryButton}>
+                <a href="/downloads/BACCHUS-ROE-Mac-1.0.0.dmg" download style={primaryButton}>
                   Download Mac build
                 </a>
                 <a href="https://altimacaviar.com" target="_blank" rel="noreferrer" style={secondaryButton}>
                   Altima Caviar
                 </a>
-                <a href="/downloads/BACCHUS-ROE-Mac-0.1.0.dmg.sha256.txt" download style={secondaryButton}>
+                <a href="/downloads/BACCHUS-ROE-Mac-1.0.0.dmg.sha256.txt" download style={secondaryButton}>
                   SHA-256
                 </a>
               </div>
               <p style={{ color: "var(--text-tertiary)", fontSize: "0.72rem", marginTop: "0.8rem", marginBottom: 0 }}>
-                Native Mac build · unsigned · macOS may require right-click Open the first time.
+                Native Mac build · Developer ID signed · notarization pending.
               </p>
             </div>
           </div>
