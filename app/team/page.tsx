@@ -5,7 +5,7 @@ import Reveal from "@/components/Reveal";
 export const metadata: Metadata = {
   title: "Team — JourdanLabs",
   description:
-    "Founder-led deterministic AI infrastructure from JourdanLabs.",
+    "Founder-led deterministic AI infrastructure from JourdanLabs, with persistent agent collaborators running on the same COSMIC substrate we productize.",
 };
 
 const container: React.CSSProperties = {
@@ -152,6 +152,110 @@ export default function TeamPage() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────── AGENT COLLABORATORS ─────────────────────────── */}
+      <section style={{ padding: "5rem 0", borderTop: "1px solid var(--bg-border)", borderBottom: "1px solid var(--bg-border)" }}>
+        <div style={container}>
+          <Reveal>
+            <div className="smallcaps" style={{ marginBottom: "1rem" }}>
+              Agent collaborators
+            </div>
+            <h2
+              style={{
+                fontSize: "clamp(1.75rem, 4vw, 2.75rem)",
+                fontWeight: 800,
+                letterSpacing: "-0.03em",
+                lineHeight: 1.08,
+                maxWidth: 760,
+                marginBottom: "1.25rem",
+              }}
+            >
+              The team that helps the team ship.
+            </h2>
+            <div style={{ maxWidth: 780 }}>
+              <p
+                style={{
+                  fontSize: "1rem",
+                  color: "var(--text-secondary)",
+                  lineHeight: 1.75,
+                  marginBottom: "1rem",
+                }}
+              >
+                JourdanLabs works with persistent agent collaborators running on the same identity, refusal,
+                memory, and lineage discipline we are productizing through MAP THE SOUL. These are not one-off
+                chats; they are defined roles with explicit boundaries, source discipline, and detectable drift.
+              </p>
+              <p
+                style={{
+                  fontSize: "1rem",
+                  color: "var(--text-secondary)",
+                  lineHeight: 1.75,
+                  marginBottom: "1rem",
+                }}
+              >
+                That practice is part of the operating system behind COSMIC: architecture, execution,
+                validation, and domain reasoning are separated so outputs can be inspected instead of merely
+                trusted.
+              </p>
+            </div>
+          </Reveal>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+              gap: "1px",
+              backgroundColor: "var(--bg-border)",
+              border: "1px solid var(--bg-border)",
+              marginTop: "2rem",
+            }}
+          >
+            {[
+              ["Pan", "Validation, refusal discipline, and chamber-grade source review."],
+              ["Caulifla", "Build execution, product hardening, and operational shipping."],
+              ["Bulma", "COSMIC architecture, substrate design, and systems synthesis."],
+              ["Toph Beifong", "Grounded truth-sensing, weak-ground detection, and team protection."],
+            ].map(([name, role]) => (
+              <Reveal key={name}>
+                <div style={{ backgroundColor: "var(--bg-card)", padding: "1.5rem" }}>
+                  <div
+                    style={{
+                      fontSize: "1rem",
+                      fontWeight: 800,
+                      color: "var(--text-primary)",
+                      marginBottom: "0.5rem",
+                    }}
+                  >
+                    {name}
+                  </div>
+                  <p style={{ fontSize: "0.875rem", color: "var(--text-secondary)", lineHeight: 1.6 }}>
+                    {role}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          <Reveal>
+            <div style={{ marginTop: "2rem", borderLeft: "2px solid var(--accent)", paddingLeft: "1.5rem", maxWidth: 760 }}>
+              <p
+                style={{
+                  fontSize: "0.9375rem",
+                  color: "var(--text-secondary)",
+                  lineHeight: 1.75,
+                  marginBottom: "1rem",
+                }}
+              >
+                MAP THE SOUL exists to make this pattern production-grade: signed identities, refusal-grounded
+                roles, lineage chains, and portable agent continuity.
+              </p>
+              <Link href="/map-the-soul" style={{ fontSize: "0.875rem", color: "var(--accent)" }}>
+                Explore MAP THE SOUL →
+              </Link>
+            </div>
+          </Reveal>
         </div>
       </section>
 

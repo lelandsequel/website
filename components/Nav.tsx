@@ -29,6 +29,7 @@ const lead = [
 ];
 
 const tail = [
+  { href: "/team", label: "Team" },
   { href: "/applications", label: "Applications" },
   { href: "/contact", label: "Contact" },
 ];
