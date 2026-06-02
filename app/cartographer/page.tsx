@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "CARTOGRAPHER — SEO Intelligence | JourdanLabs",
+  title: "CARTOGRAPHER — SEO Intelligence",
   description:
     "CARTOGRAPHER is the JourdanLabs SEO intelligence and execution system for paid client engagements: audits, content maps, technical blockers, and proof-backed search strategy.",
 };
