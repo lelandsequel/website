@@ -92,7 +92,7 @@ const DIVISIONS = [
     tagline: "Identity",
     headline: "Verifiable AI continuity",
     products: "Preserved, audited, migrated agent identity",
-    href: "/research",
+    href: "/map-the-soul",
     accent: "#a855f7",
   },
   {
