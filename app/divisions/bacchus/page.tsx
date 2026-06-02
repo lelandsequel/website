@@ -80,8 +80,8 @@ const products = [
   },
   {
     name: "BACCHUS ROE",
-    status: "Altima-exclusive · native Mac",
-    href: "/downloads/BACCHUS-ROE-Mac-1.0.0.dmg",
+    status: "Altima-exclusive · webapp",
+    href: "/bacchus/roe",
     description:
       "Caviar account pipeline built for Altima Caviar. Tracks buyer programs, reorder risk, AURORA account scoring, CSV imports, account briefs, and SHA-chained receipts.",
   },
@@ -118,14 +118,17 @@ export default function BacchusPage() {
               <span style={{ ...S.label, color: accent, marginBottom: "0.75rem" }}>Client build</span>
               <h2 style={{ fontSize: "1.35rem", margin: "0 0 0.75rem", color: "var(--text-primary)" }}>ROE is exclusive to Altima Caviar.</h2>
               <p style={{ ...S.p, fontSize: "0.925rem", marginBottom: "1.25rem" }}>
-                BACCHUS ROE is the native Mac operating build for Altima Caviar's caviar account pipeline.
+                BACCHUS ROE is the operating build for Altima Caviar's caviar account pipeline.
                 It is not the generic BACCHUS SKU.
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "0.65rem" }}>
+                <Link href="/bacchus/roe" style={primaryButton}>
+                  Open ROE webapp
+                </Link>
                 <Link href="/bacchus/cellar" style={primaryButton}>
                   Open Cellar Intelligence
                 </Link>
-                <a href="/downloads/BACCHUS-ROE-Mac-1.0.0.dmg" download style={primaryButton}>
+                <a href="/downloads/BACCHUS-ROE-Mac-1.0.0.dmg" download style={secondaryButton}>
                   Download Mac build
                 </a>
                 <a href="https://altimacaviar.com" target="_blank" rel="noreferrer" style={secondaryButton}>
@@ -136,7 +139,7 @@ export default function BacchusPage() {
                 </a>
               </div>
               <p style={{ color: "var(--text-tertiary)", fontSize: "0.72rem", marginTop: "0.8rem", marginBottom: 0 }}>
-                Native Mac build · Developer ID signed · notarization pending.
+                Webapp available now · Native Mac build remains available as a secondary option.
               </p>
             </div>
           </div>
@@ -188,7 +191,7 @@ export default function BacchusPage() {
                   download={product.href.endsWith(".dmg") ? true : undefined}
                   style={{ fontSize: "0.78rem", color: accent, fontWeight: 800, textDecoration: "none" }}
                 >
-                  {product.href === "/bacchus/cellar" ? "Open workbench →" : product.href.endsWith(".dmg") ? "Download build →" : "Open source surface →"}
+                  {product.href.startsWith("/bacchus/") ? "Open workbench →" : product.href.endsWith(".dmg") ? "Download build →" : "Open source surface →"}
                 </a>
               </div>
             ))}
