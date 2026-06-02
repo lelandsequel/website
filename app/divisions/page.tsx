@@ -49,9 +49,9 @@ const DIVISIONS = [
   },
   {
     name: "HEIMDALL",
-    tagline: "Security operations & compliance",
-    headline: "SENTINEL",
-    products: "SENTINEL (pre-pilot)",
+    tagline: "Verification & refusal at the irreversible edge",
+    headline: "HEIMDALL Gate",
+    products: "HEIMDALL Gate (demo) · SENTINEL (pre-pilot)",
     href: "/divisions/heimdall",
     accent: "#4A7BA7",
   },

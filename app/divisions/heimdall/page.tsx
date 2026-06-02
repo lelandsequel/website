@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "HEIMDALL Division — Security Operations & Compliance",
+  title: "HEIMDALL Division — Verification & Refusal at the Irreversible Edge",
   description:
-    "HEIMDALL applies COSMIC to security operations. SENTINEL is in pre-pilot with 94.0% held-out accuracy.",
+    "HEIMDALL applies COSMIC to high-consequence decisions — a verification gate that grounds every claim, weighs proportionality, and refuses what it can't prove. It can refuse; it cannot authorize. SENTINEL is in pre-pilot at 94.0% held-out accuracy.",
 };
 
 const accent = "#4A7BA7";
@@ -17,6 +17,13 @@ const S: Record<string, React.CSSProperties> = {
   section: { padding: "5rem 0", borderBottom: "1px solid var(--bg-border)" },
 };
 
+const VERDICTS = [
+  { name: "REFUSE", meaning: "A claim can't be grounded in verified evidence. The action cannot proceed — and the failed claim is named." },
+  { name: "HOLD", meaning: "True, but it doesn't bear the load of the moment. Escalated for human judgment, not executed." },
+  { name: "ABSTAIN", meaning: "The stakes can't be assessed. The gate will not stamp what it can't see." },
+  { name: "NO OBJECTION", meaning: "Grounded and proportionate — and still not an authorization. Authority remains with the human operator." },
+];
+
 export default function HeimdallPage() {
   return (
     <>
@@ -28,14 +35,70 @@ export default function HeimdallPage() {
             </div>
             <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.6875rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: accent, display: "block", marginBottom: "1rem" }}>HEIMDALL</span>
             <h1 style={{ fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, letterSpacing: "-0.035em", lineHeight: 1.1, color: "var(--text-primary)", marginBottom: "1.25rem" }}>
-              Security operations and compliance.
+              The guardian that says no &mdash; and proves why.
             </h1>
             <p style={{ fontSize: "1.0625rem", color: "var(--text-secondary)", lineHeight: 1.7, maxWidth: 560 }}>
-              HEIMDALL applies the COSMIC reasoning substrate to security operations — SOC alert triage,
-              compliance monitoring, and threat classification. Every decision is traceable. Every refusal
-              is logged. No guessing at the security perimeter.
+              HEIMDALL applies the COSMIC reasoning substrate to the decisions you can&rsquo;t take back. It
+              grounds every claim in verified evidence, weighs whether even a true claim bears the weight of
+              the moment, and refuses when it can&rsquo;t. A human holds every decision &mdash; the gate can
+              refuse, hold, or stand aside, but it cannot authorize. No guessing at the irreversible edge.
             </p>
           </div>
+        </div>
+      </section>
+
+      <section style={S.section}>
+        <div style={S.container}>
+          <span style={S.label}>The HEIMDALL gate</span>
+          <p style={{ ...S.p, maxWidth: 620, marginBottom: "2rem" }}>
+            Every proposed action carries claims, and every claim must cite evidence that can be verified.
+            The gate returns one of four verdicts &mdash; and not one of them is &ldquo;yes.&rdquo;
+          </p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "1px", backgroundColor: "var(--bg-border)", border: "1px solid var(--bg-border)" }}>
+            {VERDICTS.map((v) => (
+              <div key={v.name} style={{ backgroundColor: "var(--bg-card)", padding: "1.75rem" }}>
+                <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.8125rem", fontWeight: 700, color: accent, letterSpacing: "0.04em", display: "block", marginBottom: "0.75rem" }}>{v.name}</span>
+                <p style={{ fontSize: "0.8125rem", color: "var(--text-secondary)", lineHeight: 1.6, margin: 0 }}>{v.meaning}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section style={S.section}>
+        <div style={S.containerSm}>
+          <span style={S.label}>The one rule</span>
+          <p style={S.p}>
+            By design, HEIMDALL has no &ldquo;authorize&rdquo; verdict &mdash; there is no path in the engine
+            that can emit one. It can refuse, hold, abstain, or raise no objection. It removes options; it
+            never grants them. A human stays accountable on every decision. The gate is the brake and the
+            record &mdash; never the trigger.
+          </p>
+          <p style={{ ...S.p, marginBottom: 0 }}>
+            <strong style={{ color: "var(--text-primary)", fontWeight: 600 }}>Deterministic.</strong> Identical
+            inputs produce an identical verdict &mdash; reproducible in any review or inquiry, no model, no
+            guess. <strong style={{ color: "var(--text-primary)", fontWeight: 600 }}>Accountable.</strong> Every
+            decision, and every refusal, is sealed into the LUNA audit chain: append-only, tamper-evident,
+            post-mortem ready.
+          </p>
+        </div>
+      </section>
+
+      <section style={S.section}>
+        <div style={S.containerSm}>
+          <span style={S.label}>One guardian, every edge</span>
+          <p style={S.p}>
+            A decision that can&rsquo;t be undone should never rest on a claim that can&rsquo;t be proven
+            &mdash; wherever it happens. A defense engagement review. A clinical intervention. An irreversible
+            financial execution. An infrastructure cutover. The same posture applies: ground the claims, weigh
+            the consequences, refuse what can&rsquo;t survive scrutiny, and leave an immutable record of why
+            every call was made.
+          </p>
+          <p style={{ ...S.p, marginBottom: 0, fontSize: "0.8125rem", color: "var(--text-tertiary)" }}>
+            All gate demonstrations use synthetic, illustrative scenarios. HEIMDALL is decision oversight
+            &mdash; verification, refusal, and an auditable record &mdash; with a human in the loop at all
+            times.
+          </p>
         </div>
       </section>
 
@@ -44,6 +107,12 @@ export default function HeimdallPage() {
           <span style={S.label}>Products</span>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "1px", backgroundColor: "var(--bg-border)", border: "1px solid var(--bg-border)" }}>
             {[
+              {
+                name: "HEIMDALL Gate",
+                status: "Demo",
+                description: "The verification-and-refusal gate for irreversible decisions. Grounds every claim (COSMIC), weighs proportionality, refuses what it can't prove, and seals each decision into the LUNA audit chain. Brake-only by construction — it cannot authorize.",
+                accuracy: "—",
+              },
               {
                 name: "SENTINEL",
                 status: "Pre-pilot",
@@ -56,7 +125,7 @@ export default function HeimdallPage() {
                   <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.75rem", fontWeight: 700, color: accent }}>{product.name}</span>
                   <span style={{ fontSize: "0.625rem", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: product.status === "Pre-pilot" ? accent : "var(--text-tertiary)", border: `1px solid ${product.status === "Pre-pilot" ? accent : "var(--bg-border)"}`, padding: "0.125rem 0.5rem", fontFamily: "var(--font-geist-mono), monospace" }}>{product.status}</span>
                 </div>
-                <p style={{ fontSize: "0.8125rem", color: "var(--text-secondary)", lineHeight: 1.6, marginBottom: "1rem" }}>{product.description}</p>
+                <p style={{ fontSize: "0.8125rem", color: "var(--text-secondary)", lineHeight: 1.6, marginBottom: product.accuracy !== "—" ? "1rem" : 0 }}>{product.description}</p>
                 {product.accuracy !== "—" && (
                   <div style={{ fontSize: "0.75rem", color: "var(--text-tertiary)" }}>
                     Held-out accuracy: <span style={{ fontFamily: "var(--font-geist-mono), monospace", color: accent }}>{product.accuracy}</span>
@@ -93,16 +162,16 @@ export default function HeimdallPage() {
 
       <section style={{ padding: "5rem 0" }}>
         <div style={S.containerSm}>
-          <span style={S.label}>Why deterministic matters in security</span>
+          <span style={S.label}>Why deterministic matters at the edge</span>
           <p style={S.p}>
-            A SOC triage system that occasionally hallucinates a false negative — classifying a real threat
-            as noise — is not a triage system. It is a liability. SENTINEL's HEIMDALL gate escalates
-            alerts that fall outside the calibrated decision boundary to a human analyst, rather than
-            guessing on novel threat patterns.
+            A system that occasionally hallucinates a confident answer at a high-consequence decision is not a
+            decision system. It is a liability. HEIMDALL escalates anything that falls outside what the
+            evidence can support to a human &mdash; rather than guessing on a call that can&rsquo;t be taken
+            back.
           </p>
           <p style={{ ...S.p, marginBottom: "2rem" }}>
-            The LUNA audit chain means every triage decision — and every refusal — has an immutable,
-            tamper-evident record. When an incident requires post-mortem, the chain of evidence is there.
+            The LUNA audit chain means every decision &mdash; and every refusal &mdash; has an immutable,
+            tamper-evident record. When a call requires post-mortem, the chain of evidence is already there.
           </p>
           <Link href="/applications" style={{ fontSize: "0.875rem", color: accent }}>
             Contact for pre-pilot access →

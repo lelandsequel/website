@@ -3,26 +3,41 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const links = [
+// OMNIS lifecycle order: specify → verify → discover → remember.
+const omnis = [
+  { href: "/omnis/cadmus", label: "CADMUS" },
+  { href: "/omnis/vantage", label: "VANTAGE" },
+  { href: "/omnis/prospector", label: "PROSPECTOR" },
+  { href: "/omnis/luna", label: "LUNA" },
+];
+
+// Keep priority divisions first, then the broader product portfolio.
+const divisions = [
+  { href: "/divisions/helix", label: "HELIX" },
+  { href: "/divisions/heimdall", label: "HEIMDALL" },
+  { href: "/alchemist", label: "ALCHEMIST" },
+  { href: "/divisions/atlas", label: "ATLAS" },
+  { href: "/bacchus", label: "BACCHUS" },
+  { href: "/divisions/hygeia", label: "HYGEIA" },
+  { href: "/crucible", label: "CRUCIBLE" },
+];
+
+const lead = [
   { href: "/cosmic", label: "COSMIC" },
   { href: "/bifrost", label: "BIFROST" },
-  { href: "/alchemist", label: "ALCHEMIST" },
-  { href: "/omnis", label: "OMNIS" },
-  { href: "/divisions/hygeia", label: "HYGEIA" },
-  { href: "/divisions/helix", label: "HELIX" },
-  { href: "/bacchus", label: "BACCHUS" },
-  { href: "/crucible", label: "CRUCIBLE" },
-  { href: "/divisions", label: "Divisions" },
+];
+
+const tail = [
   { href: "/applications", label: "Applications" },
   { href: "/contact", label: "Contact" },
 ];
 
 export default function Nav() {
   const pathname = usePathname();
-  const activeHref =
-    links
-      .filter((l) => pathname === l.href || pathname.startsWith(`${l.href}/`))
-      .sort((a, b) => b.href.length - a.href.length)[0]?.href ?? "";
+  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+  const omnisActive = pathname === "/omnis" || pathname.startsWith("/omnis/");
+  const divisionsActive =
+    pathname === "/divisions" || pathname.startsWith("/divisions/") || divisions.some((d) => isActive(d.href));
 
   return (
     <header className="nav-shell">
@@ -33,18 +48,43 @@ export default function Nav() {
         </Link>
 
         <nav className="nav-links">
-          {links.map((l) => {
-            const active = l.href === activeHref;
-            return (
-              <Link
-                key={l.href}
-                href={l.href}
-                className={`nav-link${active ? " active" : ""}`}
-              >
-                {l.label}
-              </Link>
-            );
-          })}
+          {lead.map((l) => (
+            <Link key={l.href} href={l.href} className={`nav-link${isActive(l.href) ? " active" : ""}`}>
+              {l.label}
+            </Link>
+          ))}
+
+          <div className="nav-dropdown">
+            <Link href="/omnis" className={`nav-link nav-dropdown-trigger${omnisActive ? " active" : ""}`} aria-haspopup="true">
+              OMNIS <span aria-hidden="true">▾</span>
+            </Link>
+            <div className="nav-dropdown-menu">
+              {omnis.map((o) => (
+                <Link key={o.href} href={o.href} className={`nav-dropdown-item${isActive(o.href) ? " active" : ""}`}>
+                  {o.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div className="nav-dropdown">
+            <Link href="/divisions" className={`nav-link nav-dropdown-trigger${divisionsActive ? " active" : ""}`} aria-haspopup="true">
+              Divisions <span aria-hidden="true">▾</span>
+            </Link>
+            <div className="nav-dropdown-menu">
+              {divisions.map((d) => (
+                <Link key={d.href} href={d.href} className={`nav-dropdown-item${isActive(d.href) ? " active" : ""}`}>
+                  {d.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {tail.map((l) => (
+            <Link key={l.href} href={l.href} className={`nav-link${isActive(l.href) ? " active" : ""}`}>
+              {l.label}
+            </Link>
+          ))}
         </nav>
       </div>
     </header>
