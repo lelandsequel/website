@@ -25,6 +25,7 @@ const divisions = [
 const lead = [
   { href: "/cosmic", label: "COSMIC" },
   { href: "/bifrost", label: "BIFROST" },
+  { href: "/map-the-soul", label: "MAP THE SOUL" },
 ];
 
 const tail = [
