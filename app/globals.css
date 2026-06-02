@@ -59,6 +59,10 @@ body::before {
 a { color: var(--accent); text-decoration: none; transition: opacity 0.15s, transform 0.15s; }
 a:hover { opacity: 0.84; }
 
+@media (max-width: 860px) {
+  .cadmus-grid { grid-template-columns: 1fr !important; }
+}
+
 .back-link {
   display: inline-flex;
   align-items: center;

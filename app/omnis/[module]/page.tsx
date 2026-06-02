@@ -61,6 +61,25 @@ export default async function OmnisModulePage({ params }: { params: Promise<{ mo
                 <span className={styles.kicker}>{module.lane} · {module.name}</span>
                 <h1>{module.headline}.</h1>
                 <p>{module.summary}</p>
+                {module.id === "cadmus" && (
+                  <Link
+                    href="/cadmus"
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "0.4rem",
+                      marginTop: "1.1rem",
+                      padding: "0.6rem 1.05rem",
+                      borderRadius: 999,
+                      background: "#6f38ff",
+                      color: "#fff",
+                      fontWeight: 700,
+                      fontSize: "0.9rem",
+                    }}
+                  >
+                    ⚡ Try the live generator →
+                  </Link>
+                )}
               </div>
               <div className={styles.mascotPanel}>
                 <Image src="/brand/baby-pulsar-speech.png" alt="Baby PULSAR" width={240} height={240} />
