@@ -43,6 +43,14 @@ export default function HelixPage() {
               adaptive training intelligence for athletes and coaches, with Apple Watch and WHOOP
               integration. It is not HYGEIA; regulated clinical safety work lives under HYGEIA.
             </p>
+            <div style={{ marginTop: "1.75rem", paddingTop: "1.25rem", borderTop: "1px solid var(--bg-border)", maxWidth: 560 }}>
+              <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.6875rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--text-tertiary)", display: "block", marginBottom: "0.4rem" }}>Origin</span>
+              <p style={{ fontSize: "0.9375rem", color: "var(--text-secondary)", lineHeight: 1.6, margin: 0 }}>
+                HELIX is the brainchild of{" "}
+                <strong style={{ color: "var(--text-primary)", fontWeight: 600 }}>Charles Jourdan</strong>, CSO —
+                conceived, championed, and carried by him.
+              </p>
+            </div>
           </div>
         </div>
       </section>
