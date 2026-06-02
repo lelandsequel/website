@@ -46,13 +46,13 @@ export default function ApplicationsPage() {
       <section style={S.section}>
         <div style={S.container}>
           <span style={S.label}>Direct deployment</span>
-          <div style={{ display: "flex", flexDirection: "column", gap: "1px", backgroundColor: "var(--bg-border)", border: "1px solid var(--bg-border)" }}>
+          <div className="application-list">
             {DIVISION_CONTACTS.map((d) => (
-              <div key={d.name} style={{ display: "grid", gridTemplateColumns: "8rem 1fr 1fr auto", gap: "2rem", padding: "1.5rem", backgroundColor: "var(--bg-card)", alignItems: "center" }}>
-                <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.75rem", fontWeight: 700, color: d.accent }}>{d.name}</span>
-                <span style={{ fontSize: "0.875rem", color: "var(--text-secondary)" }}>{d.domain}</span>
-                <span style={{ fontSize: "0.8125rem", color: "var(--text-tertiary)" }}>{d.contact}</span>
-                <Link href={d.href} style={{ fontSize: "0.8125rem", color: d.accent, whiteSpace: "nowrap" }}>
+              <div key={d.name} className="application-row">
+                <span className="application-name" style={{ color: d.accent }}>{d.name}</span>
+                <span className="application-domain">{d.domain}</span>
+                <span className="application-contact">{d.contact}</span>
+                <Link href={d.href} className="application-link" style={{ color: d.accent }}>
                   View →
                 </Link>
               </div>

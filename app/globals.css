@@ -768,7 +768,7 @@ pre code { background: none; padding: 0; color: inherit; }
   right: 0;
   margin-top: 0.4rem;
   min-width: 190px;
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 0.1rem;
   padding: 0.4rem;
@@ -785,6 +785,7 @@ pre code { background: none; padding: 0; color: inherit; }
 
 .nav-dropdown:hover .nav-dropdown-menu,
 .nav-dropdown:focus-within .nav-dropdown-menu {
+  display: flex;
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
@@ -806,23 +807,68 @@ pre code { background: none; padding: 0; color: inherit; }
 }
 
 @media (max-width: 900px) {
-  .nav-dropdown {
-    display: contents;
-  }
   .nav-dropdown-menu {
-    position: static;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-    box-shadow: none;
-    border: none;
-    background: transparent;
-    padding: 0;
-    margin: 0;
-    flex-direction: row;
-    flex-wrap: wrap;
-    min-width: 0;
+    display: none !important;
   }
+}
+
+.application-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background-color: var(--bg-border);
+  border: 1px solid var(--bg-border);
+}
+
+.application-row {
+  display: grid;
+  grid-template-columns: 8rem minmax(0, 1fr) minmax(0, 1fr) auto;
+  gap: 2rem;
+  padding: 1.5rem;
+  background-color: var(--bg-card);
+  align-items: center;
+}
+
+.application-row > * {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.application-name {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.application-domain {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.application-contact {
+  font-size: 0.8125rem;
+  color: var(--text-tertiary);
+}
+
+.application-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  width: fit-content;
+  font-size: 0.8125rem;
+  white-space: nowrap;
+}
+
+.vantage-receipt-grid,
+.vantage-case-row,
+.vantage-scan-row {
+  min-width: 0;
+}
+
+.vantage-case-row > *,
+.vantage-scan-row > * {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .footer-shell {
@@ -2066,6 +2112,42 @@ pre code { background: none; padding: 0; color: inherit; }
   .llm-check-comparison {
     display: grid;
     grid-template-columns: 1fr;
+  }
+
+  .application-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.48rem;
+    padding: 1.15rem;
+    align-items: start;
+  }
+
+  .application-name {
+    font-size: 0.72rem;
+  }
+
+  .application-domain {
+    font-weight: 800;
+  }
+
+  .application-link {
+    margin-top: 0.2rem;
+  }
+
+  .vantage-receipt-grid,
+  .vantage-case-row,
+  .vantage-scan-row {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 0.45rem !important;
+    align-items: start !important;
+  }
+
+  .vantage-receipt-grid {
+    gap: 1.5rem !important;
+  }
+
+  .vantage-case-head,
+  .vantage-scan-head {
+    display: none !important;
   }
 
   .hero-proof-card {

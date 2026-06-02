@@ -88,7 +88,7 @@ export default function VantagePage() {
         <div style={S.container}>
           <span style={S.label}>VANTAGE 2.0 / CLARION receipts</span>
 
-          <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(280px, 0.8fr)", gap: "3rem", alignItems: "start" }}>
+          <div className="vantage-receipt-grid" style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(280px, 0.8fr)", gap: "3rem", alignItems: "start" }}>
             <div>
               <h2 style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 700, lineHeight: 1.1, color: "var(--text-primary)", marginBottom: "1rem" }}>
                 The auditor beat the auditor.
@@ -132,13 +132,13 @@ export default function VantagePage() {
           </div>
 
           <div style={{ marginTop: "3rem", border: "1px solid var(--bg-border)", overflow: "hidden" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "10rem 1fr 7rem", padding: "0.75rem 1rem", borderBottom: "1px solid var(--bg-border)", backgroundColor: "var(--bg-card)" }}>
+            <div className="vantage-case-head" style={{ display: "grid", gridTemplateColumns: "10rem 1fr 7rem", padding: "0.75rem 1rem", borderBottom: "1px solid var(--bg-border)", backgroundColor: "var(--bg-card)" }}>
               {["Fixture", "Pressure", "Outcome"].map((h) => (
                 <span key={h} style={{ fontSize: "0.6875rem", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--text-tertiary)" }}>{h}</span>
               ))}
             </div>
             {V2_CASES.map((row, i) => (
-              <div key={row.fixture} style={{ display: "grid", gridTemplateColumns: "10rem 1fr 7rem", padding: "1rem", borderBottom: i < V2_CASES.length - 1 ? "1px solid var(--bg-border)" : "none", alignItems: "center" }}>
+              <div key={row.fixture} className="vantage-case-row" style={{ display: "grid", gridTemplateColumns: "10rem 1fr 7rem", padding: "1rem", borderBottom: i < V2_CASES.length - 1 ? "1px solid var(--bg-border)" : "none", alignItems: "center" }}>
                 <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.75rem", fontWeight: 600, color: "var(--accent)" }}>{row.fixture}</span>
                 <span style={{ fontSize: "0.875rem", color: "var(--text-secondary)" }}>{row.pressure}</span>
                 <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.75rem", color: "var(--text-primary)", textTransform: "uppercase" }}>{row.outcome}</span>
@@ -157,13 +157,13 @@ export default function VantagePage() {
           <span style={S.label}>Scan Receipts</span>
 
           <div style={{ border: "1px solid var(--bg-border)", overflow: "hidden" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "8rem 1fr 6rem 6rem 1fr", padding: "0.75rem 1rem", borderBottom: "1px solid var(--bg-border)", backgroundColor: "var(--bg-card)" }}>
+            <div className="vantage-scan-head" style={{ display: "grid", gridTemplateColumns: "8rem 1fr 6rem 6rem 1fr", padding: "0.75rem 1rem", borderBottom: "1px solid var(--bg-border)", backgroundColor: "var(--bg-card)" }}>
               {["Division", "Task", "Score", "Refusal", "Corpus"].map((h) => (
                 <span key={h} style={{ fontSize: "0.6875rem", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--text-tertiary)" }}>{h}</span>
               ))}
             </div>
             {SCAN_RESULTS.map((row, i) => (
-              <div key={row.division} style={{ display: "grid", gridTemplateColumns: "8rem 1fr 6rem 6rem 1fr", padding: "1rem", borderBottom: i < SCAN_RESULTS.length - 1 ? "1px solid var(--bg-border)" : "none", alignItems: "center" }}>
+              <div key={row.division} className="vantage-scan-row" style={{ display: "grid", gridTemplateColumns: "8rem 1fr 6rem 6rem 1fr", padding: "1rem", borderBottom: i < SCAN_RESULTS.length - 1 ? "1px solid var(--bg-border)" : "none", alignItems: "center" }}>
                 <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.75rem", fontWeight: 600, color: "var(--accent)" }}>{row.division}</span>
                 <span style={{ fontSize: "0.875rem", color: "var(--text-secondary)" }}>{row.task}</span>
                 <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.875rem", fontWeight: 700, color: "var(--text-primary)" }}>{row.score}</span>
