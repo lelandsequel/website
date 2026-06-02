@@ -7,6 +7,7 @@ const footerSections = [
       { href: "/cosmic", label: "COSMIC" },
       { href: "/bifrost", label: "BIFROST" },
       { href: "/northstar", label: "NORTHSTAR" },
+      { href: "/cartographer", label: "CARTOGRAPHER" },
       { href: "/alchemist", label: "ALCHEMIST" },
       { href: "/omnis", label: "OMNIS" },
       { href: "/divisions", label: "Divisions" },

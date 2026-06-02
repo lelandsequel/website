@@ -137,6 +137,7 @@ const portfolioPlays = [
   ["CADMUS", "Brain-sprawl to airtight specs for product and engineering teams."],
   ["PROSPECTOR", "Software estate intelligence for modernization, M&A, and diligence."],
   ["CIPHER", "Finance tools that produce valuation outputs with visible assumptions."],
+  ["CARTOGRAPHER", "SEO intelligence for paid client audits, content maps, and report packets."],
   ["BIFROST", "A browser trust layer for frontier LLMs: verify, refuse, and explain."],
 ];
 
