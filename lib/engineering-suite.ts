@@ -739,7 +739,7 @@ function runAccessLens(module: EngineeringModule, packet: string): EngineeringRe
     remediation: "Convert standing privilege to time-bound, just-in-time elevation.",
     evidence: "Privileged-grant signal detected.",
   });
-  addIfPresent(findings, lower, /unused|never\s+(?:used|accessed)|not\s+(?:used|accessed)|no\s+activity|read[-\s]?only.*admin|admin.*read[-\s]?only/, {
+  addIfPresent(findings, lower, /\bunused\b|never\b[^.]{0,24}\b(?:used|accessed|logged)|not\s+(?:used|accessed)|no\s+(?:activity|logins?)|zero\s+(?:usage|activity)/, {
     code: "ACCESS-DRIFT-001",
     severity: "high",
     title: "Entitlement drift (unused access)",
@@ -747,13 +747,13 @@ function runAccessLens(module: EngineeringModule, packet: string): EngineeringRe
     remediation: "Revoke unused entitlements; enforce least privilege from observed usage.",
     evidence: "Unused-entitlement signal detected.",
   });
-  addIfMissing(findings, lower, /\breview\b|recertif|\bexpir|time[-\s]?bound|just[-\s]?in[-\s]?time|\bjit\b/, {
+  addIfPresent(findings, lower, /\bstanding\b|no\s+expir|never\s+expir|no\s+recertif|no\s+review|without\s+(?:an?\s+)?(?:expir|review|recertif)|permanent\s+(?:grant|access)|indefinite/, {
     code: "ACCESS-REVIEW-001",
     severity: "medium",
     title: "No periodic review / expiry",
-    detail: "Access lacks a recertification cadence or expiry.",
+    detail: "Access lacks a recertification cadence or expiry (standing / permanent grant).",
     remediation: "Add time-bound grants and a recurring access review.",
-    evidence: "No review/expiry signal found.",
+    evidence: "Standing-grant / no-expiry signal detected.",
   });
 
   const score = scoreFromFindings(findings);
@@ -781,13 +781,13 @@ function runBuildGate(module: EngineeringModule, packet: string): EngineeringRes
   const lower = normalize(packet);
   const findings: EngineeringFinding[] = [];
 
-  addIfMissing(findings, lower, /smartsdk|mcp\s*sdk|ex[-\s]?kit|security\s+sdk|observability\s+sdk|required\s+(?:approved\s+)?dependenc/, {
+  addIfPresent(findings, lower, /\bmissing\b[^.]{0,40}(?:security|observability|required|approved|mcp|smart)\s*sdk|\b(?:no|without|lacks?)\b[^.]{0,30}(?:security|observability|required|approved|mcp|smart)\s*sdk|\bmissing\s+the\s+required\b|\blacks?\s+(?:the\s+)?(?:required|approved)\b/, {
     code: "BUILD-DEP-001",
     severity: "high",
     title: "Required approved SDK missing",
     detail: "A required approved dependency (security / observability / MCP SDK) is not present.",
     remediation: "Add the required approved dependencies before the build can pass.",
-    evidence: "No required-dependency signal found.",
+    evidence: "Missing-required-dependency signal detected.",
   });
   addIfPresent(findings, lower, /deprecated|eol|vulnerab|\bcve\b|outside\s+the\s+approved|unapproved|known\s+issue/, {
     code: "BUILD-VER-001",
@@ -805,13 +805,13 @@ function runBuildGate(module: EngineeringModule, packet: string): EngineeringRes
     remediation: "Pin to approved version ranges and enforce at build time.",
     evidence: "Unpinned-version signal detected.",
   });
-  addIfMissing(findings, lower, /lockfile|package-lock|pnpm-lock|yarn\.lock|poetry\.lock|requirements\.txt|go\.sum/, {
+  addIfPresent(findings, lower, /no\s+(?:lock\s?file|package-lock|lock)|without\s+(?:a\s+)?lock|missing\s+(?:a\s+)?lock|lock\s?file\s+(?:is\s+)?(?:missing|absent)|not\s+committed|uncommitted\s+lock/, {
     code: "BUILD-LOCK-001",
     severity: "medium",
     title: "No lockfile / provenance",
     detail: "No lockfile is present to make the build reproducible.",
     remediation: "Commit a lockfile and emit a dependency manifest at build time.",
-    evidence: "No lockfile signal found.",
+    evidence: "Missing-lockfile signal detected.",
   });
 
   const score = scoreFromFindings(findings);
