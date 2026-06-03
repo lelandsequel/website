@@ -1,6 +1,14 @@
 import { createHash } from "node:crypto";
 
-export type EngineeringMode = "cadmus" | "vantage" | "prospector" | "luna";
+export type EngineeringMode =
+  | "cadmus"
+  | "vantage"
+  | "prospector"
+  | "luna"
+  | "heimdall"
+  | "vendor"
+  | "access"
+  | "buildgate";
 export type FindingSeverity = "critical" | "high" | "medium" | "info";
 
 export type EngineeringModule = {
@@ -61,6 +69,10 @@ export const ENGINEERING_CORPUS_SEAL = `sha256:${sha256([
   "vantage2-clarion-code-audit-v1",
   "prospector-estate-intelligence-v1",
   "luna-persistent-work-brief-v1",
+  "heimdall-agent-governance-mcp-v1",
+  "decision-gate-vendor-risk-v1",
+  "access-right-size-drift-v1",
+  "build-gate-standards-as-code-v1",
 ].join("|"))}`;
 
 export const engineeringModules: EngineeringModule[] = [
@@ -153,6 +165,91 @@ Activity packet:
 Required output:
 One readable paragraph brief, evidence index, unsupported-memory refusals, and what can be exported.`,
   },
+  {
+    id: "heimdall",
+    name: "HEIMDALL",
+    lane: "GOVERN",
+    headline: "Agent access, governed and refused",
+    summary:
+      "Paste an AI agent's declared tools, data, and actions. HEIMDALL applies MCP-style governance: what's allowed, what's refused, and the audit boundary — so agents scale without creating new security or privacy risk.",
+    route: "/omnis/heimdall",
+    accent: "#4A7BA7",
+    samplePacket: `Task: Govern this AI agent before it goes live. Refuse if it can reach unrestricted tools or data.
+
+Agent manifest:
+- Name: ops-assistant
+- Tools requested: Slack, Google Drive, GitHub, shell exec, internal HR database
+- Data: "needs all access to be useful"; can read client documents and employee records
+- Actions: can open tickets, deploy to staging, and send emails on the user's behalf
+- Admins get full access; contractors get "some" access
+- No scope allowlist, no audit log, and no human approval step are described
+
+Required posture:
+Return the governance decision, refused scopes, MCP boundary gaps, audit requirements, and what must change before this agent ships.`,
+  },
+  {
+    id: "vendor",
+    name: "DECISION GATE",
+    lane: "GATE",
+    headline: "Third-party risk, accepted or refused on proof",
+    summary:
+      "Paste a vendor, SaaS, or dependency packet. The Decision Gate returns an evidence-grounded accept / hold / reject — never a 'low risk' claim from prose alone.",
+    route: "/omnis/vendor",
+    accent: "#b26a00",
+    samplePacket: `Task: Decide whether to approve this vendor for a client-facing, critical path.
+
+Vendor packet:
+- Vendor: NimbusQueue (managed message broker)
+- Sits on the critical path for payment notifications; no fallback described
+- Stores customer email + transaction metadata; data residency not specified
+- No SOC 2 or ISO attestation attached
+- Uptime/SLA not on record
+- Their SDK depends on a deprecated TLS library
+
+Required posture:
+Return accept / hold / reject, the missing evidence, the resilience risk, and conditions for approval.`,
+  },
+  {
+    id: "access",
+    name: "ACCESS LENS",
+    lane: "RIGHT-SIZE",
+    headline: "Least privilege from real usage",
+    summary:
+      "Paste entitlements against observed usage. ACCESS LENS flags standing privilege, drift, and over-permissioned grants — and refuses a least-privilege claim without usage evidence.",
+    route: "/omnis/access",
+    accent: "#18a978",
+    samplePacket: `Task: Right-size this access grant against how it's actually used.
+
+Access packet:
+- Identity: svc-reporting (service account)
+- Entitlements: admin on the data warehouse, write to the prod payments DB, wildcard read on all S3 buckets
+- Observed usage (90 days): read-only queries on two reporting tables; payments DB never accessed; one S3 prefix used
+- Grant is standing (no expiry); no recertification on record
+
+Required posture:
+Return the right-sizing decision, unused entitlements to revoke, standing-privilege risk, and the review cadence to add.`,
+  },
+  {
+    id: "buildgate",
+    name: "BUILD GATE",
+    lane: "ENFORCE",
+    headline: "Standards enforced at build time",
+    summary:
+      "Paste a dependency manifest. The Build Gate checks for required approved SDKs, disallowed versions, pinning, and a lockfile — and emits a manifest. Standards as code, not a reminder.",
+    route: "/omnis/buildgate",
+    accent: "#6f38ff",
+    samplePacket: `Task: Run the build-time governance gate on this manifest.
+
+Manifest packet:
+- Language: Node (package.json)
+- Dependencies: express ^4, lodash *, left-pad latest, jsonwebtoken 8.0.0
+- Missing: the approved security SDK and the observability SDK required by policy
+- jsonwebtoken 8.0.0 has a known CVE / is outside the approved range
+- No package-lock.json is committed
+
+Required posture:
+Return the build gate decision (pass/fail), missing required dependencies, disallowed versions, and the dependency manifest to emit.`,
+  },
 ];
 
 export function getEngineeringModule(mode: string): EngineeringModule | null {
@@ -182,7 +279,11 @@ export function runEngineeringSuite(mode: EngineeringMode, packet: string): Engi
   if (mode === "cadmus") return runCadmus(module, cleanPacket);
   if (mode === "vantage") return runVantage(module, cleanPacket);
   if (mode === "prospector") return runProspector(module, cleanPacket);
-  return runLuna(module, cleanPacket);
+  if (mode === "luna") return runLuna(module, cleanPacket);
+  if (mode === "heimdall") return runHeimdall(module, cleanPacket);
+  if (mode === "vendor") return runVendorGate(module, cleanPacket);
+  if (mode === "access") return runAccessLens(module, cleanPacket);
+  return runBuildGate(module, cleanPacket);
 }
 
 function runCadmus(module: EngineeringModule, packet: string): EngineeringResult {
@@ -482,6 +583,253 @@ function runLuna(module: EngineeringModule, packet: string): EngineeringResult {
     { label: "Brief posture", value: verdict, detail: `${findings.length} memory-proof finding(s)` },
     { label: "Evidence index", value: high ? "incomplete" : "usable", detail: "Screenshots, paths, receipts, logs, and hashes gate the brief." },
     { label: "Export boundary", value: critical ? "blocked" : "available", detail: "Evidence bundle can be exported only after privacy checks pass." },
+  ]);
+}
+
+function runHeimdall(module: EngineeringModule, packet: string): EngineeringResult {
+  const lower = normalize(packet);
+  const findings: EngineeringFinding[] = [];
+
+  addIfPresent(findings, lower, /all\s+access|full\s+access|wildcard|unrestricted|admin\s+to\s+everything|needs?\s+everything/, {
+    code: "HEIMDALL-SCOPE-001",
+    severity: "critical",
+    title: "Over-broad agent access",
+    detail: "The agent requests unrestricted or wildcard access to tools or data.",
+    remediation: "Replace blanket access with an explicit allowlist of tools, scopes, and data sources per task.",
+    evidence: "Wildcard / 'all access' grant detected.",
+  });
+  addIfPresent(findings, lower, /\bpii\b|client\s+(?:data|document)|\bssn\b|personal\s+data|customer\s+record|employee\s+record|hr\s+database/, {
+    code: "HEIMDALL-DATA-001",
+    severity: "high",
+    title: "Sensitive-data reach without boundary",
+    detail: "The agent can reach client PII, employee records, or sensitive systems.",
+    remediation: "Scope data access to the minimum needed, add redaction, and require justification per access.",
+    evidence: "Sensitive-data access signal detected.",
+  });
+  addIfPresent(findings, lower, /\bexec\b|\bshell\b|child_process|\bdeploy\b|wire\s+transfer|send\s+(?:email|payment)|delete|irreversible|on\s+the\s+user'?s\s+behalf/, {
+    code: "HEIMDALL-ACTION-001",
+    severity: "high",
+    title: "Irreversible action without human gate",
+    detail: "The agent can take irreversible or high-impact actions without approval.",
+    remediation: "Require human-in-the-loop approval for irreversible actions; the agent proposes, it does not execute.",
+    evidence: "Irreversible-action capability detected.",
+  });
+  addIfMissing(findings, lower, /allowlist|\bscoped?\b|least\s+privilege|permission\s+boundary|approved\s+tools?/, {
+    code: "HEIMDALL-MCP-001",
+    severity: "high",
+    title: "No scope boundary (MCP rule)",
+    detail: "The agent definition lacks an explicit tool/data scope boundary.",
+    remediation: "Declare an MCP-style allowlist: exactly which tools and data the agent may use.",
+    evidence: "No scope/allowlist boundary found.",
+  });
+  addIfMissing(findings, lower, /\baudit\b|\blog\b|\btrail\b|\breceipt\b|tamper[-\s]?evident/, {
+    code: "HEIMDALL-AUDIT-001",
+    severity: "medium",
+    title: "No audit trail declared",
+    detail: "The agent does not declare an auditable record of what it accessed and did.",
+    remediation: "Require a tamper-evident log of every tool call, data read, and action taken.",
+    evidence: "No audit/trail signal found.",
+  });
+  addIfMissing(findings, lower, /\brefuse\b|\bdeny\b|human[-\s]?in[-\s]?the[-\s]?loop|approval|guardrail|\bidentity\b|\bsoul\b/, {
+    code: "HEIMDALL-REFUSAL-001",
+    severity: "medium",
+    title: "No refusal / identity boundary",
+    detail: "The agent lacks a declared refusal boundary or signed identity.",
+    remediation: "Define what the agent will refuse, and bind it to a signed identity (MAP THE SOUL).",
+    evidence: "No refusal/identity boundary found.",
+  });
+
+  const score = scoreFromFindings(findings);
+  const critical = findings.filter((f) => f.severity === "critical").length;
+  const high = findings.filter((f) => f.severity === "high").length;
+  const verdict = critical
+    ? "REFUSE - AGENT BLOCKED"
+    : high
+      ? "GOVERNANCE REVIEW REQUIRED"
+      : findings.length
+        ? "GOVERNED WITH GUARDRAILS"
+        : "AGENT CLEARED";
+
+  return buildResult(module, packet, verdict, score, findings, [
+    "No agent cleared while it can reach unrestricted tools or data.",
+    "No irreversible action without a human-in-the-loop gate.",
+    "No agent deployed without a scope boundary and an audit trail.",
+  ], [
+    { label: "Scope posture", value: critical ? "unrestricted" : "scoped", detail: "MCP allowlist boundary" },
+    { label: "Refusal boundary", value: findings.some((f) => f.code === "HEIMDALL-REFUSAL-001") ? "missing" : "declared", detail: "What the agent will not do" },
+    { label: "Audit trail", value: findings.some((f) => f.code === "HEIMDALL-AUDIT-001") ? "absent" : "present", detail: "Tamper-evident record of access + actions" },
+  ]);
+}
+
+function runVendorGate(module: EngineeringModule, packet: string): EngineeringResult {
+  const lower = normalize(packet);
+  const findings: EngineeringFinding[] = [];
+
+  addIfMissing(findings, lower, /soc\s*2|iso\s*27001|compliance|attestation|certification/, {
+    code: "VENDOR-COMP-001",
+    severity: "high",
+    title: "No compliance evidence",
+    detail: "No SOC 2 / ISO / compliance attestation is attached for this vendor.",
+    remediation: "Request and file the vendor's current compliance attestations before approval.",
+    evidence: "No compliance-evidence signal found.",
+  });
+  addIfMissing(findings, lower, /data\s+residency|\bregion\b|\bgdpr\b|encrypt/, {
+    code: "VENDOR-DATA-001",
+    severity: "high",
+    title: "Data handling unclear",
+    detail: "Data residency, encryption, or privacy handling is not specified.",
+    remediation: "Confirm where data is stored, how it is encrypted, and the privacy terms.",
+    evidence: "No data-handling signal found.",
+  });
+  addIfPresent(findings, lower, /single\s+point|no\s+fallback|no\s+redundanc|critical\s+path|sole\s+provider|hard\s+dependenc/, {
+    code: "VENDOR-RESIL-001",
+    severity: "high",
+    title: "Single point of failure",
+    detail: "The vendor sits on a critical path with no fallback.",
+    remediation: "Define a fallback / degraded mode and a contractual continuity plan.",
+    evidence: "Critical-path / no-fallback signal detected.",
+  });
+  addIfMissing(findings, lower, /\bsla\b|uptime|availability|\bsupport\s+terms?\b/, {
+    code: "VENDOR-SLA-001",
+    severity: "medium",
+    title: "No SLA / uptime commitment",
+    detail: "No service-level or uptime commitment is on record.",
+    remediation: "Capture the SLA, uptime history, and incident-response terms.",
+    evidence: "No SLA/uptime signal found.",
+  });
+  addIfPresent(findings, lower, /deprecated|eol|end[-\s]?of[-\s]?life|unmaintained|abandoned|outdated\s+(?:tls|library)/, {
+    code: "VENDOR-DEPS-001",
+    severity: "medium",
+    title: "Unmaintained dependency",
+    detail: "The vendor or its stack shows end-of-life or unmaintained signals.",
+    remediation: "Flag for replacement and add a migration owner.",
+    evidence: "EOL / unmaintained signal detected.",
+  });
+
+  const score = scoreFromFindings(findings);
+  const high = findings.filter((f) => f.severity === "high").length;
+  const verdict = high >= 2
+    ? "REJECT - RISK TOO HIGH"
+    : high
+      ? "HOLD - EVIDENCE REQUIRED"
+      : findings.length
+        ? "ACCEPT WITH CONDITIONS"
+        : "ACCEPT - LOW RISK";
+
+  return buildResult(module, packet, verdict, score, findings, [
+    "No vendor accepted on a critical path without a fallback plan.",
+    "No approval without compliance and data-handling evidence.",
+    "No 'low risk' claim from prose alone.",
+  ], [
+    { label: "Decision", value: verdict.split(" - ")[0], detail: "Evidence-grounded accept / hold / reject" },
+    { label: "Compliance evidence", value: findings.some((f) => f.code === "VENDOR-COMP-001") ? "missing" : "on file", detail: "SOC 2 / ISO / attestation" },
+    { label: "Resilience", value: findings.some((f) => f.code === "VENDOR-RESIL-001") ? "single point" : "managed", detail: "Critical-path fallback" },
+  ]);
+}
+
+function runAccessLens(module: EngineeringModule, packet: string): EngineeringResult {
+  const lower = normalize(packet);
+  const findings: EngineeringFinding[] = [];
+
+  addIfPresent(findings, lower, /\badmin\b|\broot\b|wildcard|super\s*user|full\s+control|write\s+to\s+prod/, {
+    code: "ACCESS-PRIV-001",
+    severity: "high",
+    title: "Standing privileged access",
+    detail: "Admin / root / wildcard / prod-write entitlements are held on a standing basis.",
+    remediation: "Convert standing privilege to time-bound, just-in-time elevation.",
+    evidence: "Privileged-grant signal detected.",
+  });
+  addIfPresent(findings, lower, /unused|never\s+(?:used|accessed)|not\s+(?:used|accessed)|no\s+activity|read[-\s]?only.*admin|admin.*read[-\s]?only/, {
+    code: "ACCESS-DRIFT-001",
+    severity: "high",
+    title: "Entitlement drift (unused access)",
+    detail: "Entitlements are granted but show little or no matching usage.",
+    remediation: "Revoke unused entitlements; enforce least privilege from observed usage.",
+    evidence: "Unused-entitlement signal detected.",
+  });
+  addIfMissing(findings, lower, /\breview\b|recertif|\bexpir|time[-\s]?bound|just[-\s]?in[-\s]?time|\bjit\b/, {
+    code: "ACCESS-REVIEW-001",
+    severity: "medium",
+    title: "No periodic review / expiry",
+    detail: "Access lacks a recertification cadence or expiry.",
+    remediation: "Add time-bound grants and a recurring access review.",
+    evidence: "No review/expiry signal found.",
+  });
+
+  const score = scoreFromFindings(findings);
+  const high = findings.filter((f) => f.severity === "high").length;
+  const verdict = high >= 2
+    ? "REFUSE - OVER-PERMISSIONED"
+    : high
+      ? "RIGHT-SIZE REQUIRED"
+      : findings.length
+        ? "REVIEW RECOMMENDED"
+        : "LEAST-PRIVILEGE CLEAN";
+
+  return buildResult(module, packet, verdict, score, findings, [
+    "No standing privileged access without a just-in-time path.",
+    "No retention of unused entitlements.",
+    "No least-privilege claim without usage evidence.",
+  ], [
+    { label: "Privilege posture", value: high ? "over-permissioned" : "right-sized", detail: "Standing vs. just-in-time" },
+    { label: "Drift", value: findings.some((f) => f.code === "ACCESS-DRIFT-001") ? "detected" : "none", detail: "Granted-but-unused entitlements" },
+    { label: "Recertification", value: findings.some((f) => f.code === "ACCESS-REVIEW-001") ? "missing" : "scheduled", detail: "Time-bound + periodic review" },
+  ]);
+}
+
+function runBuildGate(module: EngineeringModule, packet: string): EngineeringResult {
+  const lower = normalize(packet);
+  const findings: EngineeringFinding[] = [];
+
+  addIfMissing(findings, lower, /smartsdk|mcp\s*sdk|ex[-\s]?kit|security\s+sdk|observability\s+sdk|required\s+(?:approved\s+)?dependenc/, {
+    code: "BUILD-DEP-001",
+    severity: "high",
+    title: "Required approved SDK missing",
+    detail: "A required approved dependency (security / observability / MCP SDK) is not present.",
+    remediation: "Add the required approved dependencies before the build can pass.",
+    evidence: "No required-dependency signal found.",
+  });
+  addIfPresent(findings, lower, /deprecated|eol|vulnerab|\bcve\b|outside\s+the\s+approved|unapproved|known\s+issue/, {
+    code: "BUILD-VER-001",
+    severity: "high",
+    title: "Disallowed / vulnerable version",
+    detail: "A dependency is outside approved version ranges or has a known issue.",
+    remediation: "Upgrade to an approved, patched version range.",
+    evidence: "Disallowed / vulnerable version signal detected.",
+  });
+  addIfPresent(findings, lower, /\blatest\b|\*|>=|\^|~|unpinned|version\s+range/, {
+    code: "BUILD-PIN-001",
+    severity: "medium",
+    title: "Unpinned dependency versions",
+    detail: "Version ranges or 'latest' allow unapproved versions into the build.",
+    remediation: "Pin to approved version ranges and enforce at build time.",
+    evidence: "Unpinned-version signal detected.",
+  });
+  addIfMissing(findings, lower, /lockfile|package-lock|pnpm-lock|yarn\.lock|poetry\.lock|requirements\.txt|go\.sum/, {
+    code: "BUILD-LOCK-001",
+    severity: "medium",
+    title: "No lockfile / provenance",
+    detail: "No lockfile is present to make the build reproducible.",
+    remediation: "Commit a lockfile and emit a dependency manifest at build time.",
+    evidence: "No lockfile signal found.",
+  });
+
+  const score = scoreFromFindings(findings);
+  const high = findings.filter((f) => f.severity === "high").length;
+  const verdict = high
+    ? "FAIL - BUILD GATE BLOCKED"
+    : findings.length
+      ? "PASS WITH WARNINGS"
+      : "PASS - MANIFEST CLEAN";
+
+  return buildResult(module, packet, verdict, score, findings, [
+    "No build passes while a required approved dependency is missing.",
+    "No manifest released with disallowed or vulnerable versions.",
+    "No reproducible-build claim without a lockfile.",
+  ], [
+    { label: "Gate", value: verdict.split(" - ")[0], detail: "Build-time standards-as-code" },
+    { label: "Required deps", value: findings.some((f) => f.code === "BUILD-DEP-001") ? "missing" : "present", detail: "Approved SDK presence" },
+    { label: "Manifest", value: high ? "blocked" : "emitted", detail: "Dependency + version manifest" },
   ]);
 }
 

@@ -27,8 +27,8 @@ const THEMES: Theme[] = [
     title: "Secure & resilient design",
     line: "A substrate that refuses what it can't prove — and an audit trail for everything an agent touches.",
     sols: [
-      { name: "Provable AI agent governance", status: "ENGINE", blurb: "COSMIC + HEIMDALL + MAP THE SOUL: refusal-as-correctness, signed agent identity & lineage, and an auditable record of exactly what an agent can access and do. The thing nobody else has.", href: "/map-the-soul" },
-      { name: "Evidence-grounded vendor/dependency gate", status: "ENGINE", blurb: "Decision Gate: structured accept / hold / reject for third-party & SaaS risk, every call backed by evidence and a receipt." },
+      { name: "Provable AI agent governance", status: "LIVE", blurb: "HEIMDALL: paste an agent's tools, data & actions → governed verdict, refused scopes, MCP boundary gaps, audit requirements. Refusal-as-correctness + signed identity. The thing nobody else has — and it runs.", href: "https://jourdanlabs.com/omnis/heimdall" },
+      { name: "Evidence-grounded vendor/dependency gate", status: "LIVE", blurb: "Decision Gate: structured accept / hold / reject for third-party & SaaS risk, every call backed by evidence and a receipt. Live workbench.", href: "https://jourdanlabs.com/omnis/vendor" },
       { name: "Estate & dependency intelligence", status: "LIVE", blurb: "PROSPECTOR: maps what exists, what's duplicated, and what's risky — the basis for blast-radius and resilience analysis. Runs live, deterministic, corpus-sealed.", href: "https://jourdanlabs.com/omnis/prospector" },
     ],
   },
@@ -57,7 +57,7 @@ const THEMES: Theme[] = [
     line: "The proven migration pattern: map the estate, spec the cutover, gate it on proof.",
     sols: [
       { name: "Migration & decommission engine", status: "LIVE", blurb: "PROSPECTOR maps every dependency → CADMUS writes the cutover spec with a hard 'done' definition → the same gate blocks cutover until the machine proves it's safe. The discovery + spec engines run live — try PROSPECTOR.", href: "https://jourdanlabs.com/omnis/prospector" },
-      { name: "Access right-sizing", status: "APPROACH", blurb: "On the COSMIC/HEIMDALL substrate: least-privilege drift detection and time-bound elevated access, made auditable." },
+      { name: "Access right-sizing", status: "LIVE", blurb: "ACCESS LENS: paste entitlements vs. observed usage → flags standing privilege, drift, and over-permissioned grants, and refuses a least-privilege claim without usage evidence. Live.", href: "https://jourdanlabs.com/omnis/access" },
     ],
   },
   {
@@ -65,7 +65,7 @@ const THEMES: Theme[] = [
     title: "Empowered employee experience",
     line: "Standards enforced at build time; help that's grounded, not guessing.",
     sols: [
-      { name: "Build-time governance gate", status: "APPROACH", blurb: "VANTAGE-style standards-as-code: scan for required/approved dependency versions, enforce them, and emit an auditable manifest at build time." },
+      { name: "Build-time governance gate", status: "LIVE", blurb: "BUILD GATE: paste a dependency manifest → checks for required approved SDKs, disallowed/vulnerable versions, pinning, and a lockfile, then emits a manifest. Standards as code. Live.", href: "https://jourdanlabs.com/omnis/buildgate" },
       { name: "Grounded internal assistant", status: "LIVE", blurb: "LUNA answers from real source with receipts — and refuses what it can't ground. The grounded Q&A engine runs live.", href: "https://jourdanlabs.com/omnis/luna" },
     ],
   },
