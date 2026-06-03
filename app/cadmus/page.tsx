@@ -5,7 +5,7 @@ import CadmusTool from "./CadmusTool";
 export const metadata: Metadata = {
   title: "CADMUS — Spec & Prompt Generator",
   description:
-    "CADMUS turns messy intent into a buildable spec and a ready-to-paste LLM prompt — with grounding and refuse-when-underspecified discipline baked in. Free to use.",
+    "CADMUS turns messy intent into a buildable spec and a ready-to-paste LLM prompt — with grounding and refuse-when-underspecified discipline baked in.",
 };
 
 const accent = "#6f38ff";
@@ -48,8 +48,8 @@ export default function CadmusPage() {
           Describe what you&apos;re trying to do. CADMUS forces it into a real spec — objective, testable
           acceptance criteria, explicit non-goals, constraints — and hands you a{" "}
           <strong style={{ color: "var(--text-primary)", fontWeight: 600 }}>ready-to-paste LLM prompt</strong> with the
-          grounding and <em>refuse-when-underspecified</em> discipline built in. Runs entirely in your browser. No
-          account, no keys, nothing leaves the page.
+          grounding and <em>refuse-when-underspecified</em> discipline built in. No model calls, no API keys, just a
+          deterministic public runner with a light access gate.
         </p>
       </section>
 
