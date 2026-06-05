@@ -8,7 +8,12 @@ export type EngineeringMode =
   | "heimdall"
   | "vendor"
   | "access"
-  | "buildgate";
+  | "buildgate"
+  | "warden"
+  | "custodian"
+  | "sunset"
+  | "assay"
+  | "herald";
 export type FindingSeverity = "critical" | "high" | "medium" | "info";
 
 export type EngineeringModule = {
@@ -69,10 +74,15 @@ export const ENGINEERING_CORPUS_SEAL = `sha256:${sha256([
   "vantage2-clarion-code-audit-v1",
   "prospector-estate-intelligence-v1",
   "luna-persistent-work-brief-v1",
-  "heimdall-agent-governance-mcp-v1",
+  "heimdall-irreversible-edge-brake-v1",
   "decision-gate-vendor-risk-v1",
   "access-right-size-drift-v1",
   "build-gate-standards-as-code-v1",
+  "warden-signed-agent-runtime-v1",
+  "custodian-data-classification-egress-v1",
+  "sunset-decommission-readiness-v1",
+  "assay-model-deployment-risk-v1",
+  "herald-grounded-brief-v1",
 ].join("|"))}`;
 
 export const engineeringModules: EngineeringModule[] = [
@@ -168,24 +178,25 @@ One readable paragraph brief, evidence index, unsupported-memory refusals, and w
   {
     id: "heimdall",
     name: "HEIMDALL",
-    lane: "GOVERN",
-    headline: "Agent access, governed and refused",
+    lane: "BRAKE",
+    headline: "The brake at the irreversible edge",
     summary:
-      "Paste an AI agent's declared tools, data, and actions. HEIMDALL applies MCP-style governance: what's allowed, what's refused, and the audit boundary — so agents scale without creating new security or privacy risk.",
+      "Paste a high-consequence action an agent or pipeline is about to take. HEIMDALL stands at the edge of the decisions you can't take back — it refuses, or it escalates to a named human. It has no AUTHORIZE verdict. The human is the trigger; HEIMDALL is the brake.",
     route: "/omnis/heimdall",
     accent: "#4A7BA7",
-    samplePacket: `Task: Govern this AI agent before it goes live. Refuse if it can reach unrestricted tools or data.
+    samplePacket: `Task: An autonomous agent is about to take this action. HEIMDALL stands at the irreversible edge — it refuses, or it escalates to a named human. It never authorizes.
 
-Agent manifest:
-- Name: ops-assistant
-- Tools requested: Slack, Google Drive, GitHub, shell exec, internal HR database
-- Data: "needs all access to be useful"; can read client documents and employee records
-- Actions: can open tickets, deploy to staging, and send emails on the user's behalf
-- Admins get full access; contractors get "some" access
-- No scope allowlist, no audit log, and no human approval step are described
+Proposed action:
+- Action: wire $2,400,000 from the operating account to a new external beneficiary
+- Trigger: agent "treasury-bot" decided the invoice looked valid
+- Authorization: none named; the agent intends to execute automatically
+- Reversibility: none — once the wire settles it cannot be recalled
+- Policy basis: not cited; no approval limit or runbook referenced
+- Verification: beneficiary not verified; amount not reconciled
+- Scope: single external beneficiary
 
 Required posture:
-Return the governance decision, refused scopes, MCP boundary gaps, audit requirements, and what must change before this agent ships.`,
+Return HEIMDALL's disposition (REFUSE or ESCALATE — never AUTHORIZE), the irreversible-action class, what grounding is missing, and exactly what a named human must confirm before this can proceed.`,
   },
   {
     id: "vendor",
@@ -250,6 +261,116 @@ Manifest packet:
 Required posture:
 Return the build gate decision (pass/fail), missing required dependencies, disallowed versions, and the dependency manifest to emit.`,
   },
+  {
+    id: "warden",
+    name: "WARDEN",
+    lane: "BIND",
+    headline: "No agent runs unbound",
+    summary:
+      "Paste an AI agent's declared identity, tools, and actions. WARDEN binds it to a signed identity and a capability allowlist before it can run — refusing unsigned, unscoped, or unaudited agents. The runtime an agent lives inside, not a checklist.",
+    route: "/omnis/warden",
+    accent: "#2d6cdf",
+    samplePacket: `Task: Bind this agent before it is allowed to run. Refuse if it has no signed identity or no scope boundary.
+
+Agent manifest:
+- Name: ops-assistant
+- Identity: none — runs as a shared service token, no signed identity
+- Tools requested: Slack, Google Drive, GitHub, shell exec, prod database (wildcard access "to be useful")
+- Actions: can open tickets and run scripts on the user's behalf
+- Allowlist: none declared
+- Audit: no tamper-evident log of tool calls
+
+Required posture:
+Return the binding decision (bind / refuse), the missing signed identity, the over-broad scopes to cut, the allowlist that must be declared, and the audit requirement before this agent may run.`,
+  },
+  {
+    id: "custodian",
+    name: "CUSTODIAN",
+    lane: "CLASSIFY",
+    headline: "No sensitive data leaves uncontrolled",
+    summary:
+      "Paste a data flow or export. CUSTODIAN classifies sensitivity (PII / PCI / MNPI), detects egress past the perimeter, and refuses an uncontrolled export — no encryption, no need-to-know, no residency. Privacy enforced, not assumed.",
+    route: "/omnis/custodian",
+    accent: "#0e8f6e",
+    samplePacket: `Task: Classify this data flow and decide whether the export may proceed. Refuse uncontrolled egress of sensitive data.
+
+Data flow:
+- Source: core banking customer table
+- Fields: full name, account number, SSN, transaction history (PII + PCI)
+- Action: export a CSV and upload it to a third-party analytics vendor outside the firm
+- Controls: no encryption in transit, no tokenization, no redaction
+- Recipients: vendor support team (no need-to-know stated)
+- Residency: vendor stores data in an unspecified region (possible cross-border)
+
+Required posture:
+Return the data classification, the egress decision (clear / hold / refuse), the missing controls, and what must be true before any regulated data leaves the perimeter.`,
+  },
+  {
+    id: "sunset",
+    name: "SUNSET",
+    lane: "RETIRE",
+    headline: "No system dies while it's load-bearing",
+    summary:
+      "Paste a system proposed for decommission. SUNSET checks dependents, live traffic, ownership, data preservation, and rollback — and refuses to retire anything still load-bearing. A go / no-go gate for turning things off safely.",
+    route: "/omnis/sunset",
+    accent: "#d6552b",
+    samplePacket: `Task: Decide whether this system is safe to decommission. Refuse if it is still load-bearing.
+
+Decommission packet:
+- System: legacy-rate-calc service
+- Dependents: still called by the settlement pipeline and two downstream reports
+- Traffic: ~4,000 production requests/day, active users this week
+- Owner: none — the original team was reorganized away
+- Data: no archive or retention plan for its historical outputs
+- Rollback: no kill switch or staged cutover described
+
+Required posture:
+Return the decommission decision (go / hold / refuse), the active dependents and traffic that block it, the owner who must sign off, the data to preserve, and the rollback path required.`,
+  },
+  {
+    id: "assay",
+    name: "ASSAY",
+    lane: "PROVE",
+    headline: "No model ships unproven",
+    summary:
+      "Paste an AI/ML model deployment packet. ASSAY refuses a model that reaches production without evaluation, fairness testing, monitoring, a rollback path, and a model card. Responsible-AI release discipline, deterministic.",
+    route: "/omnis/assay",
+    accent: "#8a4fff",
+    samplePacket: `Task: Decide whether this model may deploy to production. Refuse if it is unproven or auto-approved.
+
+Model deployment packet:
+- Model: credit-decisioning LLM, going to the production lending flow
+- Evaluation: none attached; no held-out test set or accuracy measured
+- Fairness: no bias or subgroup testing
+- Monitoring: no drift detection, alerting, or telemetry described
+- Rollback: no champion/challenger, canary, or revert path
+- Model card: none; training data provenance unknown
+- Process: set to auto-approve and self-deploy with no human sign-off
+
+Required posture:
+Return the deployment decision (deploy / hold / refuse), the missing evaluation and monitoring, the rollback path required, and what must be proven before this model can serve a decision.`,
+  },
+  {
+    id: "herald",
+    name: "HERALD",
+    lane: "GROUND",
+    headline: "No claim survives without a receipt",
+    summary:
+      "Paste a draft executive brief or readout. HERALD refuses any line that isn't grounded — numbers without a source, claims without evidence, no as-of date, no verifiable receipt. Every sentence cites its proof or gets cut.",
+    route: "/omnis/herald",
+    accent: "#b5882b",
+    samplePacket: `Task: Ground this executive brief. Refuse claims that are not backed by a cited source or receipt.
+
+Draft brief:
+- "We obviously crushed the quarter and everyone agrees this is our best work."
+- "Revenue is up 340% and churn is basically zero."
+- "The new platform will definitely save $12M next year, guaranteed."
+- "Adoption is through the roof across every region."
+- No sources, no as-of date, no receipts, no ledger references are attached.
+
+Required posture:
+Return the grounding decision (grounded / revise / refuse), the unsupported claims, the numbers missing a source or date, and exactly what receipt each line needs before it can ship to the cabinet.`,
+  },
 ];
 
 export function getEngineeringModule(mode: string): EngineeringModule | null {
@@ -283,7 +404,12 @@ export function runEngineeringSuite(mode: EngineeringMode, packet: string): Engi
   if (mode === "heimdall") return runHeimdall(module, cleanPacket);
   if (mode === "vendor") return runVendorGate(module, cleanPacket);
   if (mode === "access") return runAccessLens(module, cleanPacket);
-  return runBuildGate(module, cleanPacket);
+  if (mode === "buildgate") return runBuildGate(module, cleanPacket);
+  if (mode === "warden") return runWarden(module, cleanPacket);
+  if (mode === "custodian") return runCustodian(module, cleanPacket);
+  if (mode === "sunset") return runSunset(module, cleanPacket);
+  if (mode === "assay") return runAssay(module, cleanPacket);
+  return runHerald(module, cleanPacket);
 }
 
 function runCadmus(module: EngineeringModule, packet: string): EngineeringResult {
@@ -590,74 +716,97 @@ function runHeimdall(module: EngineeringModule, packet: string): EngineeringResu
   const lower = normalize(packet);
   const findings: EngineeringFinding[] = [];
 
-  addIfPresent(findings, lower, /all\s+access|full\s+access|wildcard|unrestricted|admin\s+to\s+everything|needs?\s+everything/, {
-    code: "HEIMDALL-SCOPE-001",
+  // HEIMDALL stands at the irreversible edge. First: is there a high-consequence,
+  // irreversible action here at all? If not, HEIMDALL stands down — it does not
+  // authorize routine work. There is no AUTHORIZE verdict anywhere in this engine.
+  const actionClasses: Array<[RegExp, string]> = [
+    [/\bwire\b|\btransfer(?:s|red|ring)?\b|\bpayment\b|\bdisburse\b|\bremit\b|\bach\b|\bswift\b|settle(?:s|ment)?\b|\btrade\b|execute\s+(?:the\s+)?(?:order|trade)|move\s+(?:\$|funds|money|cash)/, "money movement"],
+    [/\bdelete\b|drop\s+table|\bpurge\b|\bwipe\b|\btruncate\b|deprovision|\bdestroy\b|\berase\b|remove\s+(?:all|the|every)/, "destructive data change"],
+    [/\bdeploy\b|release\s+to\s+prod|push\s+to\s+prod|\bcutover\b|\brollout\b|ship\s+to\s+prod|production\s+release/, "production release"],
+    [/grant\s+(?:admin|access|root|privilege)|escalate\s+privilege|provision\s+(?:access|credential)|issue\s+(?:a\s+)?credential|add\s+to\s+(?:the\s+)?admin/, "privileged access grant"],
+    [/send\s+to\s+external|\bpublish\b|\bdisclose\b|share\s+externally|post\s+publicly|email\s+(?:the\s+|all\s+)?customers?|notify\s+(?:all\s+)?customers/, "external disclosure"],
+    [/close\s+(?:the\s+)?account|\bterminate\b|\boffboard\b|freeze\s+(?:the\s+)?account|suspend\s+(?:the\s+)?account|\brevoke\b/, "account lifecycle action"],
+  ];
+  const matched = actionClasses.find(([re]) => affirmsPresence(lower, re));
+  const actionClass = matched ? matched[1] : null;
+
+  if (!actionClass) {
+    return buildResult(module, packet, "HOLD - NOT THE IRREVERSIBLE EDGE", 100, [], [
+      "HEIMDALL guards only the irreversible edge — the decisions you can't take back.",
+      "HEIMDALL has no AUTHORIZE verdict. Standing down on a reversible action is not approval.",
+    ], [
+      { label: "Irreversible action", value: "none detected", detail: "No high-consequence, irreversible action in this packet" },
+      { label: "Disposition", value: "not HEIMDALL's edge", detail: "Route through the normal control; HEIMDALL stands down" },
+      { label: "Authorize verdict", value: "does not exist", detail: "HEIMDALL refuses or escalates — it never authorizes" },
+    ]);
+  }
+
+  // There IS an irreversible action. Every gap below is a reason to brake.
+  addIfMissing(findings, lower, /approved\s+by|authorized\s+by|sign[-\s]?off|maker[-\s]?checker|dual\s+control|four[-\s]?eyes|named\s+approver|approver\s*:/, {
+    code: "HEIMDALL-AUTH-001",
     severity: "critical",
-    title: "Over-broad agent access",
-    detail: "The agent requests unrestricted or wildcard access to tools or data.",
-    remediation: "Replace blanket access with an explicit allowlist of tools, scopes, and data sources per task.",
-    evidence: "Wildcard / 'all access' grant detected.",
+    title: "No named human authorizer",
+    detail: "An irreversible action is proposed with no named human who authorizes it.",
+    remediation: "Bind the action to a named human authorizer. HEIMDALL escalates to them — it does not authorize.",
+    evidence: "No human-authorizer signal found.",
   });
-  addIfPresent(findings, lower, /\bpii\b|client\s+(?:data|document)|\bssn\b|personal\s+data|customer\s+record|employee\s+record|hr\s+database/, {
-    code: "HEIMDALL-DATA-001",
+  addIfPresent(findings, lower, /auto[-\s]?execute|execute\s+automatically|automatically\s+execute|without\s+(?:human\s+|any\s+)?approval|no\s+(?:human\s+)?approval|skip(?:s|ping)?\s+(?:the\s+)?approval|bypass(?:es|ing)?\s+(?:the\s+)?(?:approval|control|gate|human)|no\s+human\s+in\s+the\s+loop|\bunattended\b|on\s+its\s+own/, {
+    code: "HEIMDALL-RECKLESS-001",
+    severity: "critical",
+    title: "Proposes acting without a human",
+    detail: "The action is set to execute automatically, bypassing the human gate.",
+    remediation: "Remove auto-execute. The agent proposes; a named human authorizes; HEIMDALL only refuses or escalates.",
+    evidence: "Auto-execute / bypass-human signal detected.",
+  });
+  addIfPresent(findings, lower, /all\s+(?:customers|accounts|users|records|rows)|every\s+(?:customer|account|user|record)|entire\s+(?:table|database|estate|fleet|ledger)|production[-\s]?wide|company[-\s]?wide|\bbulk\b|\bmass\b|wildcard|fleet[-\s]?wide/, {
+    code: "HEIMDALL-BLAST-001",
+    severity: "critical",
+    title: "Unbounded blast radius",
+    detail: "The irreversible action is not bounded — it can hit everything at once.",
+    remediation: "Bound the action to a named, minimal scope. HEIMDALL refuses unbounded irreversible actions outright.",
+    evidence: "Unbounded-scope signal detected.",
+  });
+  addIfPresent(findings, lower, /irreversible|cannot\s+be\s+(?:recalled|undone|reversed|recovered|reverted)|can'?t\s+be\s+(?:recalled|undone|reversed)|no\s+rollback|no\s+reversal|no\s+way\s+back|permanent(?:ly)?|\bterminal\b|unrecoverable|gone\s+for\s+good|once\s+(?:it|the\s+\w+)\s+settles?/, {
+    code: "HEIMDALL-REVERSE-001",
     severity: "high",
-    title: "Sensitive-data reach without boundary",
-    detail: "The agent can reach client PII, employee records, or sensitive systems.",
-    remediation: "Scope data access to the minimum needed, add redaction, and require justification per access.",
-    evidence: "Sensitive-data access signal detected.",
+    title: "No path back (terminal action)",
+    detail: "The action is explicitly irreversible — no rollback, reversal window, or recovery path.",
+    remediation: "Add a reversal window or recovery path, or treat as terminal and require senior, named authorization.",
+    evidence: "Explicit-irreversibility signal detected.",
   });
-  addIfPresent(findings, lower, /\bexec\b|\bshell\b|child_process|\bdeploy\b|wire\s+transfer|send\s+(?:email|payment)|delete|irreversible|on\s+the\s+user'?s\s+behalf/, {
-    code: "HEIMDALL-ACTION-001",
+  addIfMissing(findings, lower, /approved\s+limit|within\s+(?:the\s+)?(?:approved\s+)?limit|\brunbook\b|control\s+id|policy\s+(?:id|ref|reference|control)|delegated\s+authority|standard\s+operating/, {
+    code: "HEIMDALL-POLICY-001",
     severity: "high",
-    title: "Irreversible action without human gate",
-    detail: "The agent can take irreversible or high-impact actions without approval.",
-    remediation: "Require human-in-the-loop approval for irreversible actions; the agent proposes, it does not execute.",
-    evidence: "Irreversible-action capability detected.",
+    title: "No policy / authority basis",
+    detail: "The action cites no policy, approval limit, or delegated authority that permits it.",
+    remediation: "Cite the approval limit, runbook, or delegated authority that permits an action of this consequence.",
+    evidence: "No policy/authority-basis signal found.",
   });
-  addIfMissing(findings, lower, /allowlist|\bscoped?\b|least\s+privilege|permission\s+boundary|approved\s+tools?/, {
-    code: "HEIMDALL-MCP-001",
-    severity: "high",
-    title: "No scope boundary (MCP rule)",
-    detail: "The agent definition lacks an explicit tool/data scope boundary.",
-    remediation: "Declare an MCP-style allowlist: exactly which tools and data the agent may use.",
-    evidence: "No scope/allowlist boundary found.",
-  });
-  addIfMissing(findings, lower, /\baudit\b|\blog\b|\btrail\b|\breceipt\b|tamper[-\s]?evident/, {
-    code: "HEIMDALL-AUDIT-001",
+  addIfMissing(findings, lower, /verified|reconciled|validated|beneficiary\s+verified|counterparty\s+verified|checksum|evidence\s+attached|confirmation\s+(?:code|number)/, {
+    code: "HEIMDALL-EVIDENCE-001",
     severity: "medium",
-    title: "No audit trail declared",
-    detail: "The agent does not declare an auditable record of what it accessed and did.",
-    remediation: "Require a tamper-evident log of every tool call, data read, and action taken.",
-    evidence: "No audit/trail signal found.",
-  });
-  addIfMissing(findings, lower, /\brefuse\b|\bdeny\b|human[-\s]?in[-\s]?the[-\s]?loop|approval|guardrail|\bidentity\b|\bsoul\b/, {
-    code: "HEIMDALL-REFUSAL-001",
-    severity: "medium",
-    title: "No refusal / identity boundary",
-    detail: "The agent lacks a declared refusal boundary or signed identity.",
-    remediation: "Define what the agent will refuse, and bind it to a signed identity (MAP THE SOUL).",
-    evidence: "No refusal/identity boundary found.",
+    title: "Inputs not verified",
+    detail: "The facts the action relies on (beneficiary, amount, target) are not verified.",
+    remediation: "Require verification of the action's key inputs before it reaches a human authorizer.",
+    evidence: "No verification/evidence signal found.",
   });
 
   const score = scoreFromFindings(findings);
   const critical = findings.filter((f) => f.severity === "critical").length;
-  const high = findings.filter((f) => f.severity === "high").length;
+  // No AUTHORIZE path exists. Worst case: REFUSE. Best case: ESCALATE to a named human.
   const verdict = critical
-    ? "REFUSE - AGENT BLOCKED"
-    : high
-      ? "GOVERNANCE REVIEW REQUIRED"
-      : findings.length
-        ? "GOVERNED WITH GUARDRAILS"
-        : "AGENT CLEARED";
+    ? "REFUSE - IRREVERSIBLE WITHOUT GROUNDING"
+    : "ESCALATE - HUMAN AUTHORIZATION REQUIRED";
 
   return buildResult(module, packet, verdict, score, findings, [
-    "No agent cleared while it can reach unrestricted tools or data.",
-    "No irreversible action without a human-in-the-loop gate.",
-    "No agent deployed without a scope boundary and an audit trail.",
+    "HEIMDALL has no AUTHORIZE verdict. It refuses, or it escalates to a named human.",
+    "No irreversible action proceeds without a named human authorizer and a path back.",
+    "No unbounded blast radius — ever. The human is the trigger; HEIMDALL is the brake.",
   ], [
-    { label: "Scope posture", value: critical ? "unrestricted" : "scoped", detail: "MCP allowlist boundary" },
-    { label: "Refusal boundary", value: findings.some((f) => f.code === "HEIMDALL-REFUSAL-001") ? "missing" : "declared", detail: "What the agent will not do" },
-    { label: "Audit trail", value: findings.some((f) => f.code === "HEIMDALL-AUDIT-001") ? "absent" : "present", detail: "Tamper-evident record of access + actions" },
+    { label: "Irreversible action", value: actionClass, detail: "The high-consequence class HEIMDALL caught at the edge" },
+    { label: "Disposition", value: critical ? "REFUSE" : "ESCALATE TO HUMAN", detail: "Refuse · Escalate — never authorize" },
+    { label: "Human authorizer", value: findings.some((f) => f.code === "HEIMDALL-AUTH-001") ? "MISSING" : "named", detail: "HEIMDALL never authorizes — a human must" },
+    { label: "Path back", value: findings.some((f) => f.code === "HEIMDALL-REVERSE-001") ? "none (terminal)" : "declared", detail: "Rollback / reversal window if it goes wrong" },
   ]);
 }
 
@@ -833,6 +982,367 @@ function runBuildGate(module: EngineeringModule, packet: string): EngineeringRes
   ]);
 }
 
+function runWarden(module: EngineeringModule, packet: string): EngineeringResult {
+  const lower = normalize(packet);
+  const findings: EngineeringFinding[] = [];
+
+  addIfMissing(findings, lower, /signed\s+identity|map\s+the\s+soul|cryptographic(?:ally)?\s+(?:signed|identity)|verifiable\s+id(?:entity)?|attested\s+identity|workload\s+identity/, {
+    code: "WARDEN-IDENTITY-001",
+    severity: "critical",
+    title: "No signed identity",
+    detail: "The agent has no signed, verifiable identity — it cannot be held accountable for what it does.",
+    remediation: "Bind the agent to a signed identity (MAP THE SOUL) before it is allowed to run.",
+    evidence: "No signed-identity signal found.",
+  });
+  addIfPresent(findings, lower, /wildcard|all\s+access|full\s+access|unrestricted|any\s+tool|admin\s+to\s+everything|needs?\s+everything/, {
+    code: "WARDEN-SCOPE-001",
+    severity: "critical",
+    title: "Over-broad capability scope",
+    detail: "The agent requests wildcard or unrestricted access to tools or data.",
+    remediation: "Replace blanket access with an explicit per-task allowlist of tools, scopes, and data.",
+    evidence: "Wildcard / 'all access' grant detected.",
+  });
+  addIfMissing(findings, lower, /allowlist|\bscoped?\b|least\s+privilege|permission\s+boundary|approved\s+tools?|capability\s+(?:list|boundary)/, {
+    code: "WARDEN-ALLOWLIST-001",
+    severity: "high",
+    title: "No capability allowlist",
+    detail: "The agent declares no allowlist of exactly which tools and data it may use.",
+    remediation: "Declare an allowlist enforced at call time — the agent can touch nothing outside it.",
+    evidence: "No allowlist/scope boundary found.",
+  });
+  addIfMissing(findings, lower, /\baudit\b|\blog\b|\btrail\b|\breceipt\b|tamper[-\s]?evident/, {
+    code: "WARDEN-AUDIT-001",
+    severity: "high",
+    title: "No tamper-evident audit",
+    detail: "The agent declares no auditable record of the tool calls and data it touches.",
+    remediation: "Require a tamper-evident log of every call so the agent's behavior is reconstructable.",
+    evidence: "No audit/trail signal found.",
+  });
+  addIfMissing(findings, lower, /human[-\s]?in[-\s]?the[-\s]?loop|human\s+approval|approval\s+step|\brefuse\b|guardrail/, {
+    code: "WARDEN-HUMAN-001",
+    severity: "medium",
+    title: "No human gate on sensitive actions",
+    detail: "Nothing routes sensitive or irreversible actions to a human before execution.",
+    remediation: "Require human approval for sensitive actions; the agent proposes, a human disposes.",
+    evidence: "No human-in-the-loop signal found.",
+  });
+
+  const score = scoreFromFindings(findings);
+  const critical = findings.filter((f) => f.severity === "critical").length;
+  const high = findings.filter((f) => f.severity === "high").length;
+  const verdict = critical
+    ? "REFUSE - AGENT UNBOUND"
+    : high
+      ? "BIND BEFORE RUN"
+      : findings.length
+        ? "BOUND WITH CONDITIONS"
+        : "AGENT BOUND - CLEARED TO RUN";
+
+  return buildResult(module, packet, verdict, score, findings, [
+    "No agent runs without a signed identity.",
+    "No agent runs with a wildcard scope — allowlist or nothing.",
+    "No agent runs without a tamper-evident audit of every call.",
+  ], [
+    { label: "Identity", value: findings.some((f) => f.code === "WARDEN-IDENTITY-001") ? "UNSIGNED" : "signed", detail: "Signed, verifiable agent identity" },
+    { label: "Capability scope", value: findings.some((f) => f.code === "WARDEN-SCOPE-001") ? "wildcard" : "allowlisted", detail: "Enforced at call time" },
+    { label: "Audit", value: findings.some((f) => f.code === "WARDEN-AUDIT-001") ? "absent" : "tamper-evident", detail: "Reconstructable record of every call" },
+  ]);
+}
+
+function runCustodian(module: EngineeringModule, packet: string): EngineeringResult {
+  const lower = normalize(packet);
+  const findings: EngineeringFinding[] = [];
+
+  const egress = affirmsPresence(lower, /export|send\s+(?:to\s+)?external|third[-\s]?party|upload\s+to|share\s+externally|public\s+bucket|outside\s+the\s+(?:firm|perimeter)|leaves?\s+the\s+perimeter|cross[-\s]?border|to\s+a\s+vendor/);
+  const sensitive = affirmsPresence(lower, /\bpii\b|\bpci\b|\bmnpi\b|\bssn\b|social\s+security|account\s+number|card\s+number|customer\s+(?:data|record)|personal\s+data|material\s+non[-\s]?public|transaction\s+history|health\s+record/);
+
+  if (sensitive) {
+    addIfPresent(findings, lower, /\bpii\b|\bpci\b|\bmnpi\b|\bssn\b|social\s+security|account\s+number|card\s+number|customer\s+(?:data|record)|personal\s+data|material\s+non[-\s]?public|transaction\s+history|health\s+record/, {
+      code: "CUSTODIAN-SENSITIVE-001",
+      severity: "high",
+      title: "Regulated / sensitive data in scope",
+      detail: "The flow contains PII, PCI, MNPI, or other regulated data.",
+      remediation: "Tag the data tier explicitly and apply the controls that tier requires before any movement.",
+      evidence: "Sensitive-data class detected.",
+    });
+  }
+  addIfMissing(findings, lower, /classif(?:ied|ication)|\bpublic\b|\binternal\b|confidential|restricted|sensitivity\s+(?:tier|level)|data\s+tier/, {
+    code: "CUSTODIAN-CLASS-001",
+    severity: "high",
+    title: "Data not classified",
+    detail: "The data carries no sensitivity classification, so no control tier can be applied.",
+    remediation: "Classify the data (public / internal / confidential / restricted) before it moves.",
+    evidence: "No classification signal found.",
+  });
+  if (egress) {
+    addIfPresent(findings, lower, /export|send\s+(?:to\s+)?external|third[-\s]?party|upload\s+to|share\s+externally|public\s+bucket|outside\s+the\s+(?:firm|perimeter)|leaves?\s+the\s+perimeter|cross[-\s]?border/, {
+      code: "CUSTODIAN-EGRESS-001",
+      severity: "high",
+      title: "Data leaves the perimeter",
+      detail: "The flow moves data past the firm's boundary to an external destination.",
+      remediation: "Treat as egress: require encryption, need-to-know, and an approved recipient before it leaves.",
+      evidence: "Egress / external-transfer signal detected.",
+    });
+    addIfMissing(findings, lower, /encrypt(?:ion|ed)?|tokeniz|tokenis|redact|masked|\bdlp\b|need[-\s]?to[-\s]?know|approved\s+recipient|access\s+control/, {
+      code: "CUSTODIAN-CONTROL-001",
+      severity: "critical",
+      title: "Uncontrolled egress",
+      detail: "Sensitive data is leaving with no encryption, tokenization, redaction, or need-to-know control.",
+      remediation: "Block until encryption-in-transit, minimization, and an approved, need-to-know recipient are in place.",
+      evidence: "No egress-control signal found.",
+    });
+  }
+  addIfMissing(findings, lower, /residency|in[-\s]?region|data\s+residency|approved\s+region|jurisdiction|\bregion\b/, {
+    code: "CUSTODIAN-RESIDENCY-001",
+    severity: "medium",
+    title: "Residency not established",
+    detail: "Where the data comes to rest (region / jurisdiction) is not specified.",
+    remediation: "Pin the storage region to an approved jurisdiction; refuse unspecified cross-border rest.",
+    evidence: "No data-residency signal found.",
+  });
+
+  const score = scoreFromFindings(findings);
+  const critical = findings.filter((f) => f.severity === "critical").length;
+  const verdict = critical
+    ? "REFUSE - UNCONTROLLED EGRESS"
+    : egress
+      ? "HOLD - EGRESS CONTROLS REQUIRED"
+      : sensitive
+        ? "CLASSIFIED - HANDLE PER TIER"
+        : findings.length
+          ? "REVIEW - CLASSIFY BEFORE MOVING"
+          : "CLEAR - NO REGULATED DATA";
+
+  return buildResult(module, packet, verdict, score, findings, [
+    "No regulated data leaves the perimeter without encryption and need-to-know.",
+    "No data moves before it is classified.",
+    "No unspecified cross-border rest for sensitive data.",
+  ], [
+    { label: "Data tier", value: sensitive ? "regulated (PII/PCI/MNPI)" : "no regulated data", detail: "Highest sensitivity detected" },
+    { label: "Egress", value: egress ? (critical ? "uncontrolled" : "controls required") : "stays in-perimeter", detail: "Movement past the firm boundary" },
+    { label: "Disposition", value: verdict.split(" - ")[0], detail: "Refuse · Hold · Classify · Clear" },
+  ]);
+}
+
+function runSunset(module: EngineeringModule, packet: string): EngineeringResult {
+  const lower = normalize(packet);
+  const findings: EngineeringFinding[] = [];
+
+  addIfPresent(findings, lower, /still\s+called|active\s+dependent|downstream|consumer|depended\s+on\s+by|upstream\s+of|integrat(?:ed|ion)\s+with|relies\s+on\s+it/, {
+    code: "SUNSET-DEPS-001",
+    severity: "critical",
+    title: "Active dependents",
+    detail: "Other systems still depend on this one — retiring it breaks them.",
+    remediation: "Migrate or retire every dependent first; do not decommission while it is depended on.",
+    evidence: "Active-dependent signal detected.",
+  });
+  addIfPresent(findings, lower, /live\s+traffic|production\s+traffic|serving|requests?\s*\/?\s*(?:day|hour|min|second)|active\s+users|in\s+active\s+use|\bqps\b|requests\s+per/, {
+    code: "SUNSET-TRAFFIC-001",
+    severity: "critical",
+    title: "Still serving live traffic",
+    detail: "The system is still taking production traffic from real users.",
+    remediation: "Drain and redirect traffic to zero before decommission; confirm with monitoring.",
+    evidence: "Live-traffic signal detected.",
+  });
+  addIfMissing(findings, lower, /owner|owned\s+by|steward|accountable|responsible\s+team|raci/, {
+    code: "SUNSET-OWNER-001",
+    severity: "high",
+    title: "No accountable owner",
+    detail: "No named owner exists to authorize and answer for the decommission.",
+    remediation: "Assign an accountable owner who signs off on the retirement.",
+    evidence: "No ownership signal found.",
+  });
+  addIfMissing(findings, lower, /archiv|retention|backup|data\s+(?:migrated|preserved|exported)|preserved|snapshot\s+taken/, {
+    code: "SUNSET-DATA-001",
+    severity: "high",
+    title: "Data not preserved",
+    detail: "There is no archive, retention, or migration plan for the system's data.",
+    remediation: "Archive or migrate the data with a retention record before turning anything off.",
+    evidence: "No data-preservation signal found.",
+  });
+  addIfMissing(findings, lower, /rollback|restore|reversible|kill\s+switch|staged\s+cutover|canary|phased/, {
+    code: "SUNSET-ROLLBACK-001",
+    severity: "medium",
+    title: "No rollback path",
+    detail: "If the decommission goes wrong, there is no described way to bring it back.",
+    remediation: "Stage the cutover with a kill switch and a restore path before final shutdown.",
+    evidence: "No rollback/staging signal found.",
+  });
+
+  const score = scoreFromFindings(findings);
+  const critical = findings.filter((f) => f.severity === "critical").length;
+  const high = findings.filter((f) => f.severity === "high").length;
+  const verdict = critical
+    ? "REFUSE - STILL LOAD-BEARING"
+    : high
+      ? "HOLD - NOT READY TO RETIRE"
+      : findings.length
+        ? "GO WITH CONDITIONS"
+        : "GO - SAFE TO DECOMMISSION";
+
+  return buildResult(module, packet, verdict, score, findings, [
+    "No system is retired while another depends on it.",
+    "No shutdown while it still serves live traffic.",
+    "No decommission without a named owner, preserved data, and a rollback path.",
+  ], [
+    { label: "Load-bearing", value: critical ? "YES — blocked" : "no", detail: "Active dependents or live traffic" },
+    { label: "Owner", value: findings.some((f) => f.code === "SUNSET-OWNER-001") ? "MISSING" : "named", detail: "Who signs off the retirement" },
+    { label: "Disposition", value: verdict.split(" - ")[0], detail: "Refuse · Hold · Go" },
+  ]);
+}
+
+function runAssay(module: EngineeringModule, packet: string): EngineeringResult {
+  const lower = normalize(packet);
+  const findings: EngineeringFinding[] = [];
+
+  addIfMissing(findings, lower, /\beval(?:uation)?\b|benchmark|held[-\s]?out|test\s+set|accuracy|validated|\bf1\b|precision|recall/, {
+    code: "ASSAY-EVAL-001",
+    severity: "critical",
+    title: "No evaluation",
+    detail: "The model reaches production with no measured accuracy or held-out evaluation.",
+    remediation: "Attach an evaluation on a held-out set with the metrics that matter for this use.",
+    evidence: "No evaluation signal found.",
+  });
+  addIfPresent(findings, lower, /auto[-\s]?approve|self[-\s]?deploy|ship\s+without\s+review|no\s+human\s+sign|deploy\s+automatically|without\s+(?:any\s+)?review/, {
+    code: "ASSAY-AUTO-001",
+    severity: "critical",
+    title: "Auto-approved deployment",
+    detail: "The model is set to ship to production with no human sign-off.",
+    remediation: "Require a named human approval before a model serves real decisions.",
+    evidence: "Auto-approve / self-deploy signal detected.",
+  });
+  addIfMissing(findings, lower, /bias|fairness|disparate|subgroup|demographic|equit/, {
+    code: "ASSAY-BIAS-001",
+    severity: "high",
+    title: "No fairness testing",
+    detail: "No bias or subgroup fairness testing is described for a consequential model.",
+    remediation: "Test for disparate impact across protected subgroups before deployment.",
+    evidence: "No fairness/bias signal found.",
+  });
+  addIfMissing(findings, lower, /monitor|drift|observability|alerting|telemetry|logging/, {
+    code: "ASSAY-MONITOR-001",
+    severity: "high",
+    title: "No production monitoring",
+    detail: "No drift detection, alerting, or telemetry is in place for the live model.",
+    remediation: "Wire drift + performance monitoring with alerts before go-live.",
+    evidence: "No monitoring signal found.",
+  });
+  addIfMissing(findings, lower, /rollback|fallback|champion|challenger|shadow|canary|revert/, {
+    code: "ASSAY-ROLLBACK-001",
+    severity: "high",
+    title: "No rollback path",
+    detail: "There is no champion/challenger, canary, or revert path if the model misbehaves.",
+    remediation: "Stage with a canary and keep a revert path to the prior model.",
+    evidence: "No rollback signal found.",
+  });
+  addIfMissing(findings, lower, /model\s+card|datasheet|documented|provenance|training\s+data|lineage/, {
+    code: "ASSAY-CARD-001",
+    severity: "medium",
+    title: "No model card",
+    detail: "The model ships with no card documenting its intended use, data, and limits.",
+    remediation: "Publish a model card with intended use, training-data provenance, and known limits.",
+    evidence: "No model-card signal found.",
+  });
+
+  const score = scoreFromFindings(findings);
+  const critical = findings.filter((f) => f.severity === "critical").length;
+  const high = findings.filter((f) => f.severity === "high").length;
+  const verdict = critical
+    ? "REFUSE - MODEL UNPROVEN"
+    : high
+      ? "HOLD - EVIDENCE REQUIRED"
+      : findings.length
+        ? "DEPLOY WITH CONDITIONS"
+        : "PROVEN - CLEARED TO DEPLOY";
+
+  return buildResult(module, packet, verdict, score, findings, [
+    "No model ships without a held-out evaluation.",
+    "No model serves a decision without monitoring and a rollback path.",
+    "No model auto-deploys without a named human sign-off.",
+  ], [
+    { label: "Evaluation", value: findings.some((f) => f.code === "ASSAY-EVAL-001") ? "MISSING" : "measured", detail: "Held-out accuracy on the metrics that matter" },
+    { label: "Monitoring", value: findings.some((f) => f.code === "ASSAY-MONITOR-001") ? "absent" : "live", detail: "Drift + performance alerting" },
+    { label: "Disposition", value: verdict.split(" - ")[0], detail: "Refuse · Hold · Deploy" },
+  ]);
+}
+
+function runHerald(module: EngineeringModule, packet: string): EngineeringResult {
+  const lower = normalize(packet);
+  const findings: EngineeringFinding[] = [];
+  const hasNumbers = /\d+\s*%|\$\s*\d|\b\d+x\b|\d{2,}/.test(lower);
+
+  addIfMissing(findings, lower, /\bcit(?:e|ation|ed)\b|\bsource\b|\breceipt\b|\bhash\b|reference|evidence|per\s+the|\[\d|according\s+to|ledger/, {
+    code: "HERALD-CITATION-001",
+    severity: "high",
+    title: "Claims without citations",
+    detail: "The brief makes assertions with no source, receipt, or reference behind them.",
+    remediation: "Attach a source or receipt to every claim; cut what can't be cited.",
+    evidence: "No citation/source signal found.",
+  });
+  addIfPresent(findings, lower, /everyone\s+(?:knows|agrees)|obviously|clearly\s+the\s+best|trust\s+me|no\s+doubt|surely|basically\s+zero|through\s+the\s+roof|crushed\s+(?:it|the)|best\s+work/, {
+    code: "HERALD-CLAIM-001",
+    severity: "high",
+    title: "Unsupported superlatives",
+    detail: "The brief leans on persuasion words ('obviously', 'everyone agrees', 'crushed it') in place of evidence.",
+    remediation: "Replace each superlative with a measured number and its source, or remove it.",
+    evidence: "Unsupported-superlative language detected.",
+  });
+  addIfPresent(findings, lower, /\bguaranteed\b|will\s+definitely|definitely\s+(?:save|grow|win)|certain\s+to|promis(?:e|ed)\s+to/, {
+    code: "HERALD-FORECAST-001",
+    severity: "high",
+    title: "Guaranteed forecast",
+    detail: "A future projection is stated as a certainty with no basis or confidence range.",
+    remediation: "State projections with assumptions and a range, not as guarantees.",
+    evidence: "Guaranteed-forecast language detected.",
+  });
+  if (hasNumbers) {
+    addIfMissing(findings, lower, /\bsource\b|as\s+of|measured|per\s+the|baseline|methodology|\bcit/, {
+      code: "HERALD-METRIC-001",
+      severity: "medium",
+      title: "Numbers without provenance",
+      detail: "Figures are quoted with no source, as-of date, or measurement basis.",
+      remediation: "Give every number a source and an as-of date, or mark it as an estimate.",
+      evidence: "Quantitative claim without provenance.",
+    });
+  }
+  addIfMissing(findings, lower, /as\s+of|dated|timestamp|\bq[1-4]\b|fy\d|20\d{2}|this\s+(?:quarter|month|week)/, {
+    code: "HERALD-DATE-001",
+    severity: "medium",
+    title: "No as-of date",
+    detail: "The brief carries no as-of date, so a reader can't tell if it's current.",
+    remediation: "Stamp the brief and its key figures with an as-of date.",
+    evidence: "No as-of date signal found.",
+  });
+  addIfMissing(findings, lower, /receipt|\bhash\b|ledger|sha256|verifiable|tamper[-\s]?evident/, {
+    code: "HERALD-RECEIPT-001",
+    severity: "high",
+    title: "No verifiable receipts",
+    detail: "Nothing in the brief is backed by a verifiable receipt a reader could re-check.",
+    remediation: "Regenerate the brief from a ledger so every line cites a hash a reader can verify.",
+    evidence: "No receipt/ledger signal found.",
+  });
+
+  const score = scoreFromFindings(findings);
+  const high = findings.filter((f) => f.severity === "high").length;
+  const verdict = high >= 3
+    ? "REFUSE - UNGROUNDED BRIEF"
+    : high
+      ? "REVISE - CITE OR CUT"
+      : findings.length
+        ? "GROUNDED WITH GAPS"
+        : "GROUNDED - EVERY LINE CITED";
+
+  return buildResult(module, packet, verdict, score, findings, [
+    "No claim survives without a source or a receipt.",
+    "No number ships without provenance and an as-of date.",
+    "No projection is stated as a guarantee.",
+  ], [
+    { label: "Citations", value: findings.some((f) => f.code === "HERALD-CITATION-001") ? "MISSING" : "present", detail: "A source behind every claim" },
+    { label: "Receipts", value: findings.some((f) => f.code === "HERALD-RECEIPT-001") ? "none" : "verifiable", detail: "Re-checkable ledger hashes" },
+    { label: "Disposition", value: verdict.split(" - ")[0], detail: "Refuse · Revise · Grounded" },
+  ]);
+}
+
 function buildResult(
   module: EngineeringModule,
   packet: string,
@@ -884,12 +1394,43 @@ function missingPacketResult(module: EngineeringModule, packet: string): Enginee
   ]);
 }
 
+// A positive/grounding signal counts as PRESENT only if it appears in a
+// NON-negated position. "no encryption", "evaluation: none", "without a
+// lockfile" must NOT satisfy a presence requirement — the gate fires instead
+// of being fooled by the negated mention. (Inverse of the addIfPresent guard.)
+function affirmsPresence(lower: string, pattern: RegExp): boolean {
+  const re = new RegExp(pattern.source, pattern.flags.includes("g") ? pattern.flags : pattern.flags + "g");
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(lower)) !== null) {
+    if (!isNegated(lower, m.index)) return true;
+    if (m.index === re.lastIndex) re.lastIndex++;
+  }
+  return false;
+}
+
 function addIfMissing(findings: EngineeringFinding[], lower: string, pattern: RegExp, finding: EngineeringFinding) {
-  if (!pattern.test(lower)) findings.push(finding);
+  if (!affirmsPresence(lower, pattern)) findings.push(finding);
+}
+
+// A bad-signal keyword only counts if it is NOT negated within its own clause.
+// The cue must sit between a negator and the match, spanning only words / spaces /
+// hyphens (punctuation ends the negation scope), e.g. "no wildcard", "not deprecated",
+// "cannot send email", "no eval or child_process". Absence rules ("no expiry",
+// "no fallback") bake the negator INTO their pattern, so the text *before* the match
+// has no preceding negator and they still fire correctly.
+const NEGATION_CUE = /\b(?:no|not|never|without|cannot|can['’]?t|won['’]?t|don['’]?t|doesn['’]?t|isn['’]?t|aren['’]?t|wasn['’]?t|weren['’]?t|lacks?|lacking|absent|excludes?|excluding|prohibits?|forbids?|denies|disallows?|prevents?|free\s+of|zero)\b[\s\w-]{0,18}$/;
+
+function isNegated(lower: string, index: number): boolean {
+  return NEGATION_CUE.test(lower.slice(Math.max(0, index - 26), index));
 }
 
 function addIfPresent(findings: EngineeringFinding[], lower: string, pattern: RegExp, finding: EngineeringFinding) {
-  if (pattern.test(lower)) findings.push(finding);
+  const re = new RegExp(pattern.source, pattern.flags.includes("g") ? pattern.flags : pattern.flags + "g");
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(lower)) !== null) {
+    if (!isNegated(lower, m.index)) { findings.push(finding); return; }
+    if (m.index === re.lastIndex) re.lastIndex++; // guard against zero-width matches
+  }
 }
 
 function countPatterns(lower: string, patterns: RegExp[]) {

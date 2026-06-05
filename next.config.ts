@@ -34,6 +34,30 @@ const nextConfig: NextConfig = {
       { source: "/systems", destination: "/cosmic", permanent: true },
       { source: "/raven", destination: "/crucible/raven", permanent: true },
       { source: "/muninn", destination: "/benchmarks/muninn", permanent: true },
+      {
+        source: "/downloads/OMNIS-Mac-0.1.0.dmg",
+        destination:
+          "https://1ggaswfydmbvwook.public.blob.vercel-storage.com/downloads/OMNIS-Mac-0.1.1.dmg",
+        permanent: false,
+      },
+      {
+        source: "/downloads/OMNIS-Mac-0.1.0.dmg.sha256.txt",
+        destination:
+          "https://1ggaswfydmbvwook.public.blob.vercel-storage.com/downloads/OMNIS-Mac-0.1.1.dmg.sha256.txt",
+        permanent: false,
+      },
+      {
+        source: "/downloads/OMNIS-Mac-0.1.1.dmg",
+        destination:
+          "https://1ggaswfydmbvwook.public.blob.vercel-storage.com/downloads/OMNIS-Mac-0.1.1.dmg",
+        permanent: false,
+      },
+      {
+        source: "/downloads/OMNIS-Mac-0.1.1.dmg.sha256.txt",
+        destination:
+          "https://1ggaswfydmbvwook.public.blob.vercel-storage.com/downloads/OMNIS-Mac-0.1.1.dmg.sha256.txt",
+        permanent: false,
+      },
     ];
   },
 };

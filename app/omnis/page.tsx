@@ -75,17 +75,19 @@ export default function OmnisPage() {
                 <p>
                   Download the Mac build when you want OMNIS on your machine instead of only in
                   the public web workbench. The local app starts a private 127.0.0.1 workspace
-                  and opens VANTAGE, CADMUS, PROSPECTOR, and LUNA in your browser.
+                  and opens VANTAGE, CADMUS, PROSPECTOR, and LUNA in your browser. It also speaks
+                  MCP as a governed host — every agent tool call passes a deterministic gate and is
+                  hash-audited.
                 </p>
                 <small>
-                  Preview build · unsigned · macOS may require right-click Open the first time.
+                  Signed with a JourdanLabs Developer ID, notarized by Apple — opens with a normal double-click.
                 </small>
               </div>
               <div className={styles.downloadActions}>
-                <a href="/downloads/OMNIS-Mac-0.1.0.dmg" download>
+                <a href="/downloads/OMNIS-Mac-0.1.1.dmg" download>
                   Download OMNIS for Mac
                 </a>
-                <a href="/downloads/OMNIS-Mac-0.1.0.dmg.sha256.txt" download>
+                <a href="/downloads/OMNIS-Mac-0.1.1.dmg.sha256.txt" download>
                   SHA-256
                 </a>
               </div>

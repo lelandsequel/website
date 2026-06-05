@@ -120,9 +120,6 @@ export default function EngineeringRunner({ module }: { module: EngineeringModul
               {accessGate.remaining}/{accessGate.limit} runs left
             </span>
           ) : null}
-          <button type="button" onClick={() => runPacket(packet)} disabled={!packet.trim() || state.status === "loading"}>
-            {state.status === "loading" ? "Running..." : runStatus}
-          </button>
           <a href="/api/omnis/run" target="_blank" rel="noopener noreferrer">API manifest</a>
           <button type="button" onClick={handleCopyPrompt} disabled={!result}>{copyStatus}</button>
           <button type="button" onClick={handleExport} disabled={!result}>{downloadStatus}</button>
@@ -132,8 +129,8 @@ export default function EngineeringRunner({ module }: { module: EngineeringModul
       <div className={styles.runnerGrid}>
         <div className={styles.inputPanel}>
           <div className={styles.panelTopline}>
-            <span>Source packet</span>
-            <label htmlFor={fileInputId}>Upload packet</label>
+            <span>Step 1 · Your packet — edit this sample, or paste your own</span>
+            <label htmlFor={fileInputId}>↑ Upload your own file</label>
             <input
               id={fileInputId}
               type="file"
@@ -153,6 +150,24 @@ export default function EngineeringRunner({ module }: { module: EngineeringModul
             spellCheck={false}
             aria-label={`${module.name} source packet`}
           />
+          <button
+            type="button"
+            onClick={() => runPacket(packet)}
+            disabled={!packet.trim() || state.status === "loading"}
+            style={{
+              marginTop: "0.7rem", width: "100%", minHeight: 50, border: "none", borderRadius: 12,
+              background: module.accent, color: "#fff", fontFamily: "var(--font-geist-mono, monospace)",
+              fontSize: "0.85rem", fontWeight: 900, letterSpacing: "0.09em", textTransform: "uppercase",
+              cursor: !packet.trim() || state.status === "loading" ? "default" : "pointer",
+              opacity: !packet.trim() || state.status === "loading" ? 0.55 : 1,
+              boxShadow: `0 6px 18px ${module.accent}55`,
+            }}
+          >
+            {state.status === "loading" ? "Running…" : `▶  Step 2 · ${runStatus}`}
+          </button>
+          <p style={{ margin: "0.55rem 0 0", fontFamily: "var(--font-geist-mono, monospace)", fontSize: "0.64rem", color: "var(--text-tertiary)", lineHeight: 1.5 }}>
+            Deterministic — the same packet returns the same verdict and hash, every run. Your result appears on the right →
+          </p>
         </div>
 
         <div className={styles.outputPanel}>
@@ -177,6 +192,23 @@ export default function EngineeringRunner({ module }: { module: EngineeringModul
 
           {result ? (
             <>
+              <div
+                style={{
+                  display: "flex", flexWrap: "wrap", alignItems: "center", gap: "0.4rem 0.9rem",
+                  padding: "0.65rem 0.85rem", marginBottom: "0.9rem", borderRadius: 10,
+                  border: `1px solid ${module.accent}40`, background: `${module.accent}0d`,
+                  fontFamily: "var(--font-geist-mono, monospace)", fontSize: "0.66rem", lineHeight: 1.5,
+                  color: "var(--text-secondary)",
+                }}
+                title="Deterministic receipt — re-run the same packet and these hashes are identical. No LLM in the decision path."
+              >
+                <span style={{ fontWeight: 800, color: module.accent, letterSpacing: "0.04em" }}>🔒 DETERMINISTIC RECEIPT</span>
+                <span>0 runtime LLM calls</span>
+                <span>same input → same verdict, every run</span>
+                <span><b>corpus_seal</b> {result.metadata.corpus_seal.replace(/^sha256:/, "").slice(0, 16)}…</span>
+                <span><b>input_hash</b> {result.metadata.input_hash.replace(/^sha256:/, "").slice(0, 16)}…</span>
+                <span><b>engine</b> {result.metadata.engine_version}</span>
+              </div>
               <div className={styles.artifactGrid}>
                 {result.artifacts.map((artifact) => (
                   <div key={artifact.label}>

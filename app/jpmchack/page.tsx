@@ -27,7 +27,7 @@ const THEMES: Theme[] = [
     title: "Secure & resilient design",
     line: "A substrate that refuses what it can't prove — and an audit trail for everything an agent touches.",
     sols: [
-      { name: "Provable AI agent governance", status: "LIVE", blurb: "HEIMDALL: paste an agent's tools, data & actions → governed verdict, refused scopes, MCP boundary gaps, audit requirements. Refusal-as-correctness + signed identity. The thing nobody else has — and it runs.", href: "https://jourdanlabs.com/omnis/heimdall" },
+      { name: "The brake on irreversible AI actions", status: "LIVE", blurb: "HEIMDALL: paste an irreversible action an agent is about to take — a $2.4M wire, a prod-table delete, a deploy. It refuses, or escalates to a named human. There is no AUTHORIZE verdict in the engine. The brake at the edge of the decisions you can't take back — refusal-as-correctness, the human stays the trigger. The thing nobody else has — and it runs.", href: "https://jourdanlabs.com/omnis/heimdall" },
       { name: "Evidence-grounded vendor/dependency gate", status: "LIVE", blurb: "Decision Gate: structured accept / hold / reject for third-party & SaaS risk, every call backed by evidence and a receipt. Live workbench.", href: "https://jourdanlabs.com/omnis/vendor" },
       { name: "Estate & dependency intelligence", status: "LIVE", blurb: "PROSPECTOR: maps what exists, what's duplicated, and what's risky — the basis for blast-radius and resilience analysis. Runs live, deterministic, corpus-sealed.", href: "https://jourdanlabs.com/omnis/prospector" },
     ],
@@ -47,7 +47,7 @@ const THEMES: Theme[] = [
     title: "Outcomes over activity",
     line: "Prioritization as math, not opinion — and every decision carries a receipt.",
     sols: [
-      { name: "OMNIS Agility — intake & prioritization", status: "LIVE", blurb: "Deterministic risk/impact scoring, 'fix-first with rationale', and a tamper-evident decision chain. Maps 1:1 to risk-driven prioritization AND delivery insight. Live, animated walkthrough — go watch it work.", href: "https://agility.jourdanlabs.io" },
+      { name: "OMNIS Agility — intake & prioritization", status: "LIVE", blurb: "Deterministic risk/impact scoring, 'fix-first with rationale', and a tamper-evident decision chain. Maps 1:1 to risk-driven prioritization AND delivery insight. Live, animated walkthrough — go watch it work.", href: "https://agility.jourdanlabs.com" },
       { name: "LUNA — decision-grade delivery insight", status: "LIVE", blurb: "From delivery data to early risk signals and 'where to intervene' — grounded, not anecdotal. Runs live at the OMNIS LUNA workroom.", href: "https://jourdanlabs.com/omnis/luna" },
     ],
   },
@@ -74,7 +74,7 @@ const THEMES: Theme[] = [
     title: "The original problem statement",
     line: "We don't pick a square. We name the disease underneath all of them — and we already built the cure.",
     sols: [
-      { name: "#6.1 — Provable, refusal-grounded AI governance", status: "ENGINE", blurb: "Every theme above shares one root problem: AI and agents produce output that can't be grounded, refused, or audited. COSMIC is the substrate that fixes it — deterministic, evidence-cited, refuses what it can't prove, on a tamper-evident chain. See the full statement below." },
+      { name: "#6.1 — Provable, refusal-grounded AI governance", status: "LIVE", blurb: "Every theme above shares one root problem: AI and agents produce output that can't be grounded, refused, or audited. COSMIC is the substrate that fixes it — deterministic, evidence-cited, refuses what it can't prove, on a tamper-evident chain. The governance layer runs live in HEIMDALL — and the full statement is below.", href: "https://jourdanlabs.com/omnis/heimdall" },
     ],
   },
 ];
@@ -96,24 +96,40 @@ function Badge({ status }: { status: Status }) {
 export default function JpmcHackPage() {
   return (
     <main style={{ maxWidth: 1100, margin: "0 auto", padding: "2.5rem 1.5rem 5rem" }}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/pan-pulsar-thuglife.png"
+        alt="Pan & PULSAR — the chamber, watching your six"
+        style={{ position: "fixed", top: 10, right: 14, width: "clamp(82px, 10vw, 128px)", height: "auto", zIndex: 50, pointerEvents: "none", userSelect: "none", filter: "drop-shadow(0 8px 16px rgba(0,0,0,0.18))" }}
+      />
       <section style={{ marginBottom: "1.5rem" }}>
         <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.7rem", fontWeight: 800, letterSpacing: "0.12em", textTransform: "uppercase", color: accent, display: "block", marginBottom: "0.9rem" }}>
           The Chamber × GT 2026 · Internal preview
         </span>
-        <h1 style={{ fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, letterSpacing: "-0.035em", lineHeight: 1.08, color: "var(--text-primary)", marginBottom: "1rem", maxWidth: 18 + "ch" }}>
-          Six themes. Working systems, not slideware.
+        <h1 style={{ fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, letterSpacing: "-0.035em", lineHeight: 1.08, color: "var(--text-primary)", marginBottom: "1rem", maxWidth: 20 + "ch" }}>
+          One deterministic governance layer for enterprise AI — and it runs.
         </h1>
-        <p style={{ fontSize: "1.05rem", color: "var(--text-secondary)", lineHeight: 1.7, maxWidth: "64ch" }}>
-          Most teams open a blank repo. The JourdanLabs chamber walks in with engines that already run. Below, every
-          one of the six themes — mapped to a chamber system. The rule of this page:{" "}
-          <strong style={{ color: "var(--text-primary)" }}>every <span style={{ color: "#1f9d57" }}>● LIVE</span> badge is a real URL. Click it. It runs.</strong>{" "}
-          We don&apos;t ship what we can&apos;t prove — that&apos;s the whole point.
+        <p style={{ fontSize: "1.05rem", color: "var(--text-secondary)", lineHeight: 1.7, maxWidth: "66ch" }}>
+          It takes messy AI-agent, vendor, code, and work packets, refuses what it can&apos;t prove, seals every
+          decision in a hash-chained receipt, and lets compliance re-run the audit. What&apos;s below isn&apos;t six
+          products — it&apos;s <strong style={{ color: "var(--text-primary)" }}>one substrate pointed at six enterprise surfaces</strong>.{" "}
+          Every <span style={{ color: "#1f9d57" }}>● LIVE</span> badge is a real URL: click it, it runs, and the same
+          input returns the same verdict and the same hash every time. We don&apos;t ship what we can&apos;t prove.
         </p>
-        <div style={{ display: "flex", gap: "0.7rem", flexWrap: "wrap", marginTop: "1.25rem" }}>
-          <Link href="https://agility.jourdanlabs.io" style={{ ...S.card, padding: "0.6rem 1rem", fontWeight: 700, color: accent }}>▶ agility.jourdanlabs.io</Link>
-          <Link href="https://jourdanlabs.com/cadmus" style={{ ...S.card, padding: "0.6rem 1rem", fontWeight: 700, color: accent }}>▶ jourdanlabs.com/cadmus</Link>
+        <div style={{ ...S.card, marginTop: "1.4rem", padding: "1rem 1.2rem", borderColor: `${accent}40` }}>
+          <div style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.64rem", fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", color: accent, marginBottom: "0.6rem" }}>The 90-second path for a judge</div>
+          <ol style={{ margin: 0, paddingLeft: "1.15rem", display: "grid", gap: "0.45rem", fontSize: "0.86rem", color: "var(--text-secondary)", lineHeight: 1.5 }}>
+            <li><Link href="https://jourdanlabs.com/omnis/vendor" style={{ color: accent, fontWeight: 700 }}>Decision Gate</Link> — paste a risky vendor; it refuses on the evidence, with a receipt.</li>
+            <li><Link href="https://jourdanlabs.com/omnis/access" style={{ color: accent, fontWeight: 700 }}>Access Lens</Link> / <Link href="https://jourdanlabs.com/omnis/buildgate" style={{ color: accent, fontWeight: 700 }}>Build Gate</Link> — the same engine, a different enterprise surface.</li>
+            <li><Link href="https://jourdanlabs.com/cadmus" style={{ color: accent, fontWeight: 700 }}>CADMUS</Link> — the front of the workflow: messy intent becomes a buildable spec.</li>
+            <li>Hit <strong style={{ color: "var(--text-primary)" }}>Export JSON</strong> — the receipt that proves it: corpus_seal · input_hash · 0 runtime LLM calls.</li>
+          </ol>
         </div>
       </section>
+
+      <p style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.72rem", color: "var(--text-tertiary)", margin: "0 0 1.5rem", letterSpacing: "0.02em", lineHeight: 1.6 }}>
+        Six themes below — one engine. Each is the same deterministic substrate pointed at a different enterprise surface.
+      </p>
 
       {THEMES.map((t) => (
         <section key={t.n} style={S.section}>
@@ -127,7 +143,13 @@ export default function JpmcHackPage() {
               <div key={s.name} style={S.card}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "0.5rem", marginBottom: "0.5rem" }}>
                   <span style={{ fontWeight: 700, color: "var(--text-primary)", fontSize: "0.95rem" }}>{s.name}</span>
-                  <Badge status={s.status} />
+                  {s.href ? (
+                    <Link href={s.href} aria-label={`Open ${s.name} live`} style={{ textDecoration: "none", flexShrink: 0 }}>
+                      <Badge status={s.status} />
+                    </Link>
+                  ) : (
+                    <Badge status={s.status} />
+                  )}
                 </div>
                 <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", lineHeight: 1.55, margin: 0 }}>{s.blurb}</p>
                 {s.href && (
