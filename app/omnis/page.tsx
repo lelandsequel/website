@@ -84,10 +84,10 @@ export default function OmnisPage() {
                 </small>
               </div>
               <div className={styles.downloadActions}>
-                <a href="/downloads/OMNIS-Mac-0.1.2.dmg" download>
+                <a href="/downloads/OMNIS-Mac-0.1.3.dmg" download>
                   Download OMNIS for Mac
                 </a>
-                <a href="/downloads/OMNIS-Mac-0.1.2.dmg.sha256.txt" download>
+                <a href="/downloads/OMNIS-Mac-0.1.3.dmg.sha256.txt" download>
                   SHA-256
                 </a>
               </div>

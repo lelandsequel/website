@@ -37,37 +37,49 @@ const nextConfig: NextConfig = {
       {
         source: "/downloads/OMNIS-Mac-0.1.0.dmg",
         destination:
-          "https://1ggaswfydmbvwook.public.blob.vercel-storage.com/downloads/OMNIS-Mac-0.1.2.dmg",
+          "https://1ggaswfydmbvwook.public.blob.vercel-storage.com/downloads/OMNIS-Mac-0.1.3.dmg",
         permanent: false,
       },
       {
         source: "/downloads/OMNIS-Mac-0.1.0.dmg.sha256.txt",
         destination:
-          "https://1ggaswfydmbvwook.public.blob.vercel-storage.com/downloads/OMNIS-Mac-0.1.2.dmg.sha256.txt",
+          "https://1ggaswfydmbvwook.public.blob.vercel-storage.com/downloads/OMNIS-Mac-0.1.3.dmg.sha256.txt",
         permanent: false,
       },
       {
         source: "/downloads/OMNIS-Mac-0.1.1.dmg",
         destination:
-          "https://1ggaswfydmbvwook.public.blob.vercel-storage.com/downloads/OMNIS-Mac-0.1.2.dmg",
+          "https://1ggaswfydmbvwook.public.blob.vercel-storage.com/downloads/OMNIS-Mac-0.1.3.dmg",
         permanent: false,
       },
       {
         source: "/downloads/OMNIS-Mac-0.1.1.dmg.sha256.txt",
         destination:
-          "https://1ggaswfydmbvwook.public.blob.vercel-storage.com/downloads/OMNIS-Mac-0.1.2.dmg.sha256.txt",
+          "https://1ggaswfydmbvwook.public.blob.vercel-storage.com/downloads/OMNIS-Mac-0.1.3.dmg.sha256.txt",
         permanent: false,
       },
       {
         source: "/downloads/OMNIS-Mac-0.1.2.dmg",
         destination:
-          "https://1ggaswfydmbvwook.public.blob.vercel-storage.com/downloads/OMNIS-Mac-0.1.2.dmg",
+          "https://1ggaswfydmbvwook.public.blob.vercel-storage.com/downloads/OMNIS-Mac-0.1.3.dmg",
         permanent: false,
       },
       {
         source: "/downloads/OMNIS-Mac-0.1.2.dmg.sha256.txt",
         destination:
-          "https://1ggaswfydmbvwook.public.blob.vercel-storage.com/downloads/OMNIS-Mac-0.1.2.dmg.sha256.txt",
+          "https://1ggaswfydmbvwook.public.blob.vercel-storage.com/downloads/OMNIS-Mac-0.1.3.dmg.sha256.txt",
+        permanent: false,
+      },
+      {
+        source: "/downloads/OMNIS-Mac-0.1.3.dmg",
+        destination:
+          "https://1ggaswfydmbvwook.public.blob.vercel-storage.com/downloads/OMNIS-Mac-0.1.3.dmg",
+        permanent: false,
+      },
+      {
+        source: "/downloads/OMNIS-Mac-0.1.3.dmg.sha256.txt",
+        destination:
+          "https://1ggaswfydmbvwook.public.blob.vercel-storage.com/downloads/OMNIS-Mac-0.1.3.dmg.sha256.txt",
         permanent: false,
       },
     ];
