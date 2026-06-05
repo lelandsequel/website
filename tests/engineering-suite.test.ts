@@ -31,6 +31,15 @@ test("VANTAGE 2.0 blocks unsafe code packets", () => {
   assert.ok(result.score < 50);
 });
 
+test("VANTAGE 2.0 catches raw SQL built by string concatenation", () => {
+  const result = runEngineeringSuite(
+    "vantage",
+    "Diff adds raw SQL query built by string concatenation, with package-lock.json and passing tests attached.",
+  );
+  assert.equal(result.verdict, "REVIEW - HIGH RISK");
+  assert.ok(result.findings.some((finding) => finding.code === "VANTAGE-DATA-001"));
+});
+
 test("PROSPECTOR blocks critical diligence packets", () => {
   const result = runEngineeringSuite("prospector", "Public S3 bucket with customer docs. No named owner. No SBOM. No architecture diagram.");
   assert.equal(result.verdict, "REFUSE - DILIGENCE BLOCKED");

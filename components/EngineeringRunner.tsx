@@ -31,13 +31,20 @@ async function runEngineering(mode: EngineeringMode, packet: string, signal: Abo
   };
 }
 
-function initialState(): ApiState {
-  return { status: "loading", result: null, error: null };
+function initialState(initialResult?: EngineeringResult): ApiState {
+  if (initialResult) return { status: "ready", result: initialResult, error: null };
+  return { status: "idle", result: null, error: null };
 }
 
-export default function EngineeringRunner({ module }: { module: EngineeringModule }) {
+export default function EngineeringRunner({
+  module,
+  initialResult,
+}: {
+  module: EngineeringModule;
+  initialResult?: EngineeringResult;
+}) {
   const [packet, setPacket] = useState(module.samplePacket);
-  const [state, setState] = useState<ApiState>(initialState);
+  const [state, setState] = useState<ApiState>(() => initialState(initialResult));
   const [copyStatus, setCopyStatus] = useState("Copy LLM prompt");
   const [downloadStatus, setDownloadStatus] = useState("Export JSON");
   const [runStatus, setRunStatus] = useState("Run packet");
@@ -52,7 +59,7 @@ export default function EngineeringRunner({ module }: { module: EngineeringModul
     }
     const activeSignal = signal ?? new AbortController().signal;
     setRunStatus("Running...");
-    setState(initialState());
+    setState({ status: "loading", result: null, error: null });
     runEngineering(module.id, packetToRun, activeSignal)
       .then((next) => {
         setAccessGate(next.accessGate);
@@ -67,11 +74,11 @@ export default function EngineeringRunner({ module }: { module: EngineeringModul
   };
 
   useEffect(() => {
-    const controller = new AbortController();
     setPacket(module.samplePacket);
-    runPacket(module.samplePacket, controller.signal);
-    return () => controller.abort();
-  }, [module.id, module.samplePacket]);
+    setAccessGate(null);
+    setRunStatus("Run packet");
+    setState(initialState(initialResult));
+  }, [initialResult, module.id, module.samplePacket]);
 
   const handleCopyPrompt = () => {
     if (!result) return;

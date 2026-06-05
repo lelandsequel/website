@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import EngineeringRunner from "@/components/EngineeringRunner";
-import { engineeringModules, getEngineeringModule } from "@/lib/engineering-suite";
+import { engineeringModules, getEngineeringModule, runEngineeringSuite } from "@/lib/engineering-suite";
 import styles from "../omnis.module.css";
 
 export function generateStaticParams() {
@@ -24,6 +24,7 @@ export default async function OmnisModulePage({ params }: { params: Promise<{ mo
   const { module: moduleId } = await params;
   const module = getEngineeringModule(moduleId);
   if (!module) notFound();
+  const initialResult = runEngineeringSuite(module.id, module.samplePacket);
 
   return (
     <main className={styles.page}>
@@ -86,7 +87,7 @@ export default async function OmnisModulePage({ params }: { params: Promise<{ mo
                 <span>Deterministic gate online</span>
               </div>
             </div>
-            <EngineeringRunner module={module} />
+            <EngineeringRunner module={module} initialResult={initialResult} />
           </div>
         </section>
       </div>

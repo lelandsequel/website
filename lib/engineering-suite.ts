@@ -516,7 +516,7 @@ function runVantage(module: EngineeringModule, packet: string): EngineeringResul
     remediation: "Use safe rendering primitives and sanitization with tests.",
     evidence: "HTML sink signal detected.",
   });
-  addIfPresent(findings, lower, /sql.*\+|\+\s*where|raw\s+query|prisma\.\$queryrawunsafe/, {
+  addIfPresent(findings, lower, /sql.*\+|\+\s*where|raw\s+(?:sql|query)|sql\s+query|query\s+(?:built|composed)\s+by\s+string\s+concatenation|string\s+concatenation|concatenat(?:e|ed|ion)|prisma\.\$queryrawunsafe/, {
     code: "VANTAGE-DATA-001",
     severity: "high",
     title: "Query injection surface",

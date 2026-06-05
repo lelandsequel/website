@@ -15,7 +15,10 @@
   position: sticky;
   top: 74px;
   height: calc(100vh - 74px);
+  display: flex;
+  flex-direction: column;
   padding: 1.25rem;
+  overflow-y: auto;
   border-right: 1px solid var(--bg-border);
   background: rgba(255, 255, 255, 0.72);
   backdrop-filter: blur(18px);
@@ -99,12 +102,9 @@
 }
 
 .railFooter {
-  position: absolute;
-  left: 1.25rem;
-  right: 1.25rem;
-  bottom: 1.25rem;
   display: grid;
   gap: 0.4rem;
+  margin-top: 1rem;
   padding: 0.9rem;
   border: 1px solid var(--bg-border);
   border-radius: 16px;
