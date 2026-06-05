@@ -1,0 +1,501 @@
+.page {
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(247, 243, 238, 0.95), rgba(255, 252, 248, 0.98)),
+    radial-gradient(circle at 80% 0%, rgba(79, 101, 128, 0.08), transparent 32rem);
+  color: #1c1d21;
+}
+
+.shell {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(247, 243, 238, 0.98), rgba(255, 252, 248, 0.99)),
+    radial-gradient(circle at 80% 0%, rgba(79, 101, 128, 0.08), transparent 32rem);
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 4.5rem;
+  padding: 0 3rem;
+  border-bottom: 1px solid rgba(42, 48, 58, 0.08);
+  background: rgba(250, 247, 242, 0.92);
+  backdrop-filter: blur(18px);
+}
+
+.brandBlock,
+.topActions {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+  min-width: 0;
+}
+
+.brand {
+  font-size: 1.25rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.activeTab {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  border-bottom: 2px solid #4f6580;
+  color: #4f6580;
+  font-weight: 650;
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-width: min(18rem, 32vw);
+  height: 2.75rem;
+  padding: 0 1rem;
+  border: 1px solid rgba(42, 48, 58, 0.06);
+  border-radius: 8px;
+  background: rgba(237, 233, 227, 0.7);
+  color: #4f6580;
+}
+
+.searchBox span {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.searchBox input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #1c1d21;
+  font: inherit;
+}
+
+.searchBox input::placeholder {
+  color: rgba(42, 48, 58, 0.42);
+}
+
+.gatePill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.25rem;
+  padding: 0 1rem;
+  border-radius: 8px;
+  background: rgba(79, 101, 128, 0.1);
+  color: #33465e;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.workspace {
+  width: min(96rem, calc(100vw - 3rem));
+  margin: 0 auto;
+  padding: 4rem 0 5rem;
+}
+
+.heroRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin: 0 auto 2.8rem;
+  width: min(78rem, 100%);
+}
+
+.heroRow h1 {
+  margin: 0 0 0.7rem;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.heroRow p,
+.panelCopy,
+.statusLine {
+  margin: 0;
+  color: rgba(28, 29, 33, 0.65);
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.modeSwitch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: min(28rem, 100%);
+  height: 3.25rem;
+  padding: 0.25rem;
+  border: 1px solid rgba(42, 48, 58, 0.06);
+  border-radius: 8px;
+  background: rgba(237, 233, 227, 0.78);
+}
+
+.modeSwitch button {
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: rgba(28, 29, 33, 0.75);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.modeSwitch .modeOn {
+  background: #4f6580;
+  color: white;
+  box-shadow: 0 10px 24px rgba(42, 48, 58, 0.18);
+}
+
+.workGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.28fr) minmax(24rem, 0.82fr);
+  gap: 2rem;
+  width: min(78rem, 100%);
+  margin: 0 auto;
+  align-items: start;
+}
+
+.leftStack,
+.rightStack {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.panel,
+.selectPanel,
+.guidedPanel {
+  border: 1px solid rgba(42, 48, 58, 0.07);
+  border-radius: 8px;
+  background: rgba(233, 230, 225, 0.78);
+  box-shadow: 0 22px 60px rgba(42, 48, 58, 0.08);
+}
+
+.panel {
+  padding: 2rem;
+}
+
+.panel h2 {
+  margin: 0 0 0.55rem;
+  color: #1c1d21;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+.kicker {
+  display: block;
+  margin-bottom: 1.15rem;
+  color: #4f6580;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.78rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ideaBox {
+  width: 100%;
+  min-height: 19rem;
+  margin-top: 2rem;
+  padding: 1.7rem;
+  border: 0;
+  border-radius: 8px;
+  outline: 0;
+  resize: vertical;
+  background: rgba(255, 253, 250, 0.78);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  color: #1c1d21;
+  font: inherit;
+  font-size: 1.05rem;
+  line-height: 1.45;
+}
+
+.charCount {
+  margin-top: 0.9rem;
+  color: rgba(28, 29, 33, 0.42);
+  font-size: 0.9rem;
+}
+
+.selectRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.selectPanel {
+  display: grid;
+  gap: 0.8rem;
+  padding: 1.7rem;
+}
+
+.selectPanel select,
+.guidedField input,
+.guidedField textarea,
+.unlockRow input {
+  width: 100%;
+  border: 1px solid rgba(42, 48, 58, 0.08);
+  border-radius: 8px;
+  outline: 0;
+  background: rgba(255, 253, 250, 0.86);
+  color: #1c1d21;
+  font: inherit;
+}
+
+.selectPanel select,
+.guidedField input,
+.unlockRow input {
+  min-height: 3.2rem;
+  padding: 0 1rem;
+}
+
+.guidedPanel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+
+.guidedField {
+  display: grid;
+}
+
+.guidedField textarea {
+  min-height: 7rem;
+  padding: 1rem;
+  resize: vertical;
+  line-height: 1.45;
+}
+
+.guidedField:nth-child(3),
+.guidedField:nth-child(4),
+.guidedField:nth-child(5) {
+  grid-column: 1 / -1;
+}
+
+.outputGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+}
+
+.outputGrid button {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 3.35rem;
+  padding: 0 1rem;
+  border: 1px solid #4f6580;
+  border-radius: 8px;
+  background: rgba(255, 253, 250, 0.2);
+  color: #1c1d21;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.outputGrid button span {
+  display: inline-grid;
+  place-items: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  line-height: 1;
+}
+
+.outputGrid .outputOn {
+  background: rgba(255, 253, 250, 0.72);
+}
+
+.unlockRow {
+  margin-top: 1.4rem;
+}
+
+.runButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  min-height: 3.6rem;
+  margin-top: 1rem;
+  border: 0;
+  border-radius: 8px;
+  background: #4f6580;
+  color: white;
+  box-shadow: 0 12px 28px rgba(42, 48, 58, 0.2);
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.runButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.statusLine {
+  min-height: 1.4rem;
+  margin-top: 0.9rem;
+  font-size: 0.9rem;
+}
+
+.resultPanel {
+  background: rgba(255, 253, 250, 0.72);
+}
+
+.resultTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.resultTop h2 {
+  margin: 0;
+}
+
+.resultTop div,
+.artifactTabs {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.resultTop button,
+.artifactTabs button {
+  min-height: 2.2rem;
+  padding: 0 0.75rem;
+  border: 1px solid rgba(79, 101, 128, 0.25);
+  border-radius: 8px;
+  background: rgba(255, 253, 250, 0.8);
+  color: #4f6580;
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.resultTop button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.artifactTabs {
+  margin-bottom: 1rem;
+}
+
+.artifactTabs .artifactOn {
+  background: #4f6580;
+  color: white;
+}
+
+.resultPanel pre,
+.emptyState {
+  min-height: 14rem;
+  max-height: 42rem;
+  overflow: auto;
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid rgba(42, 48, 58, 0.07);
+  border-radius: 8px;
+  background: rgba(250, 247, 242, 0.86);
+  color: rgba(28, 29, 33, 0.78);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.82rem;
+  line-height: 1.58;
+  white-space: pre-wrap;
+}
+
+.emptyState {
+  display: grid;
+  place-items: center;
+  color: rgba(28, 29, 33, 0.45);
+  text-align: center;
+}
+
+@media (max-width: 980px) {
+  .topbar,
+  .heroRow,
+  .topActions {
+    align-items: stretch;
+  }
+
+  .topbar,
+  .heroRow,
+  .workGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar,
+  .heroRow {
+    flex-direction: column;
+  }
+
+  .topbar {
+    position: static;
+    padding: 1rem;
+  }
+
+  .brandBlock,
+  .topActions,
+  .heroRow {
+    width: 100%;
+  }
+
+  .searchBox {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .workspace {
+    width: min(100% - 1.5rem, 78rem);
+    padding-top: 2rem;
+  }
+
+  .workGrid {
+    display: grid;
+  }
+}
+
+@media (max-width: 640px) {
+  .brandBlock,
+  .topActions,
+  .selectRow,
+  .guidedPanel,
+  .outputGrid {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+
+  .brandBlock {
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .modeSwitch {
+    width: 100%;
+  }
+
+  .panel,
+  .selectPanel {
+    padding: 1.2rem;
+  }
+
+  .ideaBox {
+    min-height: 15rem;
+    padding: 1.1rem;
+  }
+}

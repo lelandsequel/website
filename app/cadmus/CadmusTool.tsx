@@ -1,43 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { CadmusInput } from "@/lib/cadmus";
+import styles from "./cadmus.module.css";
 
-const accent = "#6f38ff";
-
-const S: Record<string, React.CSSProperties> = {
-  wrap: { display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1.05fr)", gap: "1.25rem", alignItems: "start" },
-  panel: { background: "var(--bg-card)", border: "1px solid var(--bg-border)", borderRadius: 16, padding: "1.25rem", boxShadow: "var(--soft-shadow)" },
-  label: { display: "block", fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.66rem", fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-tertiary)", marginBottom: "0.35rem" },
-  field: { marginBottom: "0.9rem" },
-  input: { width: "100%", padding: "0.6rem 0.7rem", border: "1px solid var(--bg-border)", borderRadius: 10, background: "rgba(255,255,255,0.7)", color: "var(--text-primary)", fontSize: "0.9rem", fontFamily: "inherit" },
-  out: { whiteSpace: "pre-wrap", fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.78rem", lineHeight: 1.6, color: "var(--text-secondary)", margin: 0, maxHeight: "62vh", overflow: "auto" },
-  tabRow: { display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.9rem", flexWrap: "wrap" },
-  tab: { fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.04em", padding: "0.4rem 0.75rem", borderRadius: 999, border: "1px solid var(--bg-border)", background: "rgba(255,255,255,0.6)", color: "var(--text-secondary)", cursor: "pointer" },
-  tabOn: { borderColor: accent, background: "var(--accent-dim)", color: accent },
-  copy: { marginLeft: "auto", fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.72rem", fontWeight: 800, padding: "0.4rem 0.85rem", borderRadius: 10, border: "none", background: accent, color: "#fff", cursor: "pointer" },
-  gate: { marginTop: "0.85rem", padding: "0.8rem", borderRadius: 12, border: "1px solid var(--accent-border)", background: "rgba(111,56,255,0.06)", color: "var(--text-secondary)", fontSize: "0.82rem", lineHeight: 1.55 },
-};
-
-const FIELDS: Array<{ key: keyof CadmusInput; label: string; placeholder: string; area?: boolean; required?: boolean }> = [
-  { key: "intent", label: "What are you trying to do?", placeholder: "e.g. write a weekly status update for my team from these raw notes", area: true, required: true },
-  { key: "role", label: "Who should the AI act as? (optional)", placeholder: "e.g. a concise engineering manager" },
-  { key: "audience", label: "Who / what is it for? (optional)", placeholder: "e.g. my director, who skims" },
-  { key: "done", label: "What does “done” look like? (one per line, optional)", placeholder: "covers blockers, decisions, next steps\nunder 200 words\nno fluff", area: true },
-  { key: "nonGoals", label: "What's out of scope? (one per line, optional)", placeholder: "no individual blame\nno new commitments" },
-  { key: "constraints", label: "Constraints? (one per line, optional)", placeholder: "plain language\nemail-ready" },
-  { key: "format", label: "Output format? (optional)", placeholder: "e.g. 4 bullet points + a one-line summary" },
-];
-
-const EXAMPLE: CadmusInput = {
-  intent: "Turn these messy meeting notes into a clear decision log",
-  role: "a precise chief of staff",
-  audience: "leadership, who need the decisions not the chatter",
-  done: "lists each decision with its owner\nflags open questions separately\ncites where each came from",
-  nonGoals: "summarizing small talk\nre-litigating settled debates",
-  constraints: "plain language\nmarkdown",
-  format: "a Decisions list and an Open Questions list",
-};
+type Mode = "beginner" | "guided";
+type ArtifactId = "spec" | "deck" | "prompt" | "prd";
 
 type CadmusRun = {
   result: {
@@ -52,14 +20,50 @@ type CadmusRun = {
   } | null;
 };
 
+const STARTER_INTENT =
+  "Create a local-first app that turns messy project notes into a buildable spec, a deck outline, and an AI build prompt.";
+
+const INDUSTRIES = ["Technology", "Finance", "Healthcare", "Real estate", "Hospitality", "Energy", "Consumer"];
+const PROJECT_TYPES = ["Web app", "Mobile app", "Internal tool", "AI agent", "Data product", "Deck / brief", "Workflow"];
+
+const ARTIFACTS: Array<{ id: ArtifactId; label: string }> = [
+  { id: "spec", label: "Full Spec" },
+  { id: "deck", label: "Deck Outline" },
+  { id: "prompt", label: "AI Build Prompt" },
+  { id: "prd", label: "PRD" },
+];
+
+const GUIDED_FIELDS: Array<{ key: keyof CadmusInput; label: string; placeholder: string; area?: boolean }> = [
+  { key: "role", label: "Acting role", placeholder: "a senior product architect" },
+  { key: "audience", label: "Audience / context", placeholder: "founder, designer, and build agent" },
+  {
+    key: "done",
+    label: "Done looks like",
+    placeholder: "outputs a buildable spec\nmarks assumptions\nincludes testable acceptance criteria",
+    area: true,
+  },
+  { key: "nonGoals", label: "Non-goals", placeholder: "no production secrets\nno unsupported claims", area: true },
+  { key: "constraints", label: "Constraints", placeholder: "local-first\nplain English\nmobile responsive", area: true },
+];
+
 export default function CadmusTool() {
-  const [input, setInput] = useState<CadmusInput>({ intent: "" });
-  const [view, setView] = useState<"prompt" | "spec">("prompt");
+  const [mode, setMode] = useState<Mode>("beginner");
+  const [input, setInput] = useState<CadmusInput>({ intent: STARTER_INTENT });
+  const [industry, setIndustry] = useState(INDUSTRIES[0]);
+  const [projectType, setProjectType] = useState(PROJECT_TYPES[0]);
+  const [selected, setSelected] = useState<Record<ArtifactId, boolean>>({
+    spec: true,
+    deck: true,
+    prompt: true,
+    prd: true,
+  });
+  const [activeArtifact, setActiveArtifact] = useState<ArtifactId>("spec");
+  const [search, setSearch] = useState("");
   const [copied, setCopied] = useState(false);
   const [run, setRun] = useState<CadmusRun | null>(null);
   const [unlockPassword, setUnlockPassword] = useState("");
   const [isUnlocked, setIsUnlocked] = useState(false);
-  const [status, setStatus] = useState("2 free runs per IP.");
+  const [status, setStatus] = useState("2 public runs per IP.");
   const [error, setError] = useState("");
   const [running, setRunning] = useState(false);
 
@@ -72,23 +76,52 @@ export default function CadmusTool() {
     }
   }, []);
 
-  const text = run ? (view === "prompt" ? run.result.llm_prompt : run.result.spec_markdown) : "";
+  const preparedInput = useMemo(() => buildRequest(input, mode, industry, projectType, selected), [
+    input,
+    mode,
+    industry,
+    projectType,
+    selected,
+  ]);
+
+  const artifacts = useMemo(() => {
+    if (!run) return null;
+    return {
+      spec: run.result.spec_markdown,
+      prompt: run.result.llm_prompt,
+      deck: makeDeckOutline(preparedInput, industry, projectType),
+      prd: makePrd(preparedInput, industry, projectType),
+    } satisfies Record<ArtifactId, string>;
+  }, [industry, preparedInput, projectType, run]);
+
+  const selectedArtifacts = ARTIFACTS.filter((artifact) => selected[artifact.id]);
+  const activeText = artifacts ? artifacts[activeArtifact] : "";
+  const displayText = search.trim() && activeText ? filterLines(activeText, search.trim()) : activeText;
+  const hasIntent = input.intent.trim().length > 0;
+
   const set = (key: keyof CadmusInput, value: string) => {
-    setInput((p) => ({ ...p, [key]: value }));
+    setInput((previous) => ({ ...previous, [key]: value }));
     setRun(null);
     setError("");
   };
 
-  const loadExample = () => {
-    setInput(EXAMPLE);
-    setRun(null);
-    setError("");
+  const toggleArtifact = (id: ArtifactId) => {
+    setSelected((previous) => {
+      const enabledCount = Object.values(previous).filter(Boolean).length;
+      if (previous[id] && enabledCount === 1) return previous;
+      const next = { ...previous, [id]: !previous[id] };
+      if (!next[activeArtifact]) {
+        const fallback = ARTIFACTS.find((artifact) => next[artifact.id])?.id ?? "spec";
+        setActiveArtifact(fallback);
+      }
+      return next;
+    });
   };
 
   const copy = async () => {
-    if (!text) return;
+    if (!displayText) return;
     try {
-      await navigator.clipboard.writeText(text);
+      await navigator.clipboard.writeText(displayText);
       setCopied(true);
       setTimeout(() => setCopied(false), 1400);
     } catch {
@@ -96,7 +129,18 @@ export default function CadmusTool() {
     }
   };
 
-  const hasIntent = input.intent.trim().length > 0;
+  const download = () => {
+    if (!displayText) return;
+    const blob = new Blob([displayText], { type: "text/markdown;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `cadmus-${activeArtifact}.md`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  };
 
   const runCadmus = async () => {
     if (!hasIntent || running) return;
@@ -107,7 +151,7 @@ export default function CadmusTool() {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
-          ...input,
+          ...preparedInput,
           unlockPassword: unlockPassword.trim() || undefined,
         }),
       });
@@ -115,16 +159,18 @@ export default function CadmusTool() {
       if (!response.ok) {
         setRun(null);
         setError(body.detail || body.error || "CADMUS refused this run.");
-        if (body.requires_password) setStatus("Free runs spent. Enter the unlock password to keep running CADMUS.");
+        if (body.requires_password) setStatus("Free runs spent. Enter the unlock password to keep going.");
         return;
       }
       setRun(body);
+      setActiveArtifact(selectedArtifacts[0]?.id ?? "spec");
       if (body.access_gate?.unlocked) {
         if (unlockPassword.trim()) window.sessionStorage.setItem("cadmus-unlock-password", unlockPassword.trim());
         setIsUnlocked(true);
         setStatus("Unlocked. Future runs in this browser session are allowed.");
       } else {
-        setStatus(`${body.access_gate?.remaining ?? 0} free run${body.access_gate?.remaining === 1 ? "" : "s"} remaining for this IP.`);
+        const remaining = body.access_gate?.remaining ?? 0;
+        setStatus(`${remaining} public run${remaining === 1 ? "" : "s"} remaining for this IP.`);
       }
     } catch {
       setRun(null);
@@ -135,65 +181,272 @@ export default function CadmusTool() {
   };
 
   return (
-    <div className="cadmus-grid" style={S.wrap}>
-      <div style={S.panel}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.9rem" }}>
-          <span style={S.label}>Your intent</span>
-          <button type="button" onClick={loadExample} style={{ ...S.tab, padding: "0.3rem 0.6rem" }}>
-            Load example
-          </button>
+    <div className={styles.shell}>
+      <header className={styles.topbar}>
+        <div className={styles.brandBlock}>
+          <strong className={styles.brand}>CADMUS</strong>
+          <span className={styles.activeTab}>New Project</span>
         </div>
-        {FIELDS.map((f) => (
-          <div key={f.key} style={S.field}>
-            <label style={S.label} htmlFor={`cadmus-${f.key}`}>{f.label}</label>
-            {f.area ? (
-              <textarea id={`cadmus-${f.key}`} rows={f.key === "intent" ? 3 : 3} placeholder={f.placeholder}
-                value={input[f.key] ?? ""} onChange={(e) => set(f.key, e.target.value)}
-                style={{ ...S.input, resize: "vertical", lineHeight: 1.5 }} />
-            ) : (
-              <input id={`cadmus-${f.key}`} type="text" placeholder={f.placeholder}
-                value={input[f.key] ?? ""} onChange={(e) => set(f.key, e.target.value)} style={S.input} />
-            )}
-          </div>
-        ))}
-        <div style={S.gate}>
-          <strong style={{ color: "var(--text-primary)" }}>Access gate:</strong> {status}
-          <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) auto", gap: "0.55rem", marginTop: "0.7rem" }}>
+        <div className={styles.topActions}>
+          <label className={styles.searchBox}>
+            <span aria-hidden="true">⌕</span>
             <input
-              type="password"
-              placeholder="Unlock password"
-              value={unlockPassword}
-              onChange={(e) => setUnlockPassword(e.target.value)}
-              style={S.input}
-              aria-label="Unlock password"
+              type="search"
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              placeholder="Search current output..."
+              aria-label="Search current output"
             />
-            <button type="button" onClick={runCadmus} disabled={!hasIntent || running} style={{ ...S.copy, marginLeft: 0, opacity: !hasIntent || running ? 0.55 : 1 }}>
-              {running ? "Running..." : isUnlocked ? "Run unlocked" : "Run CADMUS"}
+          </label>
+          <span className={styles.gatePill}>{isUnlocked ? "Unlocked" : "2-run gate"}</span>
+        </div>
+      </header>
+
+      <section className={styles.workspace}>
+        <div className={styles.heroRow}>
+          <div>
+            <h1>Create With CADMUS</h1>
+            <p>Use Beginner Mode for a starter pack, or Guided Mode for the full spec interview.</p>
+          </div>
+          <div className={styles.modeSwitch} aria-label="CADMUS mode">
+            <button type="button" className={mode === "beginner" ? styles.modeOn : ""} onClick={() => setMode("beginner")}>
+              Beginner Mode
+            </button>
+            <button type="button" className={mode === "guided" ? styles.modeOn : ""} onClick={() => setMode("guided")}>
+              Guided Mode
             </button>
           </div>
-          {error ? <p style={{ margin: "0.65rem 0 0", color: "#b3261e" }}>{error}</p> : null}
         </div>
-      </div>
 
-      <div style={S.panel}>
-        <div style={S.tabRow}>
-          <button type="button" onClick={() => setView("prompt")} style={{ ...S.tab, ...(view === "prompt" ? S.tabOn : {}) }}>
-            ⚡ LLM Prompt
-          </button>
-          <button type="button" onClick={() => setView("spec")} style={{ ...S.tab, ...(view === "spec" ? S.tabOn : {}) }}>
-            📋 Build Spec
-          </button>
-          <button type="button" onClick={copy} disabled={!text} style={{ ...S.copy, opacity: text ? 1 : 0.55 }}>{copied ? "Copied ✓" : "Copy"}</button>
+        <div className={styles.workGrid}>
+          <div className={styles.leftStack}>
+            <section className={styles.panel}>
+              <label className={styles.kicker} htmlFor="cadmus-intent">
+                Raw idea
+              </label>
+              <p className={styles.panelCopy}>Dump the paragraph. CADMUS will infer structure, generate useful artifacts, and mark assumptions.</p>
+              <textarea
+                id="cadmus-intent"
+                value={input.intent}
+                onChange={(event) => set("intent", event.target.value)}
+                className={styles.ideaBox}
+                aria-label="Raw idea"
+              />
+              <div className={styles.charCount}>{input.intent.length.toLocaleString()} chars</div>
+            </section>
+
+            <div className={styles.selectRow}>
+              <label className={styles.selectPanel}>
+                <span className={styles.kicker}>Industry</span>
+                <select value={industry} onChange={(event) => setIndustry(event.target.value)}>
+                  {INDUSTRIES.map((option) => (
+                    <option key={option}>{option}</option>
+                  ))}
+                </select>
+              </label>
+              <label className={styles.selectPanel}>
+                <span className={styles.kicker}>Project type</span>
+                <select value={projectType} onChange={(event) => setProjectType(event.target.value)}>
+                  {PROJECT_TYPES.map((option) => (
+                    <option key={option}>{option}</option>
+                  ))}
+                </select>
+              </label>
+            </div>
+
+            {mode === "guided" ? (
+              <section className={styles.guidedPanel}>
+                {GUIDED_FIELDS.map((field) => (
+                  <label key={field.key} className={styles.guidedField}>
+                    <span className={styles.kicker}>{field.label}</span>
+                    {field.area ? (
+                      <textarea
+                        value={input[field.key] ?? ""}
+                        onChange={(event) => set(field.key, event.target.value)}
+                        placeholder={field.placeholder}
+                        rows={3}
+                      />
+                    ) : (
+                      <input
+                        value={input[field.key] ?? ""}
+                        onChange={(event) => set(field.key, event.target.value)}
+                        placeholder={field.placeholder}
+                      />
+                    )}
+                  </label>
+                ))}
+              </section>
+            ) : null}
+          </div>
+
+          <aside className={styles.rightStack}>
+            <section className={styles.panel}>
+              <h2>Starter Pack Outputs</h2>
+              <p className={styles.panelCopy}>Pick what CADMUS should generate from the paragraph.</p>
+              <div className={styles.outputGrid}>
+                {ARTIFACTS.map((artifact) => (
+                  <button
+                    key={artifact.id}
+                    type="button"
+                    className={selected[artifact.id] ? styles.outputOn : ""}
+                    onClick={() => toggleArtifact(artifact.id)}
+                    aria-pressed={selected[artifact.id]}
+                  >
+                    <span aria-hidden="true">{selected[artifact.id] ? "✓" : "+"}</span>
+                    {artifact.label}
+                  </button>
+                ))}
+              </div>
+            </section>
+
+            <section className={styles.panel}>
+              <h2>{mode === "beginner" ? "Beginner Mode" : "Guided Mode"}</h2>
+              <p className={styles.panelCopy}>
+                {mode === "beginner"
+                  ? "Best for rough starts, first drafts, deck outlines, and AI build prompts. Assumptions are explicit."
+                  : "Best when you know the audience, constraints, non-goals, and acceptance criteria already."}
+              </p>
+              <div className={styles.unlockRow}>
+                <input
+                  type="password"
+                  value={unlockPassword}
+                  onChange={(event) => setUnlockPassword(event.target.value)}
+                  placeholder="Unlock password"
+                  aria-label="Unlock password"
+                />
+              </div>
+              <button type="button" className={styles.runButton} disabled={!hasIntent || running} onClick={runCadmus}>
+                <span aria-hidden="true">✦</span>
+                {running ? "Generating..." : mode === "beginner" ? "Generate Starter Pack" : "Generate Full Spec"}
+              </button>
+              <div className={styles.statusLine}>{error || status}</div>
+            </section>
+
+            <section className={`${styles.panel} ${styles.resultPanel}`}>
+              <div className={styles.resultTop}>
+                <h2>Output</h2>
+                <div>
+                  <button type="button" onClick={copy} disabled={!displayText}>
+                    {copied ? "Copied" : "Copy"}
+                  </button>
+                  <button type="button" onClick={download} disabled={!displayText}>
+                    Download
+                  </button>
+                </div>
+              </div>
+
+              {run && artifacts ? (
+                <>
+                  <div className={styles.artifactTabs}>
+                    {selectedArtifacts.map((artifact) => (
+                      <button
+                        key={artifact.id}
+                        type="button"
+                        className={activeArtifact === artifact.id ? styles.artifactOn : ""}
+                        onClick={() => setActiveArtifact(artifact.id)}
+                      >
+                        {artifact.label}
+                      </button>
+                    ))}
+                  </div>
+                  <pre>{displayText}</pre>
+                </>
+              ) : (
+                <div className={styles.emptyState}>Run CADMUS to release the selected artifacts.</div>
+              )}
+            </section>
+          </aside>
         </div>
-        {text ? (
-          <pre style={S.out}>{text}</pre>
-        ) : (
-          <p style={{ color: "var(--text-tertiary)", fontSize: "0.88rem", lineHeight: 1.6, margin: 0 }}>
-            Describe what you're trying to do on the left, then run CADMUS. It will return a structured spec and a
-            ready-to-paste prompt with the guardrails baked in. Try <strong style={{ color: accent }}>Load example</strong>.
-          </p>
-        )}
-      </div>
+      </section>
     </div>
   );
+}
+
+function buildRequest(
+  input: CadmusInput,
+  mode: Mode,
+  industry: string,
+  projectType: string,
+  selected: Record<ArtifactId, boolean>,
+): CadmusInput {
+  const selectedLabels = ARTIFACTS.filter((artifact) => selected[artifact.id]).map((artifact) => artifact.label);
+  const defaultRole = `a senior ${industry.toLowerCase()} product architect`;
+  const defaultAudience = `${projectType.toLowerCase()} builders, stakeholders, and reviewers`;
+  const modeConstraint =
+    mode === "beginner"
+      ? "Beginner Mode: infer missing structure, make assumptions explicit, and keep the starter pack buildable."
+      : "Guided Mode: preserve the supplied constraints, non-goals, and acceptance criteria.";
+  const constraints = [input.constraints, `Industry: ${industry}.`, `Project type: ${projectType}.`, modeConstraint]
+    .filter(Boolean)
+    .join("\n");
+
+  return {
+    ...input,
+    role: input.role?.trim() || defaultRole,
+    audience: input.audience?.trim() || defaultAudience,
+    constraints,
+    format: input.format?.trim() || selectedLabels.join(", "),
+  };
+}
+
+function makeDeckOutline(input: CadmusInput, industry: string, projectType: string) {
+  return [
+    "# Deck Outline",
+    "",
+    "1. Title",
+    `   - ${input.intent}`,
+    "2. Problem",
+    `   - The current idea is underspecified for ${industry.toLowerCase()} execution.`,
+    "3. Proposed Product",
+    `   - ${projectType} shaped from the supplied intent.`,
+    "4. Core Workflow",
+    "   - Capture intent.",
+    "   - Convert intent into explicit requirements.",
+    "   - Refuse unsupported scope.",
+    "   - Release the build prompt.",
+    "5. Guardrails",
+    "   - Claims must be grounded in user-provided inputs.",
+    "   - Assumptions must be labeled before build work begins.",
+    "6. Acceptance Criteria",
+    "   - The output is actionable by a builder.",
+    "   - Non-goals are visible.",
+    "   - Open questions are separated from decisions.",
+  ].join("\n");
+}
+
+function makePrd(input: CadmusInput, industry: string, projectType: string) {
+  return [
+    "# Product Requirements Document",
+    "",
+    "## Objective",
+    input.intent,
+    "",
+    "## Context",
+    `Industry: ${industry}`,
+    `Project type: ${projectType}`,
+    `Audience: ${input.audience || "Builders, stakeholders, and reviewers"}`,
+    "",
+    "## Functional Requirements",
+    "- Convert raw intent into an explicit objective.",
+    "- Produce acceptance criteria that can be tested.",
+    "- Mark non-goals and constraints before build starts.",
+    "- Generate a prompt that refuses unsupported claims.",
+    "",
+    "## Non-Goals",
+    input.nonGoals || "- Anything not grounded in the supplied intent.",
+    "",
+    "## Acceptance",
+    input.done || "- A builder can begin work without guessing the core scope.",
+    "",
+    "## Open Questions",
+    "- Which assumptions should be confirmed before production build?",
+    "- Which user role owns final approval?",
+  ].join("\n");
+}
+
+function filterLines(text: string, needle: string) {
+  const q = needle.toLowerCase();
+  const lines = text.split("\n");
+  const hits = lines.filter((line) => line.toLowerCase().includes(q));
+  return hits.length ? hits.join("\n") : "No matching lines in the current output.";
 }
