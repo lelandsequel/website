@@ -428,8 +428,8 @@ async function resolveTicker(ticker: string): Promise<SecTickerRow | undefined> 
 async function fetchJson<T>(url: string, sec = false): Promise<T | undefined> {
   const response = await fetch(url, {
     headers: sec ? { "User-Agent": SEC_USER_AGENT, Accept: "application/json" } : undefined,
-    next: { revalidate: 60 * 60 * 12 },
-  } as RequestInit & { next: { revalidate: number } });
+    cache: "no-store",
+  });
   if (!response.ok) return undefined;
   return await response.json() as T;
 }
@@ -442,8 +442,8 @@ async function fetchYahooQuote(ticker: string): Promise<{ symbol: string; date: 
   const symbol = ticker.toUpperCase();
   const response = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?range=5d&interval=1d`, {
     headers: { "User-Agent": SEC_USER_AGENT, Accept: "application/json" },
-    next: { revalidate: 60 * 15 },
-  } as RequestInit & { next: { revalidate: number } });
+    cache: "no-store",
+  });
   if (!response.ok) return undefined;
 
   const payload = await response.json() as {
@@ -482,8 +482,8 @@ async function fetchYahooQuote(ticker: string): Promise<{ symbol: string; date: 
 async function fetchStooqQuote(ticker: string): Promise<{ symbol: string; date: string; close: number; source: string } | undefined> {
   const symbol = `${ticker.toLowerCase()}.us`;
   const response = await fetch(`https://stooq.com/q/l/?s=${encodeURIComponent(symbol)}&f=sd2t2ohlcv&h&e=csv`, {
-    next: { revalidate: 60 * 15 },
-  } as RequestInit & { next: { revalidate: number } });
+    cache: "no-store",
+  });
   if (!response.ok) return undefined;
   const row = (await response.text()).trim().split(/\r?\n/)[1]?.split(",");
   const close = Number(row?.[6]);
