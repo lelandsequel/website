@@ -16,9 +16,9 @@ const blockerRules: Array<[string, RegExp]> = [
   ["MISSING_PROOF", /\bmissing|not attached|no support|unsupported|without support/],
   ["MISMATCH", /\bmismatch|does not tie|doesn't tie|difference|out of balance|unbalanced/],
   ["STALE_ITEM", /\bstale|older than|aged|180 days/],
-  ["POLICY_CONFLICT", /\bpolicy conflict|below threshold|cutoff|capitalization|approval matrix/],
+  ["POLICY_CONFLICT", /\bpolicy conflict|below threshold|cutoff (?:break|issue|failure)|capitalization (?:conflict|exception|violation)|approval matrix (?:conflict|exception|violation|not approved)/],
   ["OPEN_REVIEW", /\bunresolved|blocker|review|not approved|queue/],
-  ["VARIANCE_GAP", /\bvariance|strong demand|volume|price|mix|timing/],
+  ["VARIANCE_GAP", /\bvariance (?:gap|unexplained|unsupported|not explained|without support)|strong demand (?:unsupported|without support)|(?:volume|price|mix|timing) (?:break|gap|unsupported|not explained|without support)/],
 ];
 
 const requiredEvidenceByMode: Partial<Record<RunnerMode, Array<[string, RegExp]>>> = {
