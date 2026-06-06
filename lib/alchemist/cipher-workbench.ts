@@ -33,6 +33,31 @@ export type CipherPeerRow = {
   refusal?: string;
 };
 
+export type CipherDcfAssumption = {
+  label: string;
+  value: string;
+  source: string;
+};
+
+export type CipherDcfProjection = {
+  year: string;
+  growth: string;
+  freeCashFlow: string;
+  discountFactor: string;
+  presentValue: string;
+};
+
+export type CipherDcfBridgeRow = {
+  label: string;
+  value: string;
+};
+
+export type CipherDcfModel = {
+  assumptions: CipherDcfAssumption[];
+  projections: CipherDcfProjection[];
+  bridge: CipherDcfBridgeRow[];
+};
+
 export type CipherWorkbenchResult = {
   mode: CipherMode;
   runId: string;
@@ -47,6 +72,7 @@ export type CipherWorkbenchResult = {
   metrics: CipherMetric[];
   proofRows: CipherProofRow[];
   refusals: CipherRefusal[];
+  dcfModel?: CipherDcfModel;
   peerRows?: CipherPeerRow[];
 };
 
@@ -242,12 +268,15 @@ function runDcf(profile: PublicCompanyProfile): CipherWorkbenchResult {
     };
   }
 
-  const explicitValue = range(5).reduce((sum, index) => {
+  const projections = range(5).map((index) => {
     const year = index + 1;
     const fade = Math.max(profile.growth * (1 - index * 0.14), terminalGrowth);
     const fcf = normalizedFcf * (1 + fade) ** year;
-    return sum + fcf / (1 + wacc) ** year;
-  }, 0);
+    const discountFactor = 1 / (1 + wacc) ** year;
+    const presentValue = fcf * discountFactor;
+    return { year, fade, fcf, discountFactor, presentValue };
+  });
+  const explicitValue = projections.reduce((sum, row) => sum + row.presentValue, 0);
   const terminalFcf = normalizedFcf * (1 + terminalGrowth);
   const terminalValue = terminalFcf / (wacc - terminalGrowth) / (1 + wacc) ** 5;
   const enterpriseValue = explicitValue + terminalValue;
@@ -277,6 +306,33 @@ function runDcf(profile: PublicCompanyProfile): CipherWorkbenchResult {
       metric("Scenario / share", dollars(valuePerShare), "warning"),
       metric("Scenario delta", percent(delta), "warning"),
     ],
+    dcfModel: {
+      assumptions: [
+        { label: "Base free cash flow", value: money(normalizedFcf), source: profile.fcf > 0 ? "SEC operating cash flow less capex" : "Normalized EBIT after tax proxy" },
+        { label: "Revenue CAGR", value: percent(profile.growth), source: "Latest five-year SEC revenue series" },
+        { label: "Discount rate", value: percent(wacc), source: "Sector-calibrated CIPHER assumption" },
+        { label: "Terminal growth", value: percent(terminalGrowth), source: "CIPHER terminal value guardrail" },
+        { label: "Net debt", value: money(profile.netDebt), source: "SEC debt less cash" },
+        { label: "Diluted shares", value: `${profile.shares.toFixed(1)}mm`, source: "SEC shares outstanding / diluted share facts" },
+      ],
+      projections: projections.map((row) => ({
+        year: `Year ${row.year}`,
+        growth: percent(row.fade),
+        freeCashFlow: money(row.fcf),
+        discountFactor: row.discountFactor.toFixed(3),
+        presentValue: money(row.presentValue),
+      })),
+      bridge: [
+        { label: "PV projected FCF", value: money(explicitValue) },
+        { label: "PV terminal value", value: money(terminalValue) },
+        { label: "Enterprise value", value: money(enterpriseValue) },
+        { label: "Less net debt", value: money(profile.netDebt) },
+        { label: "Equity value", value: money(equityValue) },
+        { label: "Scenario / share", value: dollars(valuePerShare) },
+        { label: "Market price", value: dollars(marketPrice) },
+        { label: "Scenario delta", value: percent(delta) },
+      ],
+    },
     proofRows: [
       ...baseProofRows(profile, "dcf"),
       proof("DCF-001", "assumption", `WACC ${percent(wacc)}; terminal growth ${percent(terminalGrowth)}; revenue CAGR ${percent(profile.growth)}.`),

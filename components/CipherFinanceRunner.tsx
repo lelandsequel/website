@@ -168,6 +168,8 @@ function ResultView({
 }) {
   return (
     <>
+      {result.dcfModel ? <DcfModelView result={result} /> : null}
+
       <div className="cipher-result-card">
         <div className="cipher-result-head">
           <div>
@@ -236,6 +238,66 @@ function ResultView({
         </div>
       </details>
     </>
+  );
+}
+
+function DcfModelView({ result }: { result: CipherWorkbenchResult }) {
+  if (!result.dcfModel) return null;
+
+  return (
+    <section className="cipher-dcf-model" aria-label={`${result.ticker} DCF model`}>
+      <div className="cipher-dcf-head">
+        <div>
+          <span>DCF model</span>
+          <h4>{result.ticker} projected cash-flow build</h4>
+        </div>
+        <strong>{result.sector}</strong>
+      </div>
+
+      <div className="cipher-table-wrap">
+        <table className="cipher-dcf-table">
+          <thead>
+            <tr>
+              <th>Period</th>
+              <th>Growth</th>
+              <th>Free cash flow</th>
+              <th>Discount factor</th>
+              <th>Present value</th>
+            </tr>
+          </thead>
+          <tbody>
+            {result.dcfModel.projections.map((row) => (
+              <tr key={row.year}>
+                <td>{row.year}</td>
+                <td>{row.growth}</td>
+                <td>{row.freeCashFlow}</td>
+                <td>{row.discountFactor}</td>
+                <td>{row.presentValue}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="cipher-bridge-grid">
+        {result.dcfModel.bridge.map((row) => (
+          <div key={row.label}>
+            <span>{row.label}</span>
+            <strong>{row.value}</strong>
+          </div>
+        ))}
+      </div>
+
+      <div className="cipher-assumption-grid">
+        {result.dcfModel.assumptions.map((assumption) => (
+          <div key={assumption.label}>
+            <span>{assumption.label}</span>
+            <strong>{assumption.value}</strong>
+            <small>{assumption.source}</small>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
 

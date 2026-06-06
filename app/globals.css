@@ -1005,6 +1005,30 @@ pre code { background: none; padding: 0; color: inherit; }
   margin-bottom: 1.25rem;
 }
 
+.cipher-page-head {
+  align-items: end;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.52fr);
+  margin: 0.85rem 0 1rem;
+}
+
+.cipher-page-head h1 {
+  color: var(--text-primary);
+  font-size: clamp(2rem, 4.8vw, 3.8rem);
+  font-weight: 950;
+  letter-spacing: -0.055em;
+  line-height: 0.94;
+  margin: 0;
+}
+
+.cipher-page-head p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.55;
+  margin: 0;
+}
+
 .alchemist-path-card {
   min-height: 360px;
   padding: clamp(1.25rem, 3vw, 2.1rem);
@@ -1801,6 +1825,135 @@ pre code { background: none; padding: 0; color: inherit; }
   line-height: 1.45;
 }
 
+.cipher-dcf-model {
+  border: 1px solid rgba(124, 58, 237, 0.14);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.82);
+  display: grid;
+  gap: 0.85rem;
+  padding: 1rem;
+}
+
+.cipher-dcf-head {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.cipher-dcf-head span,
+.cipher-assumption-grid span,
+.cipher-bridge-grid span {
+  color: var(--accent);
+  display: block;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.66rem;
+  font-weight: 950;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.cipher-dcf-head h4 {
+  color: var(--text-primary);
+  font-size: clamp(1.25rem, 2.5vw, 1.8rem);
+  font-weight: 950;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  margin: 0.25rem 0 0;
+}
+
+.cipher-dcf-head > strong {
+  border: 1px solid var(--accent-border);
+  border-radius: 999px;
+  color: var(--accent);
+  flex: 0 0 auto;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.68rem;
+  font-weight: 950;
+  letter-spacing: 0.05em;
+  padding: 0.36rem 0.54rem;
+  text-transform: uppercase;
+}
+
+.cipher-assumption-grid,
+.cipher-bridge-grid {
+  display: grid;
+  gap: 0.6rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.cipher-assumption-grid > div,
+.cipher-bridge-grid > div {
+  border: 1px solid var(--bg-border);
+  border-radius: 12px;
+  background: rgba(251, 248, 255, 0.58);
+  display: grid;
+  gap: 0.25rem;
+  min-width: 0;
+  padding: 0.72rem;
+}
+
+.cipher-assumption-grid strong,
+.cipher-bridge-grid strong {
+  color: var(--text-primary);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 1.08rem;
+  font-weight: 950;
+  overflow-wrap: anywhere;
+}
+
+.cipher-assumption-grid small {
+  color: var(--text-secondary);
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.cipher-table-wrap {
+  border: 1px solid var(--bg-border);
+  border-radius: 14px;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.cipher-dcf-table {
+  border-collapse: collapse;
+  min-width: 760px;
+  width: 100%;
+}
+
+.cipher-dcf-table th,
+.cipher-dcf-table td {
+  border-bottom: 1px solid var(--bg-border);
+  color: var(--text-secondary);
+  padding: 0.78rem 0.82rem;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.cipher-dcf-table th:first-child,
+.cipher-dcf-table td:first-child {
+  text-align: left;
+}
+
+.cipher-dcf-table th {
+  color: var(--text-primary);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.68rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cipher-dcf-table td {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.88rem;
+  font-weight: 850;
+}
+
+.cipher-dcf-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
 .alchemist-live-runner {
   border: 1px solid var(--bg-border);
   border-radius: 24px;
@@ -2395,6 +2548,11 @@ pre code { background: none; padding: 0; color: inherit; }
     grid-template-columns: 1fr;
   }
 
+  .cipher-page-head {
+    align-items: start;
+    grid-template-columns: 1fr;
+  }
+
   .live-runner-actions {
     justify-content: flex-start;
     max-width: none;
@@ -2412,6 +2570,8 @@ pre code { background: none; padding: 0; color: inherit; }
   }
 
   .cipher-metric-grid,
+  .cipher-assumption-grid,
+  .cipher-bridge-grid,
   .cipher-detail-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2494,8 +2654,15 @@ pre code { background: none; padding: 0; color: inherit; }
 
   .cipher-stage-strip,
   .cipher-metric-grid,
+  .cipher-assumption-grid,
+  .cipher-bridge-grid,
   .cipher-detail-grid {
     grid-template-columns: 1fr;
+  }
+
+  .cipher-dcf-head {
+    align-items: flex-start;
+    display: grid;
   }
 
   .cipher-ticker-form input,

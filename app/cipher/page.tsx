@@ -32,27 +32,18 @@ export default async function CipherPage({ searchParams }: PageProps) {
   const initialTicker = resolvedSearchParams?.ticker ?? resolvedSearchParams?.target ?? "NVDA";
 
   return (
-    <section style={{ padding: "3.25rem 0 5.5rem" }}>
+    <section style={{ padding: "1.75rem 0 5.5rem" }}>
       <div style={S.container}>
         <BackLink href="/alchemist/banking" label="Back to Banking" />
-        <span style={S.label}>CIPHER</span>
-        <h1
-          style={{
-            fontSize: "clamp(2.35rem, 6vw, 4.8rem)",
-            fontWeight: 950,
-            letterSpacing: "-0.055em",
-            lineHeight: 0.95,
-            color: "var(--text-primary)",
-            maxWidth: 780,
-            marginBottom: "0.65rem",
-          }}
-        >
-          Deterministic DCF.
-        </h1>
-        <p style={{ ...S.p, fontSize: "1.02rem", maxWidth: 760, marginBottom: "1.2rem" }}>
-          Enter a public ticker. CIPHER resolves the filer, pulls the source data,
-          computes the DCF, and seals the receipt.
-        </p>
+        <div className="cipher-page-head">
+          <div>
+            <span style={S.label}>CIPHER</span>
+            <h1>DCF model runner.</h1>
+          </div>
+          <p>
+            Type a ticker. Watch the stages. Inspect the model.
+          </p>
+        </div>
         <CipherFinanceRunner mode="dcf" initialTicker={initialTicker} />
       </div>
     </section>
