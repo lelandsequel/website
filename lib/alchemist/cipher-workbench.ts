@@ -115,8 +115,8 @@ type PublicCompanyProfile = {
 
 const SEC_USER_AGENT = "JourdanLabs CIPHER public workbench leland@jourdanlabs.com";
 const SEC_TICKERS_URL = "https://www.sec.gov/files/company_tickers.json";
-const ENGINE_VERSION = "cipher-local-workbench-v0.1.0";
-const CORPUS_SEAL = `sha256:${sha256("cipher-local-workbench:dcf:comps:sec-company-facts:stooq-market-snapshot:v0.1.0")}`;
+const ENGINE_VERSION = "cipher-local-workbench-v0.1.1";
+const CORPUS_SEAL = `sha256:${sha256("cipher-local-workbench:dcf:comps:sec-company-facts:yahoo-chart-market-snapshot:v0.1.1")}`;
 
 const revenueTags = [
   "Revenues",
@@ -197,7 +197,7 @@ export function cipherWorkbenchManifest() {
     engine_version: ENGINE_VERSION,
     corpus_seal: CORPUS_SEAL,
     modes: ["dcf", "comps"],
-    source_policy: "SEC Company Facts + SEC submissions metadata + Stooq market snapshot; no external iframe.",
+    source_policy: "SEC Company Facts + SEC submissions metadata + Yahoo Finance chart market snapshot; no external iframe.",
   };
 }
 
@@ -359,7 +359,7 @@ async function resolvePublicCompanyProfileUncached(ticker: string): Promise<Publ
   const [facts, submissions, market] = await Promise.all([
     fetchJson<CompanyFactsResponse>(factsUrl, true),
     fetchJson<SubmissionResponse>(submissionsUrl, true),
-    fetchStooqQuote(ticker),
+    fetchMarketQuote(ticker),
   ]);
 
   const usGaap = facts?.facts?.["us-gaap"];
@@ -414,7 +414,7 @@ async function resolvePublicCompanyProfileUncached(ticker: string): Promise<Publ
       `SEC ticker resolution: ${SEC_TICKERS_URL}`,
       `SEC Company Facts: ${factsUrl}`,
       `SEC submissions metadata: ${submissionsUrl}`,
-      `Market snapshot: Stooq close $${market.close.toFixed(2)} for ${market.symbol} on ${market.date}`,
+      `Market snapshot: ${market.source} close $${market.close.toFixed(2)} for ${market.symbol} on ${market.date}`,
       `${revenue.tag} FY${revenue.fy ?? "latest"} revenue ${money(toMillions(revenue.value))} filed ${revenue.filed ?? "unknown"}`,
     ],
   };
@@ -434,7 +434,52 @@ async function fetchJson<T>(url: string, sec = false): Promise<T | undefined> {
   return await response.json() as T;
 }
 
-async function fetchStooqQuote(ticker: string): Promise<{ symbol: string; date: string; close: number } | undefined> {
+async function fetchMarketQuote(ticker: string): Promise<{ symbol: string; date: string; close: number; source: string } | undefined> {
+  return await fetchYahooQuote(ticker) ?? await fetchStooqQuote(ticker);
+}
+
+async function fetchYahooQuote(ticker: string): Promise<{ symbol: string; date: string; close: number; source: string } | undefined> {
+  const symbol = ticker.toUpperCase();
+  const response = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?range=5d&interval=1d`, {
+    headers: { "User-Agent": SEC_USER_AGENT, Accept: "application/json" },
+    next: { revalidate: 60 * 15 },
+  } as RequestInit & { next: { revalidate: number } });
+  if (!response.ok) return undefined;
+
+  const payload = await response.json() as {
+    chart?: {
+      result?: Array<{
+        meta?: {
+          symbol?: string;
+          currency?: string;
+          regularMarketPrice?: number;
+          regularMarketTime?: number;
+        };
+        timestamp?: number[];
+        indicators?: { quote?: Array<{ close?: Array<number | null> }> };
+      }>;
+    };
+  };
+  const result = payload.chart?.result?.[0];
+  const meta = result?.meta;
+  if (!result || meta?.currency !== "USD") return undefined;
+
+  const close =
+    finitePositive(meta?.regularMarketPrice) ??
+    [...(result.indicators?.quote?.[0]?.close ?? [])].reverse().find((value): value is number => finitePositive(value) !== undefined);
+  if (!close) return undefined;
+
+  const timestamp = meta?.regularMarketTime ?? result.timestamp?.at(-1);
+  const date = timestamp ? new Date(timestamp * 1000).toISOString().slice(0, 10) : "unknown";
+  return {
+    symbol: meta?.symbol ?? symbol,
+    date,
+    close,
+    source: "Yahoo Finance chart",
+  };
+}
+
+async function fetchStooqQuote(ticker: string): Promise<{ symbol: string; date: string; close: number; source: string } | undefined> {
   const symbol = `${ticker.toLowerCase()}.us`;
   const response = await fetch(`https://stooq.com/q/l/?s=${encodeURIComponent(symbol)}&f=sd2t2ohlcv&h&e=csv`, {
     next: { revalidate: 60 * 15 },
@@ -443,7 +488,11 @@ async function fetchStooqQuote(ticker: string): Promise<{ symbol: string; date: 
   const row = (await response.text()).trim().split(/\r?\n/)[1]?.split(",");
   const close = Number(row?.[6]);
   if (!row || !Number.isFinite(close) || close <= 0) return undefined;
-  return { symbol: row[0] ?? symbol.toUpperCase(), date: row[1] ?? "unknown", close };
+  return { symbol: row[0] ?? symbol.toUpperCase(), date: row[1] ?? "unknown", close, source: "Stooq CSV" };
+}
+
+function finitePositive(value: number | null | undefined): number | undefined {
+  return typeof value === "number" && Number.isFinite(value) && value > 0 ? value : undefined;
 }
 
 function annualSeries(usGaap: Record<string, SecFactTag>, tags: readonly string[], unit: string): readonly PickedFact[] {
