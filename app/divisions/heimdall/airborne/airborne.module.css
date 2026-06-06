@@ -1,0 +1,555 @@
+/* Always the brake. Never the sword. */
+.page {
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(246, 249, 252, 0.98)),
+    linear-gradient(135deg, rgba(74, 123, 167, 0.1), rgba(24, 169, 120, 0.08));
+}
+
+.shell {
+  width: min(1240px, 100%);
+  margin: 0 auto;
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.topRail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.topRail a,
+.actionRow button,
+.scenarioButtons button,
+.details summary {
+  min-height: 38px;
+  border: 1px solid rgba(74, 123, 167, 0.28);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.86);
+  color: #23364a;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.topRail a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 0.78rem;
+}
+
+.statusStrip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.statusStrip span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 0.56rem;
+  border: 1px solid rgba(30, 53, 77, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  color: #59697b;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.console {
+  display: grid;
+  gap: 1rem;
+}
+
+.heroGrid,
+.fusionGrid,
+.outputGrid {
+  display: grid;
+  gap: 1rem;
+}
+
+.heroGrid {
+  grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.88fr);
+  align-items: stretch;
+}
+
+.fusionGrid {
+  grid-template-columns: minmax(0, 1fr) minmax(330px, 0.76fr);
+}
+
+.outputGrid {
+  grid-template-columns: minmax(330px, 0.78fr) minmax(0, 1fr);
+}
+
+.verdictPanel,
+.scenarioPanel,
+.feedPanel,
+.timelinePanel,
+.outputPanel,
+.logPanel,
+.details {
+  border: 1px solid rgba(74, 123, 167, 0.22);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 18px 50px rgba(32, 61, 89, 0.1);
+}
+
+.verdictPanel {
+  min-height: 430px;
+  padding: clamp(1rem, 3vw, 1.6rem);
+  background:
+    linear-gradient(135deg, rgba(21, 32, 47, 0.96), rgba(35, 54, 74, 0.94)),
+    #172231;
+  color: #fff;
+}
+
+.scenarioPanel,
+.feedPanel,
+.timelinePanel,
+.outputPanel,
+.logPanel {
+  padding: 1rem;
+}
+
+.panelTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.panelTop span,
+.primaryVerdict span,
+.internalVerdict span,
+.humanFrame span,
+.sensorList span,
+.brakeNote span,
+.timeline span,
+.outputList span,
+.logList span,
+.meter span,
+.details span {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.66rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.panelTop span,
+.sensorList span,
+.brakeNote span,
+.timeline span,
+.outputList span,
+.logList span,
+.meter span,
+.details span {
+  color: #4a7ba7;
+}
+
+.verdictPanel .panelTop span,
+.primaryVerdict span,
+.internalVerdict span,
+.humanFrame span {
+  color: rgba(194, 226, 255, 0.76);
+}
+
+.panelTop strong {
+  color: #23364a;
+  font-size: 0.82rem;
+  text-align: right;
+}
+
+.verdictPanel .panelTop strong {
+  color: #dcefff;
+}
+
+.primaryVerdict {
+  margin-top: clamp(1rem, 3vw, 2rem);
+}
+
+.primaryVerdict strong {
+  display: block;
+  max-width: 100%;
+  margin-top: 0.35rem;
+  overflow-wrap: anywhere;
+  color: #f7fbff;
+  font-size: 5.2rem;
+  line-height: 0.92;
+  font-weight: 950;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+.internalVerdict {
+  display: inline-grid;
+  gap: 0.2rem;
+  margin: 1rem 0;
+  padding: 0.68rem 0.82rem;
+  border: 1px solid rgba(194, 226, 255, 0.22);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.internalVerdict strong {
+  color: #8fd4af;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+}
+
+.verdictPanel p,
+.scenarioPanel p,
+.feedPanel p,
+.timelinePanel p,
+.outputPanel p,
+.logPanel p,
+.details p {
+  color: #59697b;
+  line-height: 1.62;
+}
+
+.verdictPanel > p {
+  max-width: 760px;
+  color: rgba(242, 248, 255, 0.78);
+  font-size: 1rem;
+}
+
+.humanFrame {
+  margin-top: 1rem;
+  padding: 0.85rem;
+  border: 1px solid rgba(143, 212, 175, 0.28);
+  border-radius: 8px;
+  background: rgba(143, 212, 175, 0.09);
+}
+
+.proofStack {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 1rem;
+}
+
+.proofStack > span {
+  color: rgba(194, 226, 255, 0.76);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.66rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.proofStack div {
+  padding: 0.78rem;
+  border: 1px solid rgba(194, 226, 255, 0.18);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.proofStack strong {
+  color: #dcefff;
+  font-size: 0.82rem;
+}
+
+.proofStack p {
+  margin-top: 0.24rem;
+  color: rgba(242, 248, 255, 0.76);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.humanFrame p {
+  margin-top: 0.4rem;
+  color: rgba(242, 248, 255, 0.82);
+}
+
+.scenarioButtons {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.45rem;
+  margin-top: 1rem;
+}
+
+.scenarioButtons button,
+.actionRow button {
+  cursor: pointer;
+}
+
+.scenarioButtons button {
+  padding: 0 0.56rem;
+  color: #59697b;
+}
+
+.scenarioButtons button[aria-pressed="true"],
+.actionRow button:first-child {
+  border-color: rgba(74, 123, 167, 0.46);
+  background: #23364a;
+  color: #fff;
+}
+
+.actionRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.actionRow button {
+  padding: 0 0.75rem;
+}
+
+.actionRow button:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.metricSet {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin-bottom: 1rem;
+}
+
+.meter {
+  min-width: 0;
+  padding: 0.82rem;
+  border: 1px solid rgba(74, 123, 167, 0.18);
+  border-radius: 8px;
+  background: rgba(246, 249, 252, 0.8);
+}
+
+.meter div {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.65rem;
+}
+
+.meter strong {
+  color: #23364a;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.86rem;
+}
+
+.meter i {
+  display: block;
+  block-size: 8px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #4a7ba7, #18a978);
+}
+
+.sensorList {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.sensorList div,
+.brakeNote,
+.outputList div,
+.logList article {
+  border: 1px solid rgba(74, 123, 167, 0.16);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.76);
+}
+
+.sensorList div {
+  padding: 0.78rem;
+}
+
+.sensorList p,
+.brakeNote p,
+.timeline p,
+.outputList p,
+.logList p {
+  margin-top: 0.35rem;
+  font-size: 0.86rem;
+}
+
+.brakeNote {
+  margin-top: 0.75rem;
+  padding: 0.82rem;
+  background: rgba(143, 212, 175, 0.1);
+}
+
+.timeline {
+  display: grid;
+  gap: 0.65rem;
+  list-style: none;
+}
+
+.timeline li {
+  position: relative;
+  padding: 0.82rem 0.82rem 0.82rem 1rem;
+  border-left: 3px solid rgba(74, 123, 167, 0.36);
+  background: rgba(246, 249, 252, 0.78);
+}
+
+.timeline strong {
+  display: block;
+  margin-top: 0.3rem;
+  color: #23364a;
+}
+
+.outputList,
+.logList {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.outputList div {
+  padding: 0.86rem;
+}
+
+.outputList div[data-active="true"] {
+  border-color: rgba(24, 169, 120, 0.42);
+  background: rgba(24, 169, 120, 0.08);
+}
+
+.outputList strong {
+  display: block;
+  margin-top: 0.28rem;
+  color: #23364a;
+  font-size: 1.2rem;
+}
+
+.logPanel .panelTop strong {
+  font-family: var(--font-geist-mono), monospace;
+  color: #b34b2f;
+}
+
+.logPanel .panelTop strong[data-ok="true"] {
+  color: #0d7f59;
+}
+
+.logList {
+  max-height: 620px;
+  overflow: auto;
+  padding-right: 0.25rem;
+}
+
+.logList article {
+  padding: 0.82rem;
+}
+
+.logList article[data-broken="true"] {
+  border-color: rgba(179, 75, 47, 0.62);
+  background: rgba(255, 122, 69, 0.1);
+}
+
+.logList article > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.logList strong {
+  color: #23364a;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.78rem;
+  text-align: right;
+}
+
+.logList dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin-top: 0.65rem;
+}
+
+.logList dl div {
+  min-width: 0;
+  padding: 0.5rem;
+  border-radius: 6px;
+  background: rgba(35, 54, 74, 0.05);
+}
+
+.logList dt {
+  color: #8794a3;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.logList dd {
+  margin-top: 0.18rem;
+  overflow-wrap: anywhere;
+  color: #23364a;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.72rem;
+}
+
+.details {
+  margin-top: 1rem;
+  padding: 0.95rem;
+}
+
+.details summary {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 0 0.78rem;
+  cursor: pointer;
+}
+
+.details div {
+  display: grid;
+  gap: 0.65rem;
+  margin-top: 1rem;
+}
+
+.details p {
+  max-width: 920px;
+}
+
+@media (max-width: 980px) {
+  .heroGrid,
+  .fusionGrid,
+  .outputGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .verdictPanel {
+    min-height: auto;
+  }
+
+  .primaryVerdict strong {
+    font-size: 4.7rem;
+  }
+}
+
+@media (max-width: 660px) {
+  .shell {
+    padding: 0.8rem;
+  }
+
+  .primaryVerdict strong {
+    font-size: 3.35rem;
+  }
+
+  .scenarioButtons,
+  .metricSet,
+  .logList dl {
+    grid-template-columns: 1fr;
+  }
+
+  .panelTop,
+  .logList article > div:first-child {
+    display: grid;
+  }
+
+  .panelTop strong,
+  .logList strong {
+    text-align: left;
+  }
+}

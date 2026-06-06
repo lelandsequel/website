@@ -1,10 +1,11 @@
+// Always the brake. Never the sword.
 import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "HEIMDALL Division — Verification & Refusal at the Irreversible Edge",
   description:
-    "HEIMDALL applies COSMIC to high-consequence decisions — a verification gate that grounds every claim, weighs proportionality, and refuses what it can't prove. It can refuse; it cannot authorize. SENTINEL is in pre-pilot at 94.0% held-out accuracy.",
+    "HEIMDALL applies COSMIC to high-consequence decisions — a verification gate that grounds every claim, weighs proportionality, and refuses what it can't prove. It can refuse; it cannot grant permission. SENTINEL is in pre-pilot at 94.0% held-out accuracy.",
 };
 
 const accent = "#4A7BA7";
@@ -21,7 +22,7 @@ const VERDICTS = [
   { name: "REFUSE", meaning: "A claim can't be grounded in verified evidence. The action cannot proceed — and the failed claim is named." },
   { name: "HOLD", meaning: "True, but it doesn't bear the load of the moment. Escalated for human judgment, not executed." },
   { name: "ABSTAIN", meaning: "The stakes can't be assessed. The gate will not stamp what it can't see." },
-  { name: "NO OBJECTION", meaning: "Grounded and proportionate — and still not an authorization. Authority remains with the human operator." },
+  { name: "NO OBJECTION", meaning: "Grounded and proportionate — and still not permission. Authority remains with the human operator." },
 ];
 
 export default function HeimdallPage() {
@@ -41,7 +42,7 @@ export default function HeimdallPage() {
               HEIMDALL applies the COSMIC reasoning substrate to the decisions you can&rsquo;t take back. It
               grounds every claim in verified evidence, weighs whether even a true claim bears the weight of
               the moment, and refuses when it can&rsquo;t. A human holds every decision &mdash; the gate can
-              refuse, hold, or stand aside, but it cannot authorize. No guessing at the irreversible edge.
+              refuse, hold, or stand aside, but it cannot grant permission. No guessing at the irreversible edge.
             </p>
           </div>
         </div>
@@ -52,7 +53,7 @@ export default function HeimdallPage() {
           <span style={S.label}>The HEIMDALL gate</span>
           <p style={{ ...S.p, maxWidth: 620, marginBottom: "2rem" }}>
             Every proposed action carries claims, and every claim must cite evidence that can be verified.
-            The gate returns one of four verdicts &mdash; and not one of them is &ldquo;yes.&rdquo;
+            The gate returns one of four verdicts &mdash; and not one is a permission word.
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "1px", backgroundColor: "var(--bg-border)", border: "1px solid var(--bg-border)" }}>
             {VERDICTS.map((v) => (
@@ -69,7 +70,7 @@ export default function HeimdallPage() {
         <div style={S.containerSm}>
           <span style={S.label}>The one rule</span>
           <p style={S.p}>
-            By design, HEIMDALL has no &ldquo;authorize&rdquo; verdict &mdash; there is no path in the engine
+            By design, HEIMDALL has no approval verdict &mdash; there is no path in the engine
             that can emit one. It can refuse, hold, abstain, or raise no objection. It removes options; it
             never grants them. A human stays accountable on every decision. The gate is the brake and the
             record &mdash; never the trigger.
@@ -89,7 +90,7 @@ export default function HeimdallPage() {
           <span style={S.label}>One guardian, every edge</span>
           <p style={S.p}>
             A decision that can&rsquo;t be undone should never rest on a claim that can&rsquo;t be proven
-            &mdash; wherever it happens. A defense engagement review. A clinical intervention. An irreversible
+            &mdash; wherever it happens. A defense review. A clinical intervention. An irreversible
             financial execution. An infrastructure cutover. The same posture applies: ground the claims, weigh
             the consequences, refuse what can&rsquo;t survive scrutiny, and leave an immutable record of why
             every call was made.
@@ -108,14 +109,23 @@ export default function HeimdallPage() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "1px", backgroundColor: "var(--bg-border)", border: "1px solid var(--bg-border)" }}>
             {[
               {
+                name: "HEIMDALL Airborne Command Center",
+                status: "Coalition brief",
+                href: "/divisions/heimdall/airborne",
+                description: "A runnable synthetic command-center slice for airborne decision support: fused-picture stepping, brake-only verdicts, human-in-command framing, and a tamper-evident decision log.",
+                accuracy: "—",
+              },
+              {
                 name: "HEIMDALL Gate",
                 status: "Demo",
-                description: "The verification-and-refusal gate for irreversible decisions. Grounds every claim (COSMIC), weighs proportionality, refuses what it can't prove, and seals each decision into the LUNA audit chain. Brake-only by construction — it cannot authorize.",
+                href: "",
+                description: "The verification-and-refusal gate for irreversible decisions. Grounds every claim (COSMIC), weighs proportionality, refuses what it can't prove, and seals each decision into the LUNA audit chain. Brake-only by construction — it cannot grant permission.",
                 accuracy: "—",
               },
               {
                 name: "SENTINEL",
                 status: "Pre-pilot",
+                href: "",
                 description: "Deterministic SOC alert triage. SOAR adapters for Chronicle, Microsoft Sentinel, Splunk, and Elastic. 94.0% held-out accuracy. LUNA audit chain on every decision.",
                 accuracy: "94.0%",
               },
@@ -126,6 +136,11 @@ export default function HeimdallPage() {
                   <span style={{ fontSize: "0.625rem", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: product.status === "Pre-pilot" ? accent : "var(--text-tertiary)", border: `1px solid ${product.status === "Pre-pilot" ? accent : "var(--bg-border)"}`, padding: "0.125rem 0.5rem", fontFamily: "var(--font-geist-mono), monospace" }}>{product.status}</span>
                 </div>
                 <p style={{ fontSize: "0.8125rem", color: "var(--text-secondary)", lineHeight: 1.6, marginBottom: product.accuracy !== "—" ? "1rem" : 0 }}>{product.description}</p>
+                {product.href && (
+                  <Link href={product.href} style={{ display: "inline-flex", marginTop: "1rem", fontSize: "0.8125rem", color: accent }}>
+                    Open airborne console →
+                  </Link>
+                )}
                 {product.accuracy !== "—" && (
                   <div style={{ fontSize: "0.75rem", color: "var(--text-tertiary)" }}>
                     Held-out accuracy: <span style={{ fontFamily: "var(--font-geist-mono), monospace", color: accent }}>{product.accuracy}</span>
