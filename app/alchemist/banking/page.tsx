@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import BackLink from "@/components/BackLink";
+import CipherFinanceRunner from "@/components/CipherFinanceRunner";
 
 export const metadata: Metadata = {
   title: "ALCHEMIST Banking - Financial Model Workflows",
@@ -77,7 +78,7 @@ const S: Record<string, React.CSSProperties> = {
 export default function BankingPage() {
   return (
     <>
-      <section style={{ padding: "5.5rem 0 2rem" }}>
+      <section style={{ padding: "3.25rem 0 1rem" }}>
         <div style={S.container}>
           <BackLink href="/alchemist" label="Back to ALCHEMIST" />
           <span style={S.label}>ALCHEMIST · BANKING</span>
@@ -95,9 +96,15 @@ export default function BankingPage() {
             Financial models with receipts.
           </h1>
           <p style={{ ...S.p, fontSize: "1.08rem", maxWidth: 820 }}>
-            Eight banking workflows for valuation, transaction, credit, scenario,
-            and benchmark work. Each page opens a working model surface.
+            Start with CIPHER, then branch into comps, credit, transactions,
+            scenarios, or the LLM benchmark once the room is paying attention.
           </p>
+        </div>
+      </section>
+
+      <section style={{ padding: "0 0 2rem" }}>
+        <div style={S.container}>
+          <CipherFinanceRunner mode="dcf" initialTicker="NVDA" />
         </div>
       </section>
 

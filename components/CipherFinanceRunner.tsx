@@ -48,7 +48,7 @@ export default function CipherFinanceRunner({
 
   return (
     <section className="alchemist-live-runner">
-      <div className="live-runner-header">
+      <div className="live-runner-header cipher-runner-header">
         <div>
           <span>Live local CIPHER runner</span>
           <h2>{mode === "dcf" ? "CIPHER DCF" : "CIPHER COMPS"}</h2>
@@ -57,7 +57,7 @@ export default function CipherFinanceRunner({
             no external embed dependency, no hidden fallback company.
           </p>
         </div>
-        <div className="live-runner-actions">
+        <div className="live-runner-actions cipher-runner-actions">
           <form
             onSubmit={(event) => {
               event.preventDefault();
@@ -70,17 +70,20 @@ export default function CipherFinanceRunner({
               onChange={(event) => setTicker(event.target.value.toUpperCase())}
               aria-label="Ticker"
               placeholder="NVDA"
+              inputMode="text"
+              autoCapitalize="characters"
               style={{
-                minWidth: 120,
+                minWidth: 128,
                 border: "1px solid var(--bg-border)",
-                borderRadius: 12,
-                padding: "0.78rem 0.9rem",
+                borderRadius: 14,
+                padding: "0.9rem 1rem",
                 fontFamily: "var(--font-geist-mono), monospace",
                 fontWeight: 850,
+                fontSize: "1rem",
               }}
             />
             <button type="submit" className="copy-button primary" disabled={state.status === "loading"}>
-              {state.status === "loading" ? "Running..." : "Run"}
+              {state.status === "loading" ? "Running..." : mode === "dcf" ? "Run DCF" : "Run COMPS"}
             </button>
           </form>
           <a href={`/api/cipher/run?mode=${mode}&ticker=${ticker || "NVDA"}`} target="_blank" rel="noopener noreferrer">

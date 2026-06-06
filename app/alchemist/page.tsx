@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import CipherFinanceRunner from "@/components/CipherFinanceRunner";
 
 export const metadata: Metadata = {
   title: "ALCHEMIST - Banking and Accounting Workflows",
@@ -42,27 +43,39 @@ const S: Record<string, React.CSSProperties> = {
 export default function AlchemistPage() {
   return (
     <>
-      <section style={{ padding: "5.5rem 0 2rem" }}>
+      <section style={{ padding: "3.25rem 0 1rem" }}>
         <div style={S.container}>
           <span style={S.label}>ALCHEMIST</span>
           <h1
             style={{
-              fontSize: "clamp(2.75rem, 8vw, 6rem)",
+              fontSize: "clamp(2.65rem, 7vw, 5.4rem)",
               fontWeight: 950,
               letterSpacing: "-0.06em",
               lineHeight: 0.92,
               color: "var(--text-primary)",
               maxWidth: 980,
-              marginBottom: "1rem",
+              marginBottom: "0.9rem",
             }}
           >
-            Deterministic finance workflows.
+            Type a ticker. Run CIPHER.
           </h1>
           <p style={{ ...S.p, fontSize: "1.08rem", maxWidth: 790 }}>
-            ALCHEMIST is the JourdanLabs finance suite. It has two lanes:
-            banking models for valuation and transaction work, and accounting
-            workflows for close, proof, and workpaper release.
+            The fastest path is right here: enter any public ticker and CIPHER
+            runs the deterministic DCF workflow with source receipts. Banking
+            and accounting suites are below when you want the full system.
           </p>
+          <div className="alchemist-hero-actions" aria-label="ALCHEMIST quick actions">
+            <Link href="/alchemist/cipher?ticker=NVDA">Open CIPHER</Link>
+            <Link href="/alchemist/comps?ticker=NVDA">Open COMPS</Link>
+            <Link href="/alchemist/banking">All banking models</Link>
+            <Link href="/alchemist/accounting">Accounting suite</Link>
+          </div>
+        </div>
+      </section>
+
+      <section style={{ padding: "0 0 2rem" }}>
+        <div style={S.container}>
+          <CipherFinanceRunner mode="dcf" initialTicker="NVDA" />
         </div>
       </section>
 
