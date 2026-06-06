@@ -15,7 +15,6 @@ const omnis = [
 const divisions = [
   { href: "/divisions/helix", label: "HELIX" },
   { href: "/divisions/heimdall", label: "HEIMDALL" },
-  { href: "/alchemist", label: "ALCHEMIST" },
   { href: "/divisions/atlas", label: "ATLAS" },
   { href: "/bacchus", label: "BACCHUS" },
   { href: "/divisions/hygeia", label: "HYGEIA" },
@@ -25,6 +24,7 @@ const divisions = [
 const lead = [
   { href: "/cosmic", label: "COSMIC" },
   { href: "/bifrost", label: "BIFROST" },
+  { href: "/alchemist", label: "ALCHEMIST" },
   { href: "/map-the-soul", label: "MAP THE SOUL" },
 ];
 

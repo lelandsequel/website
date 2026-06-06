@@ -19,19 +19,25 @@ export default function CipherFinanceRunner({
   const [ticker, setTicker] = useState(initialTicker);
   const [state, setState] = useState<RunState>({ status: "loading", result: null, error: null });
   const [copyStatus, setCopyStatus] = useState("Copy JSON");
+  const [stageIndex, setStageIndex] = useState(0);
 
   const runTicker = async (nextTicker = ticker) => {
     const clean = nextTicker.trim().toUpperCase() || "NVDA";
     setTicker(clean);
+    setStageIndex(0);
     setState({ status: "loading", result: null, error: null });
     try {
-      const response = await fetch("/api/cipher/run", {
+      const request = fetch("/api/cipher/run", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ mode, ticker: clean }),
-      });
-      const payload = await response.json() as { result?: CipherWorkbenchResult; error?: string };
+      }).then((response) => response.json() as Promise<{ result?: CipherWorkbenchResult; error?: string }>);
+
+      const stageRun = animateStages(setStageIndex);
+      const [payload] = await Promise.all([request, stageRun]);
+
       if (!payload.result) throw new Error(payload.error ?? "CIPHER run failed.");
+      setStageIndex(4);
       setState({ status: "ready", result: payload.result, error: null });
       window.history.replaceState(null, "", `${window.location.pathname}?ticker=${payload.result.ticker}`);
     } catch (error) {
@@ -47,23 +53,26 @@ export default function CipherFinanceRunner({
   const result = state.status === "ready" ? state.result : null;
 
   return (
-    <section className="alchemist-live-runner">
-      <div className="live-runner-header cipher-runner-header">
+    <section className="cipher-workbench">
+      <div className="cipher-runner-top">
         <div>
-          <span>Live local CIPHER runner</span>
-          <h2>{mode === "dcf" ? "CIPHER DCF" : "CIPHER COMPS"}</h2>
-          <p>
-            SEC Company Facts and market snapshots resolve inside JourdanLabs. No iframe,
-            no external embed dependency, no hidden fallback company.
-          </p>
+          <span>{mode === "dcf" ? "DCF workbench" : "COMPS workbench"}</span>
+          <h2>{mode === "dcf" ? "CIPHER" : "COMPS"}</h2>
         </div>
-        <div className="live-runner-actions cipher-runner-actions">
+        <div className="cipher-run-state" aria-live="polite">
+          <strong>{result ? result.decision : state.status === "error" ? "ERROR" : "RUNNING"}</strong>
+          <small>{result?.ticker ?? (ticker.trim().toUpperCase() || "NVDA")}</small>
+        </div>
+      </div>
+
+      <div className="cipher-run-console">
+        <div>
           <form
             onSubmit={(event) => {
               event.preventDefault();
               void runTicker(ticker);
             }}
-            style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}
+            className="cipher-ticker-form"
           >
             <input
               value={ticker}
@@ -72,133 +81,160 @@ export default function CipherFinanceRunner({
               placeholder="NVDA"
               inputMode="text"
               autoCapitalize="characters"
-              style={{
-                minWidth: 128,
-                border: "1px solid var(--bg-border)",
-                borderRadius: 14,
-                padding: "0.9rem 1rem",
-                fontFamily: "var(--font-geist-mono), monospace",
-                fontWeight: 850,
-                fontSize: "1rem",
-              }}
             />
             <button type="submit" className="copy-button primary" disabled={state.status === "loading"}>
               {state.status === "loading" ? "Running..." : mode === "dcf" ? "Run DCF" : "Run COMPS"}
             </button>
           </form>
-          <a href={`/api/cipher/run?mode=${mode}&ticker=${ticker || "NVDA"}`} target="_blank" rel="noopener noreferrer">
-            JSON endpoint
-          </a>
-          <button
-            type="button"
-            className="copy-button"
-            disabled={!result}
-            onClick={() => copyResult(result, setCopyStatus)}
-          >
-            {copyStatus}
-          </button>
+          <div className="cipher-quick-row" aria-label="Example symbols">
+            <span>Try</span>
+            {["NVDA", "CVX", "MPC", "HD", "SND"].map((quickTicker) => (
+              <button
+                key={quickTicker}
+                type="button"
+                disabled={state.status === "loading"}
+                onClick={() => void runTicker(quickTicker)}
+              >
+                {quickTicker}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="cipher-source-note">
+          <strong>Source chain</strong>
+          <span>{state.status === "loading" ? "Running stages" : result ? "Receipt sealed" : "Awaiting run"}</span>
         </div>
       </div>
 
-      <div className="live-runner-manifest" aria-live="polite">
-        <span>POST /api/cipher/run</span>
-        <strong>{result ? `${result.mode.toUpperCase()} | ${result.decision}` : state.status === "error" ? "Run failed" : "Running source chain"}</strong>
-        <code>{result?.corpusSeal ?? (state.status === "error" ? state.error : "Resolving SEC facts + market data")}</code>
-      </div>
-
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "1rem" }}>
-        {["NVDA", "SND", "CVX", "MPC", "HD"].map((quickTicker) => (
-          <button
-            key={quickTicker}
-            type="button"
-            className="copy-button"
-            disabled={state.status === "loading"}
-            onClick={() => void runTicker(quickTicker)}
-          >
-            {quickTicker}
-          </button>
-        ))}
-      </div>
+      <CipherStageStrip mode={mode} status={state.status} stageIndex={stageIndex} />
 
       {state.status === "loading" ? (
-        <div className="live-runner-empty">
+        <div className="cipher-empty">
           <strong>Running CIPHER</strong>
-          <p>Resolving ticker, pulling SEC Company Facts, fetching market snapshot, and recomputing the model.</p>
+          <p>Resolving the public filer, market snapshot, and model assumptions.</p>
         </div>
       ) : null}
 
       {state.status === "error" ? (
-        <div className="live-runner-empty error">
+        <div className="cipher-empty error">
           <strong>CIPHER request failed</strong>
           <p>{state.error}</p>
         </div>
       ) : null}
 
-      {result ? <ResultView result={result} /> : null}
+      {result ? <ResultView result={result} copyStatus={copyStatus} setCopyStatus={setCopyStatus} /> : null}
     </section>
   );
 }
 
-function ResultView({ result }: { result: CipherWorkbenchResult }) {
+async function animateStages(setStageIndex: (stageIndex: number) => void) {
+  for (let index = 1; index <= 4; index += 1) {
+    await new Promise((resolve) => window.setTimeout(resolve, 280));
+    setStageIndex(index);
+  }
+}
+
+function CipherStageStrip({ mode, status, stageIndex }: { mode: CipherMode; status: RunState["status"]; stageIndex: number }) {
+  const stages = [
+    ["01", "Resolve ticker"],
+    ["02", "SEC facts"],
+    ["03", "Market snapshot"],
+    ["04", mode === "dcf" ? "Compute DCF" : "Build comps"],
+    ["05", "Seal receipt"],
+  ];
+  return (
+    <div className="cipher-stage-strip" aria-label="CIPHER run stages">
+      {stages.map(([number, label], index) => {
+        const stateClass = status === "ready" ? "done" : status === "error" ? "error" : index < stageIndex ? "done" : index === stageIndex ? "active" : "pending";
+        return (
+          <div className={stateClass} key={label}>
+            <span>{number}</span>
+            <strong>{label}</strong>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function ResultView({
+  result,
+  copyStatus,
+  setCopyStatus,
+}: {
+  result: CipherWorkbenchResult;
+  copyStatus: string;
+  setCopyStatus: (status: string) => void;
+}) {
   return (
     <>
-      <div className="live-runner-output">
-        <span>{result.company}</span>
-        <h3>{result.headline}</h3>
-        <p>{result.summary}</p>
-        <div className="live-runner-rows">
+      <div className="cipher-result-card">
+        <div className="cipher-result-head">
           <div>
-            <strong>Run ID</strong>
-            <code>{result.runId}</code>
-            <small>{result.generatedAt}</small>
+            <span>{result.company}</span>
+            <h3>{result.headline}</h3>
           </div>
-          <div>
-            <strong>Sector</strong>
-            <code>{result.sector}</code>
-            <small>{result.ticker}</small>
-          </div>
+          <strong className={`cipher-verdict ${result.decision.toLowerCase()}`}>{result.decision}</strong>
+        </div>
+        <div className="cipher-metric-grid">
           {result.metrics.map((metric) => (
             <div key={metric.label}>
               <strong>{metric.label}</strong>
               <code>{metric.value}</code>
-              <small>{metric.tone ?? "neutral"}</small>
+              <small>{metric.tone ?? "computed"}</small>
             </div>
           ))}
         </div>
+        <p>{result.summary}</p>
       </div>
 
       {result.peerRows?.length ? <PeerTable result={result} /> : null}
 
-      <div className="live-runner-grid compact">
-        <div className="live-runner-output">
-          <span>Refusals</span>
-          {result.refusals.length ? (
-            result.refusals.map((item) => (
-              <p key={item.code}>
-                <strong>{item.code} · {item.severity}</strong>
-                <br />
-                {item.message}
-                <br />
-                <small>{item.remediation}</small>
+      <details className="cipher-details">
+        <summary>Receipts, refusals, and JSON</summary>
+        <div className="cipher-detail-grid">
+          <div>
+            <span>Run</span>
+            <p><strong>Run ID</strong><br /><code>{result.runId}</code></p>
+            <p><strong>Generated</strong><br />{result.generatedAt}</p>
+            <p><strong>Corpus seal</strong><br /><code>{result.corpusSeal}</code></p>
+          </div>
+          <div>
+            <span>Refusals</span>
+            {result.refusals.length ? (
+              result.refusals.map((item) => (
+                <p key={item.code}>
+                  <strong>{item.code} · {item.severity}</strong><br />
+                  {item.message}<br />
+                  <small>{item.remediation}</small>
+                </p>
+              ))
+            ) : (
+              <p>No refusal emitted on this run.</p>
+            )}
+          </div>
+          <div>
+            <span>Proof rows</span>
+            {result.proofRows.map((proofRow) => (
+              <p key={proofRow.id}>
+                <strong>{proofRow.id} · {proofRow.source}</strong><br />
+                <code>{proofRow.hash}</code><br />
+                <small>{proofRow.detail}</small>
               </p>
-            ))
-          ) : (
-            <p>No refusal emitted on this run.</p>
-          )}
-        </div>
-        <div className="live-runner-output chain">
-          <span>LUNA-style proof rows</span>
-          <div className="live-runner-chain">
-            {result.proofRows.map((row) => (
-              <div key={row.id}>
-                <strong>{row.id} · {row.source}</strong>
-                <code>{row.hash}</code>
-                <small>{row.detail}</small>
-              </div>
             ))}
           </div>
+          <div>
+            <span>Export</span>
+            <button
+              type="button"
+              className="copy-button"
+              onClick={() => copyResult(result, setCopyStatus)}
+            >
+              {copyStatus}
+            </button>
+          </div>
         </div>
-      </div>
+      </details>
     </>
   );
 }

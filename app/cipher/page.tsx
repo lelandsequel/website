@@ -35,33 +35,24 @@ export default async function CipherPage({ searchParams }: PageProps) {
     <section style={{ padding: "3.25rem 0 5.5rem" }}>
       <div style={S.container}>
         <BackLink href="/alchemist/banking" label="Back to Banking" />
-        <div className="cipher-workbench-head">
-          <div>
-            <span style={S.label}>CIPHER</span>
-            <h1
-              style={{
-                fontSize: "clamp(2.35rem, 6vw, 4.8rem)",
-                fontWeight: 950,
-                letterSpacing: "-0.055em",
-                lineHeight: 0.95,
-                color: "var(--text-primary)",
-                maxWidth: 780,
-                marginBottom: "0.65rem",
-              }}
-            >
-              Deterministic DCF.
-            </h1>
-            <p style={{ ...S.p, fontSize: "1.02rem", maxWidth: 760 }}>
-              Enter a public ticker and CIPHER pulls SEC Company Facts plus a market
-              snapshot, computes the DCF scenario, and shows the receipts.
-            </p>
-          </div>
-          <div className="cipher-workbench-links">
-            <a href="/alchemist/comps?ticker=NVDA">COMPS</a>
-            <a href="/alchemist/models/credit">Credit</a>
-            <a href="/alchemist/models/benchmark">Benchmark</a>
-          </div>
-        </div>
+        <span style={S.label}>CIPHER</span>
+        <h1
+          style={{
+            fontSize: "clamp(2.35rem, 6vw, 4.8rem)",
+            fontWeight: 950,
+            letterSpacing: "-0.055em",
+            lineHeight: 0.95,
+            color: "var(--text-primary)",
+            maxWidth: 780,
+            marginBottom: "0.65rem",
+          }}
+        >
+          Deterministic DCF.
+        </h1>
+        <p style={{ ...S.p, fontSize: "1.02rem", maxWidth: 760, marginBottom: "1.2rem" }}>
+          Enter a public ticker. CIPHER resolves the filer, pulls the source data,
+          computes the DCF, and seals the receipt.
+        </p>
         <CipherFinanceRunner mode="dcf" initialTicker={initialTicker} />
       </div>
     </section>

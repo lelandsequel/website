@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import CipherFinanceRunner from "@/components/CipherFinanceRunner";
 
 export const metadata: Metadata = {
   title: "ALCHEMIST - Banking and Accounting Workflows",
@@ -57,29 +56,17 @@ export default function AlchemistPage() {
               marginBottom: "0.9rem",
             }}
           >
-            Type a ticker. Run CIPHER.
+            Banking and accounting with receipts.
           </h1>
           <p style={{ ...S.p, fontSize: "1.08rem", maxWidth: 790 }}>
-            The fastest path is right here: enter any public ticker and CIPHER
-            runs the deterministic DCF workflow with source receipts. Banking
-            and accounting suites are below when you want the full system.
+            ALCHEMIST is the JourdanLabs deterministic finance suite. Choose
+            banking for valuation and transaction models, or accounting for
+            close, workpaper, and control workflows.
           </p>
-          <div className="alchemist-hero-actions" aria-label="ALCHEMIST quick actions">
-            <Link href="/alchemist/cipher?ticker=NVDA">Open CIPHER</Link>
-            <Link href="/alchemist/comps?ticker=NVDA">Open COMPS</Link>
-            <Link href="/alchemist/banking">All banking models</Link>
-            <Link href="/alchemist/accounting">Accounting suite</Link>
-          </div>
         </div>
       </section>
 
-      <section style={{ padding: "0 0 2rem" }}>
-        <div style={S.container}>
-          <CipherFinanceRunner mode="dcf" initialTicker="NVDA" />
-        </div>
-      </section>
-
-      <section style={{ padding: "1rem 0 6rem" }}>
+      <section style={{ padding: "1.25rem 0 6rem" }}>
         <div style={S.container}>
           <div className="alchemist-path-grid">
             {paths.map((path) => (
