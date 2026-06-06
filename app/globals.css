@@ -917,6 +917,13 @@ pre code { background: none; padding: 0; color: inherit; }
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
+  transition: transform 180ms ease, border-color 180ms ease;
+}
+
+.alchemist-model-card:hover,
+.alchemist-path-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-border);
 }
 
 .alchemist-model-card span {
@@ -945,6 +952,22 @@ pre code { background: none; padding: 0; color: inherit; }
   font-size: 0.92rem;
 }
 
+.alchemist-model-card em {
+  margin-top: auto;
+  width: fit-content;
+  padding: 0.5rem 0.64rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid var(--accent-border);
+  color: var(--purple-900);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.68rem;
+  font-style: normal;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
 .alchemist-path-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -965,6 +988,7 @@ pre code { background: none; padding: 0; color: inherit; }
   flex-direction: column;
   justify-content: space-between;
   gap: 1rem;
+  transition: transform 180ms ease, border-color 180ms ease;
 }
 
 .alchemist-path-card span {
