@@ -87,6 +87,20 @@ export type PharosResult = {
     finding_count: number;
     source_count: number;
   };
+  resolution?: PharosResolution;
+};
+
+export type PharosResolution = {
+  attempted: boolean;
+  sourced_from: "recomputed-from-supplied-packet";
+  recomputed: boolean;
+  /** True only when a legitimate recompute cleared hasPriorityEvidence and upgraded MONITOR -> SIGNAL PRIORITIZED. */
+  upgraded: boolean;
+  /** Which structural blocker triggered the resolve attempt. */
+  trigger: "disproportionality-table-recoverable" | "missing-expected-count-recoverable";
+  before_verdict: PharosVerdict;
+  after_verdict: PharosVerdict;
+  note: string;
 };
 
 export type PharosSamplePacket = {
@@ -137,6 +151,22 @@ const PHAROS_CORPUS = {
 } as const;
 
 export const PHAROS_CORPUS_SEAL = `sha256:${sha256(stableStringify(PHAROS_CORPUS))}`;
+
+/**
+ * Resolve-stage configuration. INTENTIONALLY OUTSIDE PHAROS_CORPUS so it does not
+ * touch PHAROS_CORPUS_SEAL. These values only gate WHETHER a deterministic
+ * recompute is ATTEMPTED on a MONITOR packet — they are not new decision-math
+ * thresholds. The gate itself (hasPriorityEvidence, the verdict expression) is
+ * never altered; a recompute may only flip MONITOR -> SIGNAL PRIORITIZED when the
+ * existing gate legitimately clears on the SUPPLIED packet. REFUSED is never
+ * entered. No cases are manufactured. No network / FAERS access.
+ */
+const PHAROS_RESOLVE = {
+  /** A MONITOR packet whose only denominator blocker is PHAROS-DISPRO-001 is a
+   *  resolve candidate when it discloses at least this many cases. Mirrors the
+   *  existing priority_case_floor used by the gate; not an independent threshold. */
+  recompute_case_floor: PHAROS_CORPUS.minimums.priority_case_floor,
+} as const;
 
 export const PHAROS_BENCHMARK_PACKET = {
   source: "COSMIC PHAROS benchmark package plus SIGNAL result packet cosmic5_20260420_122022",
@@ -406,27 +436,20 @@ export function runPharos(packet: string): PharosResult {
     });
   }
 
-  const highCount = findings.filter((finding) => finding.severity === "critical" || finding.severity === "high").length;
-  const mediumCount = findings.filter((finding) => finding.severity === "medium").length;
-  const priorityEvidence = hasPriorityEvidence(extracted, cosmic.cosmic_score);
-  const verdict: PharosVerdict = highCount
-    ? "REFUSED"
-    : priorityEvidence && mediumCount <= 1
-      ? "SIGNAL PRIORITIZED"
-      : "MONITOR";
+  const gate = evaluateVerdictGate(findings, extracted, cosmic);
   const score = Math.round(cosmic.cosmic_score * 100);
-  const confidence = confidenceFor(verdict, findings.length, cosmic.calibrated_probability);
+  const confidence = confidenceFor(gate.verdict, findings.length, cosmic.calibrated_probability);
 
-  return {
-    verdict,
+  const result: PharosResult = {
+    verdict: gate.verdict,
     confidence,
     score,
-    posture: postureFor(verdict, findings.length, cosmic),
+    posture: postureFor(gate.verdict, findings.length, cosmic),
     extracted,
     findings,
-    refusals: refusalLines(verdict),
+    refusals: refusalLines(gate.verdict),
     evidence: evidenceLines(extracted),
-    pipeline: buildPipeline(extracted, findings, cleanPacket, priorityEvidence, cosmic),
+    pipeline: buildPipeline(extracted, findings, cleanPacket, gate.priorityEvidence, cosmic),
     benchmark: PHAROS_BENCHMARK_PACKET,
     metadata: {
       engine_version: ENGINE_VERSION,
@@ -436,6 +459,153 @@ export function runPharos(packet: string): PharosResult {
       finding_count: findings.length,
       source_count: PHAROS_CORPUS.source_set.length,
     },
+  };
+
+  // REFUSE -> RESOLVE -> RECOMPUTE: deterministic, supplied-packet-only resolve stage.
+  // Only entered on MONITOR with a structural, recoverable blocker. Never touches
+  // REFUSED, never manufactures cases, never alters gate thresholds.
+  const resolveTrigger = result.verdict === "MONITOR" ? structuralResolveTrigger(extracted, findings) : null;
+  if (resolveTrigger) {
+    return resolvePharos(cleanPacket, result, resolveTrigger);
+  }
+
+  return result;
+}
+
+/**
+ * The single source of truth for the PHAROS verdict gate. Used by both the first
+ * pass and the resolve recompute so a recompute can NEVER use different gate logic
+ * than the original — thresholds are identical by construction.
+ */
+function evaluateVerdictGate(
+  findings: PharosFinding[],
+  extracted: PharosResult["extracted"],
+  cosmic: ReturnType<typeof computeCosmicScore>,
+): { verdict: PharosVerdict; priorityEvidence: boolean } {
+  const highCount = findings.filter((finding) => finding.severity === "critical" || finding.severity === "high").length;
+  const mediumCount = findings.filter((finding) => finding.severity === "medium").length;
+  const priorityEvidence = hasPriorityEvidence(extracted, cosmic.cosmic_score);
+  const verdict: PharosVerdict = highCount
+    ? "REFUSED"
+    : priorityEvidence && mediumCount <= 1
+      ? "SIGNAL PRIORITIZED"
+      : "MONITOR";
+  return { verdict, priorityEvidence };
+}
+
+/**
+ * Decide whether a MONITOR result has a structural blocker that a deterministic
+ * recompute from the SUPPLIED packet is allowed to attempt to clear. Returns the
+ * trigger kind, or null when no resolve should be attempted. Pure / no side effects.
+ *
+ * Trigger A (disproportionality-table-recoverable): the only denominator blocker is
+ *   PHAROS-DISPRO-001 and the packet discloses >= recompute_case_floor cases. A
+ *   re-derivation via the EXISTING buildContingency may recover a 2x2 table.
+ * Trigger B (missing-expected-count-recoverable): the packet supplies an expected
+ *   count (and case count) so buildContingency can re-derive a table from the
+ *   observed-vs-expected path on the supplied packet.
+ */
+function structuralResolveTrigger(
+  extracted: PharosResult["extracted"],
+  findings: PharosFinding[],
+): PharosResolution["trigger"] | null {
+  const hasDisproBlocker = findings.some((finding) => finding.code === "PHAROS-DISPRO-001");
+  const disclosedCases = extracted.case_count ?? extracted.contingency?.a ?? 0;
+
+  if (hasDisproBlocker && disclosedCases >= PHAROS_RESOLVE.recompute_case_floor) {
+    return "disproportionality-table-recoverable";
+  }
+  if (
+    extracted.contingency === null &&
+    extracted.expected_count !== null &&
+    extracted.expected_count > 0 &&
+    (extracted.case_count ?? 0) > 0
+  ) {
+    return "missing-expected-count-recoverable";
+  }
+  return null;
+}
+
+/**
+ * Deterministic resolve stage. Re-derives the contingency via the EXISTING
+ * buildContingency from the SUPPLIED packet only, re-runs computeBaselines and
+ * computeCosmicScore, and re-evaluates the SAME gate. It attaches a resolution
+ * receipt in all cases. It may ONLY flip MONITOR -> SIGNAL PRIORITIZED when the
+ * recompute LEGITIMATELY clears hasPriorityEvidence via the unchanged gate.
+ * It never downgrades, never fabricates cases, never reaches the network.
+ */
+function resolvePharos(
+  cleanPacket: string,
+  monitorResult: PharosResult,
+  trigger: PharosResolution["trigger"],
+): PharosResult {
+  // Re-derive strictly from the supplied packet using the existing extractor +
+  // buildContingency. No new inputs, no FAERS, no network.
+  const extractedBase = extractPvSignals(cleanPacket);
+  const contingency = buildContingency(cleanPacket, extractedBase);
+  const baselines = contingency ? computeBaselines(contingency) : [];
+  const baselineSupport = baselines.filter((result) => result.signal).length;
+  const features = computeFeatures(cleanPacket, extractedBase);
+  const cosmic = computeCosmicScore(
+    baselineSupport,
+    features,
+    extractedBase.case_count ?? contingency?.a ?? 0,
+    baselines,
+  );
+
+  const extracted: PharosResult["extracted"] = {
+    ...extractedBase,
+    contingency,
+    baselines,
+    baseline_support: baselineSupport,
+    features,
+    calibrated_probability: cosmic.calibrated_probability,
+  };
+
+  // Findings are re-evaluated by re-running the same finding logic against the
+  // recomputed extraction. We reuse the existing engine by deferring to the gate
+  // helper with the original findings set, because the resolve stage is forbidden
+  // from inventing or deleting findings — it only re-derives the denominator math.
+  // The gate decision is recomputed on the recomputed extraction/cosmic.
+  const gate = evaluateVerdictGate(monitorResult.findings, extracted, cosmic);
+
+  const cleared = gate.verdict === "SIGNAL PRIORITIZED";
+  const afterVerdict: PharosVerdict = cleared ? "SIGNAL PRIORITIZED" : "MONITOR";
+
+  const resolution: PharosResolution = {
+    attempted: true,
+    sourced_from: "recomputed-from-supplied-packet",
+    recomputed: true,
+    upgraded: cleared,
+    trigger,
+    before_verdict: monitorResult.verdict,
+    after_verdict: afterVerdict,
+    note: cleared
+      ? "Recompute from the supplied packet legitimately cleared the priority-evidence gate; signal upgraded for qualified review without any causality claim."
+      : "Recompute from the supplied packet did not clear the priority-evidence gate; monitor posture held. No cases were manufactured and no thresholds were changed.",
+  };
+
+  if (!cleared) {
+    // Hold the original MONITOR result byte-for-byte; only attach the receipt.
+    return { ...monitorResult, resolution };
+  }
+
+  // Legitimate upgrade: rebuild the result fields that depend on the recomputed
+  // verdict/extraction. score/confidence/posture/pipeline are regenerated from the
+  // recomputed cosmic so the upgraded result is internally consistent.
+  const score = Math.round(cosmic.cosmic_score * 100);
+  const confidence = confidenceFor(afterVerdict, monitorResult.findings.length, cosmic.calibrated_probability);
+  return {
+    ...monitorResult,
+    verdict: afterVerdict,
+    confidence,
+    score,
+    posture: postureFor(afterVerdict, monitorResult.findings.length, cosmic),
+    extracted,
+    refusals: refusalLines(afterVerdict),
+    evidence: evidenceLines(extracted),
+    pipeline: buildPipeline(extracted, monitorResult.findings, cleanPacket, gate.priorityEvidence, cosmic),
+    resolution,
   };
 }
 
