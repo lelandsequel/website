@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import CadmusTool from "./CadmusTool";
+import CadmusTour from "@/components/tour/CadmusTour";
 import styles from "./cadmus.module.css";
 
 export const metadata: Metadata = {
@@ -12,6 +13,7 @@ export default function CadmusPage() {
   return (
     <main className={styles.page}>
       <CadmusTool />
+      <CadmusTour />
     </main>
   );
 }

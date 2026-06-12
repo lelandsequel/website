@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { CSSProperties } from "react";
+import ProofTour from "@/components/tour/ProofTour";
 
 const OG_DESC =
   "AI at scale has one failure under every theme: output that can't be grounded, refused, or audited. JourdanLabs built the deterministic, refusal-grounded cure — and six of its gates run live.";
@@ -110,7 +111,7 @@ export default function ProofPage() {
         <span style={{ ...S.mono, fontSize: "0.7rem", fontWeight: 800, letterSpacing: "0.12em", textTransform: "uppercase", color: accent, display: "block", marginBottom: "0.9rem" }}>
           JourdanLabs × GT 2026 · #6.1 — The Original Problem Statement · Internal preview
         </span>
-        <h1 style={{ fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, letterSpacing: "-0.035em", lineHeight: 1.08, color: "var(--text-primary)", marginBottom: "1rem", maxWidth: "20ch" }}>
+        <h1 data-tour="thesis" style={{ fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, letterSpacing: "-0.035em", lineHeight: 1.08, color: "var(--text-primary)", marginBottom: "1rem", maxWidth: "20ch" }}>
           AI at scale has one disease. We built the cure — and it runs.
         </h1>
         <p style={{ fontSize: "1.05rem", color: "var(--text-secondary)", lineHeight: 1.7, maxWidth: "66ch" }}>
@@ -130,7 +131,7 @@ export default function ProofPage() {
         </p>
 
         {/* 90-second path */}
-        <div style={{ ...S.card, marginTop: "1.5rem", padding: "1rem 1.2rem", borderColor: `${accent}40` }}>
+        <div data-tour="substrate" style={{ ...S.card, marginTop: "1.5rem", padding: "1rem 1.2rem", borderColor: `${accent}40` }}>
           <div style={{ ...S.mono, fontSize: "0.64rem", fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", color: accent, marginBottom: "0.6rem" }}>The 90-second judge path</div>
           <ol style={{ margin: 0, paddingLeft: "1.15rem", display: "grid", gap: "0.45rem", fontSize: "0.86rem", color: "var(--text-secondary)", lineHeight: 1.5 }}>
             <li><Link href="https://jourdanlabs.com/omnis/heimdall" style={{ color: accent, fontWeight: 700 }}>HEIMDALL</Link> — paste a $2.4M auto-wire with no approver. It <strong>refuses</strong>. Add a named approver → it <strong>escalates to a human</strong>. It never authorizes.</li>
@@ -149,7 +150,7 @@ export default function ProofPage() {
         <p style={{ color: "var(--text-tertiary)", marginBottom: "1.1rem", maxWidth: "70ch", ...S.mono, fontSize: "0.72rem" }}>
           Not six products — one deterministic refusal gate, pointed at six places a wrong call is unrecoverable.
         </p>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "0.85rem" }}>
+        <div data-tour="gates" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "0.85rem" }}>
           {PROOFS.map((p) => (
             <Link key={p.name} href={p.href} style={{ ...S.card, textDecoration: "none", display: "block", borderLeft: `3px solid ${p.accent}` }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.5rem", marginBottom: "0.4rem" }}>
@@ -162,7 +163,7 @@ export default function ProofPage() {
             </Link>
           ))}
         </div>
-        <div style={{ marginTop: "1rem", padding: "0.7rem 0.9rem", borderRadius: 10, border: `1px solid ${accent}33`, background: `${accent}0d`, ...S.mono, fontSize: "0.68rem", color: "var(--text-secondary)", lineHeight: 1.6 }}>
+        <div data-tour="receipt" style={{ marginTop: "1rem", padding: "0.7rem 0.9rem", borderRadius: 10, border: `1px solid ${accent}33`, background: `${accent}0d`, ...S.mono, fontSize: "0.68rem", color: "var(--text-secondary)", lineHeight: 1.6 }}>
           🔒 <strong style={{ color: accent }}>Every verdict carries a receipt</strong> — deterministic · 0 runtime LLM calls · same input → same verdict + same hash, every run · corpus-sealed · tamper-evident. Re-run it yourself; it won&apos;t budge.
         </div>
       </section>
@@ -175,7 +176,7 @@ export default function ProofPage() {
         <p style={{ color: "var(--text-tertiary)", marginBottom: "1.1rem", maxWidth: "70ch", ...S.mono, fontSize: "0.72rem" }}>
           The cheap version of this is <code>if packet contains &quot;wire&quot; → refuse</code>. A string-matcher gets fooled both directions. These don&apos;t — same engine, verified live on the API.
         </p>
-        <div style={{ display: "grid", gap: "0.6rem" }}>
+        <div data-tour="negation" style={{ display: "grid", gap: "0.6rem" }}>
           {[
             ["CUSTODIAN", "#0e8f6e", "“…contains no PII, no PCI, and no secrets…”", "HOLD", "Negation doesn’t buy a pass — egress + residency are still flagged. It won’t wave through a leak just because the words “no PII” appear."],
             ["HEIMDALL", "#4A7BA7", "“the agent will NOT wire money, cannot delete, no deploy”", "HOLD — not the edge", "It reads “will not” and stands down — instead of seeing the word “wire” and false-refusing a harmless read."],
@@ -197,7 +198,7 @@ export default function ProofPage() {
       </section>
 
       {/* WHY THIS WINS */}
-      <section style={{ padding: "1.5rem 0 0", borderTop: "1px solid var(--bg-border)" }}>
+      <section data-tour="why" style={{ padding: "1.5rem 0 0", borderTop: "1px solid var(--bg-border)" }}>
         <span style={{ ...S.mono, fontSize: "0.7rem", fontWeight: 800, letterSpacing: "0.12em", textTransform: "uppercase", color: accent, display: "block", marginBottom: "0.9rem" }}>
           Why #6.1 wins
         </span>
@@ -218,6 +219,8 @@ export default function ProofPage() {
           We don&apos;t guess. We prove — or we say plainly we can&apos;t. 🐦‍⬛ + 🔑
         </p>
       </section>
+
+      <ProofTour />
     </main>
   );
 }

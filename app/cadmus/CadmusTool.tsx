@@ -220,7 +220,7 @@ export default function CadmusTool() {
 
         <div className={styles.workGrid}>
           <div className={styles.leftStack}>
-            <section className={styles.panel}>
+            <section className={styles.panel} data-tour="input">
               <label className={styles.kicker} htmlFor="cadmus-intent">
                 Raw idea
               </label>
@@ -280,7 +280,7 @@ export default function CadmusTool() {
           </div>
 
           <aside className={styles.rightStack}>
-            <section className={styles.panel}>
+            <section className={styles.panel} data-tour="outputs">
               <h2>Starter Pack Outputs</h2>
               <p className={styles.panelCopy}>Pick what CADMUS should generate from the paragraph.</p>
               <div className={styles.outputGrid}>
@@ -315,14 +315,14 @@ export default function CadmusTool() {
                   aria-label="Unlock password"
                 />
               </div>
-              <button type="button" className={styles.runButton} disabled={!hasIntent || running} onClick={runCadmus}>
+              <button type="button" className={styles.runButton} disabled={!hasIntent || running} onClick={runCadmus} data-tour="run">
                 <span aria-hidden="true">✦</span>
                 {running ? "Generating..." : mode === "beginner" ? "Generate Starter Pack" : "Generate Full Spec"}
               </button>
               <div className={styles.statusLine}>{error || status}</div>
             </section>
 
-            <section className={`${styles.panel} ${styles.resultPanel}`}>
+            <section className={`${styles.panel} ${styles.resultPanel}`} data-tour="output">
               <div className={styles.resultTop}>
                 <h2>Output</h2>
                 <div>
