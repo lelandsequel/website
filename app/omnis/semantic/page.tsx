@@ -1,14 +1,12 @@
-// OMNIS — the semantic spec engine. Self-contained showcase (inline-styled,
-// server-rendered, deterministic). It runs the meaning-driven pipeline on a
-// sample intent and shows what keyword parsing structurally cannot: the
-// reconciled entities, the typed requirements, and — load-bearing — the honest
-// frontier that names exactly where an LLM is still required. 🐦‍⬛ + 🔑
+// CADMUS — the meaning-driven spec engine. Showcase, on the OMNIS design system.
+// Runs the semantic pipeline on a sample intent and surfaces what keyword parsing
+// can't: reconciled entities, typed requirements, and the honest frontier. 🐦‍⬛ + 🔑
 
 import type { Metadata } from "next";
-import type { CSSProperties } from "react";
 
 import { runSixDCosmicSemantic } from "@/lib/six-d/semantic/run-semantic";
 import type { IntentSemanticModel } from "@/lib/six-d/semantic/model";
+import { Shell, Hero, Section, Card, Pill, ReceiptBar, FrontierPanel, Footer, T } from "@/components/omnis/ui";
 
 export const metadata: Metadata = {
   title: "CADMUS — the spec engine that reads what you mean | JourdanLabs",
@@ -28,156 +26,103 @@ const SAMPLE_INTENT = {
   sourceMaterial: ["Capital Markets uplift study CM-2026-07"],
 };
 
-const C = {
-  ink: "#e7e7ea",
-  muted: "#bcc0cc",
-  faint: "#9aa0ac",
-  accent: "#9fb4ff",
-  green: "#6fe0a8",
-  gold: "#f0c869",
-  card: "rgba(20,22,31,0.6)",
-  border: "#2a2d3a",
-  mono: "var(--font-mono, ui-monospace, monospace)",
-  sans: "var(--font-sans, Inter, system-ui, sans-serif)",
-};
 const short = (h: string): string => (h.length > 18 ? `${h.slice(0, 10)}…${h.slice(-6)}` : h);
-const card: CSSProperties = { border: `1px solid ${C.border}`, background: C.card, borderRadius: 12, padding: "0.9rem 1.05rem" };
-const tag = (col: string): CSSProperties => ({
-  fontFamily: C.mono,
-  fontSize: 11,
-  fontWeight: 700,
-  letterSpacing: "0.04em",
-  padding: "2px 8px",
-  borderRadius: 999,
-  background: `${col}1a`,
-  color: col,
-  border: `1px solid ${col}55`,
-  whiteSpace: "nowrap",
-});
-const h2: CSSProperties = {
-  fontSize: "0.78rem",
-  fontFamily: C.mono,
-  letterSpacing: "0.12em",
-  textTransform: "uppercase",
-  color: C.accent,
-  marginBottom: "0.5rem",
-};
 
-export default async function OmnisSemanticPage() {
+export default async function CadmusSemanticPage() {
   const { run, entry } = await runSixDCosmicSemantic(SAMPLE_INTENT);
   const m = (run.manifest as unknown as { semantic: IntentSemanticModel }).semantic;
   const bound = run.provenance.filter((p) => p.status === "BOUND").length;
   const phases = run.manifest.artifacts.map((a) => ({ phase: a.phase, n: a.elements.length }));
 
   return (
-    <div style={{ background: "#0c0e15", minHeight: "100vh", color: C.ink, fontFamily: C.sans }}>
-      <main style={{ maxWidth: 1040, margin: "0 auto", padding: "3rem 1.25rem 5rem" }}>
-      <header style={{ marginBottom: "2.4rem" }}>
-        <p style={{ fontFamily: C.mono, fontSize: 12, letterSpacing: "0.14em", textTransform: "uppercase", color: C.accent, margin: "0 0 0.8rem" }}>
-          JourdanLabs · CADMUS — the spec engine · OMNIS loop
-        </p>
-        <h1 style={{ fontSize: "clamp(2rem,5vw,3.1rem)", fontWeight: 800, letterSpacing: "-0.035em", lineHeight: 1.05, margin: "0 0 0.4rem" }}>
-          It reads what you mean.
-          <span style={{ ...tag(C.gold), marginLeft: 12, verticalAlign: "middle" }}>SYNTHETIC DATA</span>
-        </h1>
-        <p style={{ color: C.muted, fontSize: "1.06rem", lineHeight: 1.6, maxWidth: "64ch", margin: "0.8rem 0 0" }}>
-          CADMUS <strong style={{ color: C.ink }}>reconciles</strong> an intent&rsquo;s entities (NEBULA),{" "}
-          <strong style={{ color: C.ink }}>types</strong> its requirements (ASTRAL), and builds the spec from that
-          meaning — then VELLUM binds every element to a source, AURORA gates it, LUNA chains it. And where it can&rsquo;t
-          be sure, it <strong style={{ color: C.green }}>names exactly where an LLM is still required</strong> instead of
-          faking it. Deterministic · keyless · meaning-driven.
-        </p>
-      </header>
+    <Shell>
+      <Hero kicker="JourdanLabs · CADMUS — the spec engine · OMNIS loop" title="It reads what you mean." chip="SYNTHETIC DATA">
+        CADMUS <strong style={{ color: T.ink }}>reconciles</strong> an intent&rsquo;s entities (NEBULA),{" "}
+        <strong style={{ color: T.ink }}>types</strong> its requirements (ASTRAL), and builds the spec from that meaning
+        — then VELLUM binds every element to a source, AURORA gates it, LUNA chains it. And where it can&rsquo;t be
+        sure, it <strong style={{ color: T.green }}>names exactly where an LLM is still required</strong> instead of
+        faking it. Deterministic · keyless · meaning-driven.
+      </Hero>
 
-      <section style={{ marginBottom: "2.2rem" }}>
-        <h2 style={h2}>① Reconciliation — NEBULA</h2>
-        <p style={{ color: C.muted, fontSize: "0.95rem", margin: "0 0 1rem", maxWidth: "66ch" }}>
-          Keyword parsing sees strings. OMNIS sees <em>entities</em> — and merges the surface forms that mean the same
-          thing, with provenance. The thing a substring scan structurally cannot do.
-        </p>
+      <Section label="① Reconciliation — NEBULA" title="Keyword parsing sees strings. CADMUS sees entities — and merges the surface forms that mean the same thing, with provenance. The thing a substring scan structurally cannot do.">
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))", gap: "0.7rem" }}>
           {m.entities.map((e) => (
-            <div key={e.id} style={card}>
+            <Card key={e.id}>
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
-                <span style={tag(C.accent)}>{e.role}</span>
+                <Pill>{e.role}</Pill>
                 <strong style={{ fontSize: "1.02rem" }}>{e.display}</strong>
               </div>
-              <div style={{ fontFamily: C.mono, fontSize: 12.5, color: C.muted, lineHeight: 1.7 }}>
+              <div style={{ fontFamily: T.mono, fontSize: 12.5, color: T.muted, lineHeight: 1.7 }}>
                 {e.variants.map((v, i) => (
                   <span key={i}>
-                    {i > 0 && <span style={{ color: C.faint }}> · </span>}&ldquo;{v}&rdquo;
+                    {i > 0 && <span style={{ color: T.faint }}> · </span>}&ldquo;{v}&rdquo;
                   </span>
                 ))}
                 {e.variants.length >= 2 && (
-                  <div style={{ color: C.green, marginTop: 4 }}>↳ reconciled into one entity from {e.variants.length} mentions</div>
+                  <div style={{ color: T.green, marginTop: 4 }}>↳ reconciled into one entity from {e.variants.length} mentions</div>
                 )}
               </div>
-            </div>
+            </Card>
           ))}
         </div>
-      </section>
+      </Section>
 
-      <section style={{ marginBottom: "2.2rem" }}>
-        <h2 style={h2}>② Typed requirements — ASTRAL</h2>
+      <Section label="② Typed requirements — ASTRAL">
         <div style={{ display: "grid", gap: "0.45rem" }}>
           {m.requirements.map((r, i) => {
             const budget = r.typing.canonical?.budget as { raw?: string } | undefined;
             const narrative = r.typing.ears === "narrative";
             return (
-              <div key={i} style={{ ...card, display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-                <span style={tag(narrative ? C.gold : C.green)}>{r.typing.ears}</span>
-                <span style={tag(C.accent)}>{r.typing.modality}</span>
-                {budget?.raw && <span style={tag(C.gold)}>budget {budget.raw}</span>}
-                <span style={{ color: C.muted, fontSize: "0.92rem", flex: 1, minWidth: "40%" }}>{r.text}</span>
-              </div>
+              <Card key={i} style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+                <Pill color={narrative ? T.gold : T.green}>{r.typing.ears}</Pill>
+                <Pill>{r.typing.modality}</Pill>
+                {budget?.raw && <Pill color={T.gold}>budget {budget.raw}</Pill>}
+                <span style={{ color: T.muted, fontSize: "0.92rem", flex: 1, minWidth: "40%" }}>{r.text}</span>
+              </Card>
             );
           })}
         </div>
-      </section>
+      </Section>
 
-      <section style={{ marginBottom: "2.2rem" }}>
-        <h2 style={{ ...h2, color: C.green }}>③ The frontier — named, not faked</h2>
-        <p style={{ color: C.muted, fontSize: "0.95rem", margin: "0 0 1rem", maxWidth: "66ch" }}>
-          What makes OMNIS trustworthy: it does <em>not</em> pretend to understand arbitrary prose. It reconciles and
-          types what it can, and reports — precisely — where a model would still be required.
-        </p>
-        <div style={{ ...card, borderColor: `${C.green}55`, background: `${C.green}0d` }}>
-          <div style={{ display: "flex", gap: "1.6rem", marginBottom: "0.8rem", flexWrap: "wrap", fontFamily: C.mono, fontSize: 12.5, color: C.muted }}>
-            <span><strong style={{ color: C.ink, fontSize: 18 }}>{m.frontier.narrativeRequirements}</strong> narrative req(s)</span>
-            <span><strong style={{ color: C.ink, fontSize: 18 }}>{m.frontier.unresolvedTokens.length}</strong> residual token(s)</span>
-            <span><strong style={{ color: C.ink, fontSize: 18 }}>{m.frontier.reviewQueue.length}</strong> merge(s) to adjudicate</span>
-          </div>
-          <ul style={{ margin: 0, paddingLeft: "1.1rem", color: C.muted, fontSize: "0.92rem", lineHeight: 1.65 }}>
-            {m.frontier.llmRequiredFor.map((f, i) => (
-              <li key={i} style={{ marginBottom: 4 }}>{f}</li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      <Section
+        label="③ The frontier — named, not faked"
+        color={T.green}
+        title="What makes CADMUS trustworthy: it does not pretend to understand arbitrary prose. It reconciles and types what it can, and reports — precisely — where a model would still be required."
+      >
+        <FrontierPanel
+          stats={[
+            { n: m.frontier.narrativeRequirements, label: "narrative req(s)" },
+            { n: m.frontier.unresolvedTokens.length, label: "residual token(s)" },
+            { n: m.frontier.reviewQueue.length, label: "merge(s) to adjudicate" },
+          ]}
+          items={m.frontier.llmRequiredFor}
+        />
+      </Section>
 
-      <section style={{ marginBottom: "2rem" }}>
-        <h2 style={h2}>④ The governed spec — VELLUM · AURORA · LUNA</h2>
+      <Section label="④ The governed spec — VELLUM · AURORA · LUNA">
         <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "0.9rem" }}>
           {phases.map((p) => (
-            <div key={p.phase} style={{ ...card, padding: "0.5rem 0.8rem", textAlign: "center", minWidth: 92 }}>
-              <div style={{ fontFamily: C.mono, fontSize: 11, color: C.faint, textTransform: "uppercase" }}>{p.phase}</div>
+            <Card key={p.phase} style={{ padding: "0.5rem 0.8rem", textAlign: "center", minWidth: 92 }}>
+              <div style={{ fontFamily: T.mono, fontSize: 11, color: T.faint, textTransform: "uppercase" }}>{p.phase}</div>
               <div style={{ fontSize: 20, fontWeight: 700 }}>{p.n}</div>
-            </div>
+            </Card>
           ))}
         </div>
-        <div style={{ ...card, display: "flex", gap: "1.6rem", flexWrap: "wrap", fontFamily: C.mono, fontSize: 12.5 }}>
-          <span style={{ color: C.muted }}>VELLUM <strong style={{ color: C.green }}>{bound}/{run.provenance.length}</strong> bound</span>
-          <span style={{ color: C.muted }}>AURORA <strong style={{ color: C.ink }}>NO_OBJECTION {run.gate.summary.NO_OBJECTION} · HOLD {run.gate.summary.HOLD} · REFUSE {run.gate.summary.REFUSE}</strong></span>
-          <span style={{ color: C.muted }}>LUNA <strong style={{ color: C.accent }}>{short(entry.hash)}</strong></span>
-          <span style={{ color: C.muted }}>fingerprint <strong style={{ color: C.accent }}>{m.fingerprint}</strong></span>
-        </div>
-      </section>
+        <ReceiptBar
+          items={[
+            { label: "VELLUM", value: `${bound}/${run.provenance.length} bound`, color: T.green },
+            { label: "AURORA", value: `NO_OBJECTION ${run.gate.summary.NO_OBJECTION} · HOLD ${run.gate.summary.HOLD} · REFUSE ${run.gate.summary.REFUSE}` },
+            { label: "LUNA", value: short(entry.hash), color: T.accent },
+            { label: "fingerprint", value: m.fingerprint, color: T.accent },
+          ]}
+        />
+      </Section>
 
-      <footer style={{ borderTop: `1px solid ${C.border}`, paddingTop: "1.4rem", color: C.faint, fontSize: "0.88rem", lineHeight: 1.6 }}>
-        CADMUS — the JourdanLabs spec engine, the spec stage of the OMNIS loop. Meaning in, governed spec out, the gap named not faked. Every element here
-        traces to a source; the receipt re-runs identically. This page runs the same engine the loop does. 🐦‍⬛ + 🔑
-      </footer>
-      </main>
-    </div>
+      <Footer>
+        CADMUS — the JourdanLabs spec engine, the spec stage of the OMNIS loop. Meaning in, governed spec out, the gap
+        named not faked. Every element here traces to a source; the receipt re-runs identically. This page runs the same
+        engine the loop does. 🐦‍⬛ + 🔑
+      </Footer>
+    </Shell>
   );
 }
