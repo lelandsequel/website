@@ -13,6 +13,8 @@ import {
   STALE_DATA_STORY,
   type Builder,
 } from "@/lib/build-leg";
+import { prioritize, INITIATIVES } from "@/lib/agility";
+import { buildOutcomeToFeedback, applyBuildFeedback } from "@/lib/loop/build-feedback";
 import FactoryExplorer, { type FactoryVM } from "./FactoryExplorer";
 import styles from "./factory.module.css";
 
@@ -61,6 +63,28 @@ export default async function FactoryPage() {
       summary: r.verdict.summary,
     })),
   };
+
+  // ── STAGE 3 → BACK TO AGILITY — the build outcome re-decides the portfolio ──
+  // 6D fed back EFFORT; the build leg feeds back proven DELIVERABILITY (confidence).
+  const portfolioBefore = prioritize(INITIATIVES, { capacity: 12 });
+  const initiative = portfolioBefore.funded.find(
+    (i) => i.id === STALE_DATA_STORY.sourceInitiative,
+  );
+  const shippedFeedback = initiative ? buildOutcomeToFeedback(result, initiative) : null;
+  // Counterfactual: had the gate refused it, confidence drops and Agility re-decides.
+  const refusedRun = await runBuildLeg(
+    STALE_DATA_STORY,
+    () => ({ priceQuote: brokenBuild }),
+    { maxRounds: 3 },
+  );
+  const refusedFeedback = initiative ? buildOutcomeToFeedback(refusedRun, initiative) : null;
+  const portfolioAfter = refusedFeedback
+    ? prioritize(applyBuildFeedback(INITIATIVES, refusedFeedback), { capacity: 12 })
+    : portfolioBefore;
+  const scoreOf = (p: typeof portfolioBefore, id: string): number | null =>
+    (p.funded.find((f) => f.id === id) as { _score?: number } | undefined)?._score ?? null;
+  const hlScoreBefore = scoreOf(portfolioBefore, STALE_DATA_STORY.sourceInitiative);
+  const hlScoreAfter = scoreOf(portfolioAfter, STALE_DATA_STORY.sourceInitiative);
 
   return (
     <main className={styles.page}>
@@ -196,14 +220,83 @@ export default async function FactoryPage() {
         </div>
       </section>
 
+      {/* ── Stage 3 → back to Agility — the circle closes ─────────────────── */}
+      {shippedFeedback && refusedFeedback && (
+        <section className={styles.section}>
+          <h2>
+            <span className={styles.step}>BACK TO AGILITY</span>
+            The circle closes — the build verdict re-decides the portfolio
+          </h2>
+          <p className={styles.lede}>
+            6D fed back the re-estimated <em>effort</em>. The build leg feeds back the measured{" "}
+            <em>deliverability</em>: Agility stops <em>guessing</em> whether{" "}
+            {STALE_DATA_STORY.sourceInitiative} can ship — the gate proved it.{" "}
+            <span style={{ opacity: 0.7 }}>
+              (Agility&rsquo;s score = reach × NPV × <strong>confidence</strong> ÷ effort.)
+            </span>
+          </p>
+
+          <div className={styles.summaryBar}>
+            <div className={styles.summaryItem}>
+              <span className={styles.summaryLabel}>build outcome</span>
+              <span className={styles.summaryValue}>shipped</span>
+            </div>
+            <div className={styles.summaryItem}>
+              <span className={styles.summaryLabel}>proven deliverability</span>
+              <span className={styles.summaryValue}>
+                {shippedFeedback.provenDeliveryConfidence.toFixed(1)}
+              </span>
+            </div>
+            <div className={styles.summaryItem}>
+              <span className={styles.summaryLabel}>vs Agility&rsquo;s estimate</span>
+              <span className={styles.summaryValue}>
+                {shippedFeedback.confidenceChanged ? "REVISED" : "CONFIRMED"}
+              </span>
+            </div>
+            <div className={styles.summaryItem}>
+              <span className={styles.summaryLabel}>build receipt → Agility</span>
+              <span className={styles.summaryValueMono}>{short(shippedFeedback.buildReceipt)}</span>
+            </div>
+          </div>
+
+          <p className={styles.lede} style={{ marginTop: "1.75rem" }}>
+            And the gate cuts both ways: had the builder <strong>failed to pass it</strong> in
+            budget, proven deliverability would fall to{" "}
+            {refusedFeedback.provenDeliveryConfidence.toFixed(1)} —{" "}
+            {STALE_DATA_STORY.sourceInitiative}&rsquo;s risk-adjusted score{" "}
+            {hlScoreBefore} → {hlScoreAfter}, and Agility records a new decision. The portfolio
+            won&rsquo;t keep funding what the build can&rsquo;t deliver.
+          </p>
+          <div className={styles.summaryBar}>
+            <div className={styles.summaryItem}>
+              <span className={styles.summaryLabel}>counterfactual</span>
+              <span className={styles.summaryValue}>refused</span>
+            </div>
+            <div className={styles.summaryItem}>
+              <span className={styles.summaryLabel}>{STALE_DATA_STORY.sourceInitiative} score</span>
+              <span className={styles.summaryValue}>
+                {hlScoreBefore} → {hlScoreAfter}
+              </span>
+            </div>
+            <div className={styles.summaryItem}>
+              <span className={styles.summaryLabel}>Agility ledger head</span>
+              <span className={styles.summaryValueMono}>
+                {short(portfolioBefore.head ?? "")} → {short(portfolioAfter.head ?? "")}
+              </span>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* ── Footer ────────────────────────────────────────────────────────── */}
       <footer className={styles.footer}>
-        This is Stage 3 — the third stage of the OMNIS loop. Agility (Stage 1) decided{" "}
-        <em>what</em> to build; 6D (Stage 2) specified <em>how</em>; the build leg (Stage 3)
-        built it and gated it. The next seam: the build verdict and real outcome feed{" "}
-        <em>back</em> into Agility to re-prioritize against the actual delivered size and any
-        open issues the gate surfaced. The receipt rides the whole circle. Deterministic and
-        the portfolio is synthetic. 🐦‍⬛ + 🔑
+        This is Stage 3 — the third stage of the OMNIS loop, and the loop is now{" "}
+        <em>closed</em>. Agility (Stage 1) decided <em>what</em> to build; 6D (Stage 2) specified{" "}
+        <em>how</em>; the build leg (Stage 3) built it and gated it — and both legs feed{" "}
+        <em>back</em> into Agility: 6D&rsquo;s re-estimated effort and the build leg&rsquo;s proven
+        deliverability re-enter the portfolio, so Agility re-decides on what was{" "}
+        <em>measured</em>, not guessed. The receipt rides the whole circle. Deterministic; the
+        portfolio is synthetic. 🐦‍⬛ + 🔑
       </footer>
     </main>
   );
