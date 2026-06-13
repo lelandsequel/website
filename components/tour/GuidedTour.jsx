@@ -44,7 +44,7 @@ function readRect(sel) {
  * @param {string} props.storageKey   localStorage key, unique per product.
  * @param {string} [props.launchLabel] floating-button label.
  */
-export default function GuidedTour({ steps, storageKey, launchLabel = "Watch the walkthrough" }) {
+export default function GuidedTour({ steps, storageKey, launchLabel = "Watch the walkthrough", autoLaunch = false }) {
   const STEPS = Array.isArray(steps) ? steps : [];
   const CONTENT = STEPS.filter((s) => s.kind === "step").length;
   const LAST = STEPS.length - 1;
@@ -62,13 +62,16 @@ export default function GuidedTour({ steps, storageKey, launchLabel = "Watch the
     setRect(readRect(STEPS[i]?.sel));
   }, [i, STEPS]);
 
+  // Only the launcher button opens the tour by default — the product lands first,
+  // not the pitch. Pass autoLaunch to opt a page back into first-visit auto-open.
   useEffect(() => {
+    if (!autoLaunch) return;
     try {
       if (storageKey && !window.localStorage.getItem(storageKey)) setOpen(true);
     } catch {
       /* private mode — launcher still works */
     }
-  }, [storageKey]);
+  }, [storageKey, autoLaunch]);
 
   useLayoutEffect(() => {
     if (!open) return;

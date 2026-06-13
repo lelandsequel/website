@@ -6,7 +6,7 @@
 // says what it DOES in plain English; the tour says how, with the real names on
 // the doors, for the curious and the technical buyer.
 //
-// LOOPER  = decide what to build + write the plan for it, and prove it. (Agility + the semantic spec engine.)
+// LOOPER  = type an idea → it writes the plan, sizes it, and names what it can't be sure of. (Agility + the semantic spec engine.)
 // NORTH POLE = the whole workshop: idea in, finished+checked work out. (All three stages.)
 // 🐦‍⬛ + 🔑
 
@@ -30,27 +30,48 @@ export type TourStep =
   | { kind: "step"; n: number; act: string; sel: string; title: string; body: string }
   | { kind: "outro"; kicker: string; title: string; sub: string };
 
+/** A ready-to-run example prompt for the live tool. */
+export interface ToolExample {
+  label: string;
+  idea: string;
+  /** Optional gut-estimate (weeks) so the "you guessed X → real Y" lands. */
+  guess?: number;
+}
+
+/** Copy for a live "type it → run it" tool surface. */
+export interface ToolCopy {
+  inputLabel: string;
+  placeholder: string;
+  runLabel: string;
+  rerunLabel: string;
+  guessLabel: string;
+  examplesLabel: string;
+  /** Plain section headings for the result blocks (no engine names). */
+  sections: {
+    reconciled: string;
+    plan: string;
+    size: string;
+    humancall: string;
+    proof: string;
+  };
+  examples: ToolExample[];
+}
+
 export interface ProductCopy {
   slug: string;
   name: string;
-  /** Hero kicker. */
   kicker: string;
-  /** Nav + metadata one-liner. */
   oneLiner: string;
-  /** Hero headline (plain, human). */
   tagline: string;
-  /** Hero sub-paragraph (plain). */
   sub: string;
-  /** The narrative sections, in order. The page renders live data under each. */
   stages: Stage[];
-  /** The frontier, in plain words: where it refuses to fake it. */
   humanCall: HumanCall;
-  /** Plain proof points (determinism / provenance / refusal) — no hashes-as-jargon. */
   proof: string[];
-  /** localStorage key so each tour remembers "seen" independently. */
   storageKey: string;
   /** The opt-in tour. THIS is where the engine names live. cover → steps → outro. */
   tour: TourStep[];
+  /** Present when the page is a live, type-it-yourself tool (LOOPER). */
+  tool?: ToolCopy;
 }
 
 // ── LOOPER ───────────────────────────────────────────────────────────────────
@@ -58,29 +79,24 @@ export const LOOPER: ProductCopy = {
   slug: "looper",
   name: "LOOPER",
   kicker: "JourdanLabs · LOOPER",
-  oneLiner: "Decide what to build next — for real reasons.",
-  tagline: "You have more good ideas than time.",
-  sub: "LOOPER lines up everything you could build, picks what fits this round, and writes the plan for the top one. Most of the time the real plan turns out smaller than you feared — so you get to build more. Every call is shown, never guessed.",
+  oneLiner: "Type an idea — get the plan, the real size, and the honest catch.",
+  tagline: "Tell it what you want to build.",
+  sub: "Type a sentence or two — a real feature, in your own words. LOOPER reads what you mean, writes the plan, breaks it into the real size, and tells you the one spot a person still needs to weigh in. Live, every time, with a receipt. Try the example, or write your own.",
   stages: [
     {
-      anchor: "lineup",
-      label: "Everything on the table",
-      plain: "Each idea you could build, with what it's worth and how big it looks right now. Pick one to send down the line.",
-    },
-    {
-      anchor: "picks",
-      label: "What we're building this round",
-      plain: "LOOPER picks what fits your team's real schedule — and shows you why each one made the cut.",
+      anchor: "reconciled",
+      label: "What LOOPER read",
+      plain: "It pulls the real moving parts out of your words — and notices when two names mean the same thing.",
     },
     {
       anchor: "plan",
-      label: "The plan for your top pick",
-      plain: "Open it up: what it has to do, what it connects to, the one rule it can't break, and how you'll know it's done. Every line traced back to what you asked for.",
+      label: "The plan",
+      plain: "What it has to do, what it connects to, the one rule it can't break, and how we'll know it's done — every line traced back to what you said.",
     },
     {
-      anchor: "surprise",
-      label: "The surprise",
-      plain: "You guessed it was huge. Broken into a real plan, it's a fraction of that — and the freed-up time lets more ideas through. The lineup re-decides on the spot.",
+      anchor: "size",
+      label: "The real size",
+      plain: "It breaks the work into real pieces and adds them up — usually far smaller than the gut-guess.",
     },
   ],
   humanCall: {
@@ -88,63 +104,103 @@ export const LOOPER: ProductCopy = {
     plain: "There's always one spot a machine shouldn't fake. LOOPER finds it, flags it, and hands it to a person — instead of guessing and hoping.",
   },
   proof: [
-    "Every line traces back to something you actually said.",
-    "Run it twice, get the same answer. No dice.",
-    "Nothing here was invented just to sound smart.",
+    "Every line traces back to something you actually typed.",
+    "Run the same idea twice, get the same answer. No dice.",
+    "Nothing here was invented just to sound complete.",
   ],
   storageKey: "looper-tour-v1-seen",
+  tool: {
+    inputLabel: "Tell LOOPER what you want to build",
+    placeholder: "e.g. Build a real-time pricing tool that refuses to quote on stale rates…",
+    runLabel: "Run LOOPER",
+    rerunLabel: "Run it",
+    guessLabel: "Your rough guess (weeks) — optional",
+    examplesLabel: "Try one of these, or write your own:",
+    sections: {
+      reconciled: "What LOOPER read",
+      plan: "The plan",
+      size: "The real size",
+      humancall: "The one human call",
+      proof: "Signed & checkable",
+    },
+    examples: [
+      {
+        label: "Correspondent pricing",
+        guess: 20,
+        idea: "Build a real-time pricing engine for correspondent lending. Servicing agents and the servicing agent both need live quotes. It must price against the live rate-sheet feed and refuse to quote if the rate sheet is stale, and it must check the eligibility service before pricing. Respond within 2 seconds at the p95, and log every quote for audit within 1 second.",
+      },
+      {
+        label: "Payoff-quote tool",
+        guess: 12,
+        idea: "Build a customer-facing payoff-quote tool. It pulls the live payoff amount for a loan, never shows a quote older than 24 hours, and logs every request for audit. If the servicing system is unavailable it should tell the customer to try again later instead of showing a stale number.",
+      },
+      {
+        label: "Stuck-loan radar",
+        guess: 8,
+        idea: "Build an internal dashboard that flags mortgage applications stuck in underwriting for more than five business days and routes each one to a senior reviewer. It must pull from the loan origination system every hour and never double-assign the same application.",
+      },
+    ],
+  },
   tour: [
     {
       kind: "cover",
       kicker: "Under the hood · LOOPER",
       title: "How LOOPER actually works.",
-      sub: "The same loop you just saw — now with the real engine names on the doors. For the curious, and for the technical buyer.",
+      sub: "You just ran it. Here's what happened, with the real engine names on the doors — for the curious, and for the technical buyer.",
     },
     {
       kind: "step",
       n: 1,
-      act: "I · The lineup",
-      sel: '[data-tour="lineup"]',
-      title: "This part is Agility.",
-      body: "Agility scores every idea on value and effort, then decides what fits your team's true capacity — like a sharp product lead triaging a roadmap, except it shows all its math and writes the decision down.",
+      act: "I · You type it",
+      sel: '[data-tour="input"]',
+      title: "Plain words in. No special format.",
+      body: "A sentence or two about what you want built — exactly what an engineer would jot at the start of a project. This is the front door of the software lifecycle; everything after it is governed and deterministic.",
     },
     {
       kind: "step",
       n: 2,
-      act: "II · The plan",
-      sel: '[data-tour="plan"]',
-      title: "This part is CADMUS, the spec engine.",
-      body: "CADMUS doesn't keyword-match. It reads what you mean: it notices that “servicing agents” and “the agent” are the same thing and merges them, sorts the must-do rules, and ties every line of the plan back to a source.",
+      act: "II · It reads what you MEAN",
+      sel: '[data-tour="reconciled"]',
+      title: "This is CADMUS, the spec engine.",
+      body: "It doesn't keyword-match — it reads meaning. It notices when “servicing agents” and “the agent” are the same thing and merges them, and pulls out the real moving parts. A substring scan structurally can't do that.",
     },
     {
       kind: "step",
       n: 3,
-      act: "III · Why the number drops",
-      sel: '[data-tour="surprise"]',
-      title: "The gut-guess vs. the real plan.",
-      body: "Broken into actual pieces, the work is usually far smaller than the gut estimate. LOOPER feeds that true size back to Agility, which re-decides on the spot — and room opens up for more.",
+      act: "III · The plan",
+      sel: '[data-tour="plan"]',
+      title: "Sourced, not guessed.",
+      body: "It sorts the must-do rules and writes the plan — and ties every line back to something you actually said. Nothing is invented to sound complete.",
     },
     {
       kind: "step",
       n: 4,
-      act: "IV · The honest part",
-      sel: '[data-tour="humancall"]',
-      title: "It names what it can't be sure of.",
-      body: "Where the meaning is genuinely ambiguous, LOOPER doesn't bluff. It marks the exact spot a human (or a bigger model) is still needed. We call that the frontier — naming it instead of faking it is the entire point.",
+      act: "IV · The real size",
+      sel: '[data-tour="size"]',
+      title: "It breaks the work into real pieces.",
+      body: "The plan decomposes into sized slices — that's the real number, and it's usually far below the gut-guess. Feed that back to the prioritizer (we call it Agility) and the whole roadmap re-decides on the truth.",
     },
     {
       kind: "step",
       n: 5,
-      act: "V · The receipt",
+      act: "V · The honest part",
+      sel: '[data-tour="humancall"]',
+      title: "It names what it can't be sure of.",
+      body: "Where the meaning is genuinely ambiguous, it doesn't bluff — it marks the exact spot a human (or a bigger model) is still needed. We call that the frontier. Naming it instead of faking it is the entire point.",
+    },
+    {
+      kind: "step",
+      n: 6,
+      act: "VI · The receipt",
       sel: '[data-tour="proof"]',
       title: "Signed, and impossible to fake.",
-      body: "Every plan is bound to its sources, passed through a gate that can say no, and sealed into a tamper-proof record. Change one thing and the seal breaks. It re-runs identically, forever.",
+      body: "Every plan is bound to its sources (VELLUM), passed through a gate that can say no (AURORA), and sealed into a tamper-proof chain (LUNA). Change one thing and the seal breaks. It re-runs identically, forever.",
     },
     {
       kind: "outro",
       kicker: "That's LOOPER",
-      title: "Decide. Plan. Prove. Repeat.",
-      sub: "Two engines, one honest loop — and it tells you the truth about its own work.",
+      title: "You just ran the real thing.",
+      sub: "Type your own idea and run it again — same engine, live, every time.",
     },
   ],
 };
