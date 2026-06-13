@@ -17,3 +17,6 @@ export type {
 
 export { STALE_DATA_STORY } from "./workorder";
 export type { BuildWorkOrder, AcceptanceProbe, ProbeResult } from "./workorder";
+
+export { runBuildLeg } from "./orchestrator";
+export type { Builder, BuildBrief, BuildRound, BuildLegResult } from "./orchestrator";
