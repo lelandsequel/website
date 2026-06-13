@@ -275,19 +275,9 @@ export function distributePhaseSemantic(
       acAssignment.set(ac.id, goalIdx);
       continue;
     }
-    const acBucketList = storyBuckets.find
-      ? (() => {
-          // fall back: match by label overlap
-          for (let i = 0; i < storyBuckets.length; i++) {
-            if (storyBuckets[i].some((b) => (ac.body.toLowerCase().includes(b)))) return i;
-          }
-          return -1;
-        })()
-      : -1;
-    const byBucket =
-      storyBuckets.findIndex((bs) =>
-        bs.some((b) => ac.body.toLowerCase().includes(b)),
-      );
+    const byBucket = storyBuckets.findIndex((bs) =>
+      bs.some((b) => ac.body.toLowerCase().includes(b)),
+    );
     acAssignment.set(ac.id, byBucket >= 0 ? byBucket : 0);
   }
 

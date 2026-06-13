@@ -281,7 +281,7 @@ export function developPhaseSemantic(ctx: PhaseCtx, model: IntentSemanticModel):
     const typedAcceptance =
       storyReqs.length
         ? storyReqs.map((r) => {
-            const tag = r.typing.modality !== "narrative" ? ` [${r.typing.modality}/${r.typing.ears}]` : "";
+            const tag = r.typing.ears !== "narrative" ? ` [${r.typing.modality}/${r.typing.ears}]` : "";
             return `${tidy(r.text)}${tag}`;
           })
         : acs.map((ac) => ac.body);
