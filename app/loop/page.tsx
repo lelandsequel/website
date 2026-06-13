@@ -5,7 +5,11 @@ import {
   initiativeToIntent,
   artifactsToInitiativeUpdate,
 } from "@/lib/loop/adapter";
-import { runSixDCosmic, type CosmicRun } from "@/lib/six-d/cosmic";
+import { type CosmicRun } from "@/lib/six-d/cosmic";
+// OMNIS: the loop's spec engine is the MEANING-DRIVEN pipeline — NEBULA/ASTRAL
+// reconcile the intent, then VELLUM/AURORA/LUNA bind, gate, and chain it. Same
+// return shape as v1 cosmic; the spec is built from reconciled meaning, not keywords.
+import { runSixDCosmicSemantic } from "@/lib/six-d/semantic/run-semantic";
 import LoopExplorer, { type FundedVM, type TraceVM } from "./LoopExplorer";
 import styles from "./loop.module.css";
 
@@ -63,7 +67,7 @@ function findTrace(initiative: Initiative, run: CosmicRun): TraceVM | null {
 async function buildReprio(target: Initiative): Promise<FundedVM["reprio"]> {
   const pass1 = prioritize(INITIATIVES, { capacity: CAPACITY });
 
-  const { run, entry } = await runSixDCosmic(initiativeToIntent(target));
+  const { run, entry } = await runSixDCosmicSemantic(initiativeToIntent(target));
   const upd = artifactsToInitiativeUpdate(run, target, entry.hash);
 
   const updated: Initiative[] = INITIATIVES.map((i) =>
@@ -106,7 +110,7 @@ export default async function LoopPage() {
   for (const init of portfolio.funded) {
     const intent = initiativeToIntent(init);
     // Run through the COSMIC pipeline AND chain it (for the LUNA receipt).
-    const { run, entry } = await runSixDCosmic(intent);
+    const { run, entry } = await runSixDCosmicSemantic(intent);
     const update = artifactsToInitiativeUpdate(run, init, entry.hash);
 
     funded.push({

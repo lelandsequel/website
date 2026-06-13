@@ -32,12 +32,10 @@ import {
   type RawIntent,
 } from "../engine";
 import { sha256Hex, stableStringify } from "../helpers";
-import {
-  distributePhase,
-  developPhase,
-  detectPhase,
-  deliverPhase,
-} from "../phases";
+import { distributePhaseSemantic } from "./phases-semantic-distribute";
+import { developPhaseSemantic } from "./phases-semantic-develop";
+import { detectPhaseSemantic } from "./phases-semantic-detect";
+import { deliverPhaseSemantic } from "./phases-semantic-deliver";
 import type {
   ArtifactElement,
   IntentRef,
@@ -75,10 +73,10 @@ type PhaseSlot =
 const SEMANTIC_PHASES: PhaseSlot[] = [
   { semantic: true, fn: definePhaseSemantic },
   { semantic: true, fn: designPhaseSemantic },
-  { semantic: false, fn: distributePhase },
-  { semantic: false, fn: developPhase },
-  { semantic: false, fn: detectPhase },
-  { semantic: false, fn: deliverPhase },
+  { semantic: true, fn: distributePhaseSemantic },
+  { semantic: true, fn: developPhaseSemantic },
+  { semantic: true, fn: detectPhaseSemantic },
+  { semantic: true, fn: deliverPhaseSemantic },
 ];
 
 /**
