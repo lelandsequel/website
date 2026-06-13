@@ -101,6 +101,12 @@ export default async function NorthPolePage() {
     };
   });
 
+  // The round that actually shipped carries the full pass/fail checklist the
+  // build is graded against; the refused round carries the dangerous miss.
+  const shipped = rounds.find((r) => !r.refused) ?? rounds[rounds.length - 1];
+  const refusedRound = rounds.find((r) => r.refused);
+  const failed = refusedRound ? refusedRound.checks.filter((c) => !c.ok) : [];
+
   const buildVM: BuildVM = {
     whatItBuilt: "a loan-pricing step for a lending desk",
     rounds,
@@ -182,22 +188,46 @@ export default async function NorthPolePage() {
 
       {/* ── 2 · The plan ──────────────────────────────────────────────────── */}
       <Section label={NORTH_POLE.stages[1].label} title={NORTH_POLE.stages[1].plain}>
-        <div
-          data-tour="plan"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-            gap: "0.65rem",
-          }}
-        >
-          {PLAN_CARDS.map((c) => (
-            <Card key={c.heading}>
-              <div style={labelStyle}>{c.heading}</div>
-              <p style={{ color: T.muted, fontSize: "0.93rem", lineHeight: 1.6, margin: 0 }}>
-                {c.body}
-              </p>
-            </Card>
-          ))}
+        <div data-tour="plan">
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+              gap: "0.65rem",
+            }}
+          >
+            {PLAN_CARDS.map((c) => (
+              <Card key={c.heading}>
+                <div style={labelStyle}>{c.heading}</div>
+                <p style={{ color: T.muted, fontSize: "0.93rem", lineHeight: 1.6, margin: 0 }}>
+                  {c.body}
+                </p>
+              </Card>
+            ))}
+          </div>
+
+          <div style={{ marginTop: "1.1rem" }}>
+            <div style={labelStyle}>
+              Definition of done — every one of these must be true to ship
+            </div>
+            <ul style={{ listStyle: "none", margin: "0.4rem 0 0", padding: 0 }}>
+              {shipped.checks.map((check, i) => (
+                <li
+                  key={i}
+                  style={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: 8,
+                    padding: "0.3rem 0",
+                    lineHeight: 1.5,
+                  }}
+                >
+                  <span style={{ color: T.green, fontWeight: 700, flexShrink: 0 }}>✓</span>
+                  <span style={{ color: T.ink, fontSize: "0.93rem" }}>{check.rule}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
         <p style={{ color: T.faint, fontSize: "0.86rem", margin: "0.9rem 0 0", maxWidth: "70ch" }}>
           The plan isn&rsquo;t a vibe. Every line traces back to something you actually asked for
@@ -207,6 +237,67 @@ export default async function NorthPolePage() {
 
       {/* ── 3 · Build & check — THE interactive centerpiece (client) ──────── */}
       <NorthPoleApp vm={buildVM} />
+
+      {/* ── 3b · The dangerous miss, up close ─────────────────────────────── */}
+      <Section
+        label="The dangerous miss, up close"
+        title="The broken build didn't crash or look wrong. It shipped a confident, dangerous answer. This is the bug the check exists to stop."
+      >
+        <div data-tour="miss">
+          <p style={{ color: T.muted, fontSize: "0.93rem", lineHeight: 1.6, margin: "0 0 0.9rem", maxWidth: "70ch" }}>
+            Pass 1 returned a confident price. It looked completely fine — exactly what a code
+            review would have signed off on. Here is what the check caught that a human eye would
+            not.
+          </p>
+
+          {failed.length > 0 ? (
+            <div style={{ display: "grid", gap: "0.65rem" }}>
+              {failed.map((check, i) => (
+                <Card key={i} style={{ borderColor: `${T.red}66`, background: `${T.red}0d` }}>
+                  <div style={{ color: T.ink, fontWeight: 700, fontSize: "0.96rem", lineHeight: 1.4 }}>
+                    {check.rule}
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: T.mono,
+                      fontSize: 12.5,
+                      color: T.red,
+                      marginTop: 6,
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    What actually happened: {check.detail}
+                  </div>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <Card>
+              <p style={{ color: T.muted, fontSize: "0.93rem", lineHeight: 1.6, margin: 0 }}>
+                On this run every rule passed on the first try.
+              </p>
+            </Card>
+          )}
+
+          <div
+            style={{
+              marginTop: "0.9rem",
+              padding: "0.85rem 1rem",
+              border: `1px solid ${T.green}55`,
+              background: `${T.green}0a`,
+              borderRadius: 10,
+              color: T.muted,
+              fontSize: "0.93rem",
+              lineHeight: 1.65,
+            }}
+          >
+            A human eyeballing the code signs off — the number looks right. Only a check that runs
+            the real rules against the real result catches that the price was built on stale data.
+            That check is the whole product: software that can&rsquo;t lie about whether its own
+            work is right.
+          </div>
+        </div>
+      </Section>
 
       {/* ── 4 · Proof ─────────────────────────────────────────────────────── */}
       <Section label="The receipt" title="A check no one else has — and a record you can trust.">
@@ -218,6 +309,64 @@ export default async function NorthPolePage() {
               color: i === 2 ? T.green : T.ink,
             }))}
           />
+
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              alignItems: "center",
+              gap: "0.4rem 0.55rem",
+              fontFamily: T.mono,
+              fontSize: 12,
+              lineHeight: 1.6,
+              margin: "1rem 0 0",
+            }}
+          >
+            {result.rounds
+              .map((r, i) => ({ n: r.round, refused: rounds[i].refused, hash: short(r.ledgerHash) }))
+              .map((node, i) => (
+                <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: "0.55rem" }}>
+                  {i > 0 ? <span style={{ color: T.faint }}>&rarr;</span> : null}
+                  <span
+                    style={{
+                      color: node.refused ? T.red : T.green,
+                      border: `1px solid ${node.refused ? T.red : T.green}55`,
+                      borderRadius: 8,
+                      padding: "0.25rem 0.55rem",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    Pass {node.n} · {node.refused ? "refused" : "shipped"} · {node.hash}
+                  </span>
+                </span>
+              ))}
+            <span style={{ color: T.faint }}>&rarr;</span>
+            <span
+              style={{
+                color: T.accent,
+                border: `1px solid ${T.accent}55`,
+                borderRadius: 8,
+                padding: "0.25rem 0.55rem",
+                whiteSpace: "nowrap",
+                fontWeight: 700,
+              }}
+            >
+              sealed head {short(result.ledgerHead)}
+            </span>
+          </div>
+          <p
+            style={{
+              fontFamily: T.mono,
+              fontSize: 11.5,
+              color: T.faint,
+              margin: "0.55rem 0 0",
+              lineHeight: 1.6,
+            }}
+          >
+            Every step — including the refusal — is sealed in order. Change any one of them and the
+            chain breaks.
+          </p>
+
           <p
             style={{
               fontFamily: T.mono,
@@ -305,6 +454,7 @@ export default async function NorthPolePage() {
         steps={NORTH_POLE.tour}
         storageKey={NORTH_POLE.storageKey}
         launchLabel="How it works"
+        autoLaunch
       />
     </Shell>
   );

@@ -37,7 +37,7 @@ export default async function LooperPage() {
         answer, and every line traces back to what you typed. 🐦‍⬛ + 🔑
       </Footer>
 
-      <GuidedTour steps={LOOPER.tour} storageKey={LOOPER.storageKey} launchLabel="How it works" />
+      <GuidedTour steps={LOOPER.tour} storageKey={LOOPER.storageKey} launchLabel="How it works" autoLaunch />
     </Shell>
   );
 }

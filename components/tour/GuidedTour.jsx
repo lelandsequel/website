@@ -43,6 +43,7 @@ function readRect(sel) {
  * @param {Array}  props.steps        cover/step/outro objects (lib/products/copy.ts shape).
  * @param {string} props.storageKey   localStorage key, unique per product.
  * @param {string} [props.launchLabel] floating-button label.
+ * @param {boolean} [props.autoLaunch] open automatically on first visit (gated by storageKey).
  */
 export default function GuidedTour({ steps, storageKey, launchLabel = "Watch the walkthrough", autoLaunch = false }) {
   const STEPS = Array.isArray(steps) ? steps : [];
