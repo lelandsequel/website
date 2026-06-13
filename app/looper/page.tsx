@@ -78,13 +78,31 @@ function buildPlanCards(m: IntentSemanticModel): PlanCardVM[] {
 }
 
 // The frontier, in plain counts — the honest "where a person is still needed".
+// We restate the engine's REAL counts in plain English; we never pass its raw
+// grammar vocabulary ("EARS template", "free-narrative clause") to the surface.
+// Named, not faked: the numbers are the engine's; the words are for humans.
 function buildFrontier(m: IntentSemanticModel): FrontierVM {
-  return {
-    ambiguous: m.frontier.narrativeRequirements,
-    looseEnds: m.frontier.unresolvedTokens.length,
-    mergesToConfirm: m.frontier.reviewQueue.length,
-    points: m.frontier.llmRequiredFor,
-  };
+  const ambiguous = m.frontier.narrativeRequirements;
+  const looseEnds = m.frontier.unresolvedTokens.length;
+  const mergesToConfirm = m.frontier.reviewQueue.length;
+
+  const points: string[] = [];
+  if (ambiguous > 0)
+    points.push(
+      `${ambiguous} requirement${ambiguous === 1 ? " is" : "s are"} written as free-form prose — a person should confirm how to read ${ambiguous === 1 ? "it" : "them"} before we build.`,
+    );
+  if (looseEnds > 0)
+    points.push(
+      `${looseEnds} loose end${looseEnds === 1 ? "" : "s"} the system couldn't pin down on its own — worth a quick human look.`,
+    );
+  if (mergesToConfirm > 0)
+    points.push(
+      `${mergesToConfirm} possible duplicate${mergesToConfirm === 1 ? "" : "s"} to confirm before we treat them as one thing.`,
+    );
+  if (points.length === 0)
+    points.push("Nothing ambiguous on this one — the system could read all of it cleanly.");
+
+  return { ambiguous, looseEnds, mergesToConfirm, points };
 }
 
 // ── the closed-loop re-decide (before/after) for the headline pick ─────────────
