@@ -30,8 +30,8 @@ const SAMPLE_INTENT = {
 
 const C = {
   ink: "#e7e7ea",
-  muted: "#9a9aa4",
-  faint: "#7d7d88",
+  muted: "#bcc0cc",
+  faint: "#9aa0ac",
   accent: "#9fb4ff",
   green: "#6fe0a8",
   gold: "#f0c869",
@@ -70,7 +70,8 @@ export default async function OmnisSemanticPage() {
   const phases = run.manifest.artifacts.map((a) => ({ phase: a.phase, n: a.elements.length }));
 
   return (
-    <main style={{ maxWidth: 1040, margin: "0 auto", padding: "3rem 1.25rem 5rem", color: C.ink, fontFamily: C.sans }}>
+    <div style={{ background: "#0c0e15", minHeight: "100vh", color: C.ink, fontFamily: C.sans }}>
+      <main style={{ maxWidth: 1040, margin: "0 auto", padding: "3rem 1.25rem 5rem" }}>
       <header style={{ marginBottom: "2.4rem" }}>
         <p style={{ fontFamily: C.mono, fontSize: 12, letterSpacing: "0.14em", textTransform: "uppercase", color: C.accent, margin: "0 0 0.8rem" }}>
           JourdanLabs · OMNIS — the spec engine
@@ -176,6 +177,7 @@ export default async function OmnisSemanticPage() {
         OMNIS — the JourdanLabs spec engine. Meaning in, governed spec out, the gap named not faked. Every element here
         traces to a source; the receipt re-runs identically. This page runs the same engine the loop does. 🐦‍⬛ + 🔑
       </footer>
-    </main>
+      </main>
+    </div>
   );
 }
