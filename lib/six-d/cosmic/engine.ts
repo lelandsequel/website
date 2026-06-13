@@ -58,8 +58,9 @@ export type CosmicRun = {
 export async function buildCosmicRun(
   raw: RawIntent,
   resolutions: Resolution[] = [],
+  produce: (raw: RawIntent) => Promise<RunManifest> = runSixD,
 ): Promise<CosmicRun> {
-  const manifest = await runSixD(raw); // ← v1, byte-identical
+  const manifest = await produce(raw); // default: v1, byte-identical
   const provenance = await bindProvenance(manifest);
 
   let gate: GateReport;
@@ -105,10 +106,16 @@ export async function buildCosmicRun(
  */
 export async function runSixDCosmic(
   raw: RawIntent,
-  opts: { ledger?: Ledger; resolutions?: Resolution[] } = {},
+  opts: {
+    ledger?: Ledger;
+    resolutions?: Resolution[];
+    /** Manifest producer; defaults to v1 runSixD. Pass runSixDSemantic for the
+     *  meaning-driven pipeline — VELLUM/AURORA/LUNA wrap it identically. */
+    produce?: (raw: RawIntent) => Promise<RunManifest>;
+  } = {},
 ): Promise<{ run: CosmicRun; entry: LedgerEntry; ledger: Ledger }> {
   const ledger = opts.ledger ?? new Ledger();
-  const run = await buildCosmicRun(raw, opts.resolutions ?? []);
+  const run = await buildCosmicRun(raw, opts.resolutions ?? [], opts.produce);
   // Chain the canonical run payload (NOT the volatile full object) so the entry's
   // payloadHash equals run.runHash — same intent + same chain position ⇒ same seal.
   const entry = await ledger.append("6d.run", cosmicLedgerPayload(run));
