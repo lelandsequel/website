@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 
 import { runSixDCosmicSemantic } from "@/lib/six-d/semantic/run-semantic";
 import type { IntentSemanticModel } from "@/lib/six-d/semantic/model";
-import { Shell, Hero, Section, Card, Pill, ReceiptBar, FrontierPanel, Footer, T } from "@/components/omnis/ui";
+import { Shell, DemoNav, Hero, Section, Card, Pill, ReceiptBar, FrontierPanel, Footer, T } from "@/components/omnis/ui";
 
 export const metadata: Metadata = {
   title: "CADMUS — the spec engine that reads what you mean | JourdanLabs",
@@ -36,6 +36,7 @@ export default async function CadmusSemanticPage() {
 
   return (
     <Shell>
+      <DemoNav current="/omnis/semantic" />
       <Hero kicker="JourdanLabs · CADMUS — the spec engine · OMNIS loop" title="It reads what you mean." chip="SYNTHETIC DATA">
         CADMUS <strong style={{ color: T.ink }}>reconciles</strong> an intent&rsquo;s entities (NEBULA),{" "}
         <strong style={{ color: T.ink }}>types</strong> its requirements (ASTRAL), and builds the spec from that meaning

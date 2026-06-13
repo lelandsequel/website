@@ -11,6 +11,7 @@ import { type CosmicRun } from "@/lib/six-d/cosmic";
 // return shape as v1 cosmic; the spec is built from reconciled meaning, not keywords.
 import { runSixDCosmicSemantic } from "@/lib/six-d/semantic/run-semantic";
 import LoopExplorer, { type FundedVM, type TraceVM } from "./LoopExplorer";
+import { DemoNav } from "@/components/omnis/ui";
 import styles from "./loop.module.css";
 
 export const metadata: Metadata = {
@@ -147,6 +148,7 @@ export default async function LoopPage() {
 
   return (
     <main className={styles.page}>
+      <DemoNav current="/loop" />
       <header className={styles.hero}>
         <p className={styles.kicker}>JourdanLabs · OMNIS — the governed loop</p>
         <h1 className={styles.title}>

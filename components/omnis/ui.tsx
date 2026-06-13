@@ -9,6 +9,7 @@
 // highlight, alarm = refuse. The frontier ("where an LLM is still required") is
 // a FIRST-CLASS component here, not a footnote — it's the differentiator. 🐦‍⬛ + 🔑
 
+import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
 
 // ── tokens ───────────────────────────────────────────────────────────────────
@@ -157,6 +158,43 @@ export function FrontierPanel({
         ))}
       </ul>
     </div>
+  );
+}
+
+/** Shared wayfinding across the demo surfaces. `current` = this page's href. */
+export function DemoNav({ current }: { current?: string }) {
+  const links = [
+    { href: "/omnis/factory", label: "Factory" },
+    { href: "/6d", label: "CADMUS · 6D" },
+    { href: "/omnis/semantic", label: "The engine" },
+    { href: "/loop", label: "Loop" },
+    { href: "/factory", label: "Build" },
+  ];
+  return (
+    <nav style={{ display: "flex", gap: 5, flexWrap: "wrap", alignItems: "center", marginBottom: "2rem", fontFamily: T.mono, fontSize: 12 }}>
+      <Link href="/omnis/factory" style={{ color: T.accent, fontWeight: 800, letterSpacing: "0.12em", marginRight: 10, textDecoration: "none" }}>
+        OMNIS
+      </Link>
+      {links.map((l) => {
+        const on = current === l.href;
+        return (
+          <Link
+            key={l.href}
+            href={l.href}
+            style={{
+              color: on ? T.ink : T.faint,
+              textDecoration: "none",
+              padding: "3px 10px",
+              borderRadius: 999,
+              border: `1px solid ${on ? `${T.accent}66` : "transparent"}`,
+              background: on ? `${T.accent}14` : "transparent",
+            }}
+          >
+            {l.label}
+          </Link>
+        );
+      })}
+    </nav>
   );
 }
 

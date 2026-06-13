@@ -566,3 +566,236 @@
   font-size: 0.7rem;
   line-height: 1.6;
 }
+
+/* ── Engine mode toggle ───────────────────────────────────────────────── */
+
+.topbarRight {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+}
+
+.modeToggle {
+  display: inline-flex;
+  border: 1px solid var(--bg-border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.modeBtn,
+.modeActive {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.1rem;
+  padding: 0 0.85rem;
+  border: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  font-weight: 650;
+  font-size: 0.82rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.12s;
+}
+
+.modeBtn + .modeBtn,
+.modeBtn + .modeActive,
+.modeActive + .modeBtn {
+  border-left: 1px solid var(--bg-border);
+}
+
+.modeActive {
+  background: linear-gradient(120deg, var(--purple-700), var(--accent));
+  color: #fff;
+  font-weight: 800;
+}
+
+.modeBtn:hover {
+  background: var(--accent-dim);
+  color: var(--purple-900);
+}
+
+.modeSub {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.65rem;
+  opacity: 0.75;
+}
+
+/* ── Semantic panels ─────────────────────────────────────────────────── */
+
+/* Shared panel wrapper */
+.semanticPanel,
+.frontierPanel {
+  padding: 1rem 1.2rem 1.2rem;
+  border-radius: 12px;
+  background: var(--bg-card);
+  box-shadow: var(--soft-shadow);
+}
+
+.semanticPanel {
+  border: 1px solid var(--accent-border);
+}
+
+.semanticPanelHead {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-bottom: 0.75rem;
+}
+
+.semanticPanelTitle {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.semanticPanelSub {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.68rem;
+  color: var(--text-tertiary);
+}
+
+/* Entity grid */
+.entityGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.entityCard,
+.entityCardMerged {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--bg-border);
+  border-radius: 10px;
+  background: #fff;
+}
+
+.entityCardMerged {
+  border-color: var(--accent-border);
+  background: rgba(111, 56, 255, 0.03);
+}
+
+.entityRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.entityDisplay {
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.entityRole {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary);
+  padding: 0.1rem 0.4rem;
+  border: 1px solid var(--bg-border);
+  border-radius: 999px;
+}
+
+.mergedBadge {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.63rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-border);
+  border-radius: 999px;
+  padding: 0.1rem 0.45rem;
+}
+
+.variantList {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.45rem;
+}
+
+.variantChip {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+  background: rgba(111, 56, 255, 0.06);
+  border: 1px solid var(--accent-border);
+  border-radius: 6px;
+  padding: 0.1rem 0.4rem;
+}
+
+.variantArrow {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* Frontier panel */
+.frontierPanel {
+  border: 1px solid rgba(24, 169, 120, 0.3);
+  background: rgba(24, 169, 120, 0.04);
+}
+
+.frontierHead {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-bottom: 0.7rem;
+}
+
+.frontierTitle {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mint);
+  flex: 1 1 auto;
+}
+
+.frontierCounts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.frontierStat {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.7rem;
+  color: var(--text-tertiary);
+}
+
+.frontierStat strong {
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.frontierList {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.frontierItem {
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}

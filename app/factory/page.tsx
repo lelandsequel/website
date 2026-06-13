@@ -17,6 +17,7 @@ import { prioritize, INITIATIVES } from "@/lib/agility";
 import { buildOutcomeToFeedback, applyBuildFeedback } from "@/lib/loop/build-feedback";
 import FactoryExplorer, { type FactoryVM } from "./FactoryExplorer";
 import FactoryTour from "@/components/tour/FactoryTour";
+import { DemoNav } from "@/components/omnis/ui";
 import styles from "./factory.module.css";
 
 export const metadata: Metadata = {
@@ -89,6 +90,7 @@ export default async function FactoryPage() {
 
   return (
     <main className={styles.page}>
+      <DemoNav current="/factory" />
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
       <header className={styles.hero}>
         <p className={styles.kicker}>JourdanLabs · OMNIS — the build leg</p>

@@ -3,6 +3,10 @@
 // 6D Workbench — the one-screen client for the deterministic six-phase engine.
 // Everything runs in the browser: no API key, no network call, no data egress.
 // The receipt bar is the product's thesis made visible — run, verify, export.
+//
+// v1.1 — adds a v1 (keyword) ↔ Semantic (CADMUS) toggle so the same intent can
+// be run through both engines side-by-side. The semantic mode surfaces the
+// reconciled entity model and the honest frontier report above the 6-phase tabs.
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
@@ -12,12 +16,15 @@ import {
   verifyRun,
   type RawIntent,
 } from "@/lib/six-d/engine";
+import { runSixDSemantic } from "@/lib/six-d/semantic/run-semantic";
+import type { IntentSemanticModel } from "@/lib/six-d/semantic/model";
 import { EXAMPLE_INTENT } from "@/lib/six-d/example";
 import { splitLines } from "@/lib/six-d/helpers";
 import { bundleMarkdown, KIND_TITLES, phaseMarkdown } from "@/lib/six-d/markdown";
 import type { ArtifactElement, RunManifest } from "@/lib/six-d/types";
 import styles from "./sixd.module.css";
 
+type EngineMode = "v1" | "semantic";
 type VerifyState = { status: "idle" | "ok" | "fail"; recomputed?: string };
 
 const download = (name: string, text: string, mime: string) => {
@@ -39,6 +46,8 @@ export default function SixDWorkbench() {
   const [constraintsText, setConstraintsText] = useState(EXAMPLE_INTENT.constraints.join("\n"));
   const [sourceText, setSourceText] = useState("");
   const [manifest, setManifest] = useState<RunManifest | null>(null);
+  const [semanticModel, setSemanticModel] = useState<IntentSemanticModel | null>(null);
+  const [mode, setMode] = useState<EngineMode>("v1");
   const [active, setActive] = useState(0);
   const [verify, setVerify] = useState<VerifyState>({ status: "idle" });
   const [openTraces, setOpenTraces] = useState<Set<string>>(new Set());
@@ -54,9 +63,16 @@ export default function SixDWorkbench() {
     [title, context, goalsText, constraintsText, sourceText],
   );
 
-  const run = useCallback(async (intent: RawIntent) => {
-    const m = await runSixD(intent);
-    setManifest(m);
+  const run = useCallback(async (intent: RawIntent, runMode: EngineMode) => {
+    if (runMode === "semantic") {
+      const m = await runSixDSemantic(intent);
+      setManifest(m);
+      setSemanticModel(m.semantic);
+    } else {
+      const m = await runSixD(intent);
+      setManifest(m);
+      setSemanticModel(null);
+    }
     setActive(0);
     setVerify({ status: "idle" });
     setOpenTraces(new Set());
@@ -64,10 +80,10 @@ export default function SixDWorkbench() {
 
   // Land alive: the synthetic example is run on first paint.
   useEffect(() => {
-    void run(EXAMPLE_INTENT);
+    void run(EXAMPLE_INTENT, "v1");
   }, [run]);
 
-  const onRun = () => void run(currentIntent());
+  const onRun = () => void run(currentIntent(), mode);
 
   const onLoadExample = () => {
     setTitle(EXAMPLE_INTENT.title);
@@ -75,13 +91,30 @@ export default function SixDWorkbench() {
     setGoalsText(EXAMPLE_INTENT.goals.join("\n"));
     setConstraintsText(EXAMPLE_INTENT.constraints.join("\n"));
     setSourceText("");
-    void run(EXAMPLE_INTENT);
+    void run(EXAMPLE_INTENT, mode);
+  };
+
+  const onModeSwitch = (next: EngineMode) => {
+    setMode(next);
+    void run(currentIntent(), next);
   };
 
   const onVerify = async () => {
     if (!manifest) return;
-    const v = await verifyRun(manifest);
-    setVerify({ status: v.ok ? "ok" : "fail", recomputed: v.recomputed });
+    if (mode === "semantic") {
+      // Re-run the semantic pipeline and compare receipts
+      const fresh = await runSixDSemantic({
+        title: manifest.intent.title,
+        context: manifest.intent.context,
+        goals: manifest.intent.goals,
+        constraints: manifest.intent.constraints,
+        sourceMaterial: manifest.intent.sourceMaterial,
+      });
+      setVerify({ status: fresh.receipt === manifest.receipt ? "ok" : "fail", recomputed: fresh.receipt });
+    } else {
+      const v = await verifyRun(manifest);
+      setVerify({ status: v.ok ? "ok" : "fail", recomputed: v.recomputed });
+    }
   };
 
   const trace = useMemo(() => (manifest ? validateTrace(manifest) : null), [manifest]);
@@ -159,7 +192,25 @@ export default function SixDWorkbench() {
             <strong>6D WORKBENCH</strong>
             <span className={styles.brandSub}>powered by the CADMUS Engine</span>
           </div>
-          <div className={styles.gatePill}>deterministic · keyless · zero egress</div>
+          <div className={styles.topbarRight}>
+            <div className={styles.modeToggle} role="group" aria-label="Engine mode">
+              <button
+                type="button"
+                className={mode === "v1" ? styles.modeActive : styles.modeBtn}
+                onClick={() => onModeSwitch("v1")}
+              >
+                v1 <span className={styles.modeSub}>keyword</span>
+              </button>
+              <button
+                type="button"
+                className={mode === "semantic" ? styles.modeActive : styles.modeBtn}
+                onClick={() => onModeSwitch("semantic")}
+              >
+                Semantic <span className={styles.modeSub}>CADMUS</span>
+              </button>
+            </div>
+            <div className={styles.gatePill}>deterministic · keyless · zero egress</div>
+          </div>
         </header>
 
         <section className={styles.hero}>
@@ -211,6 +262,69 @@ export default function SixDWorkbench() {
 
           {/* ── Results ─────────────────────────────────────────────────── */}
           <section className={styles.results}>
+            {/* ── Semantic panels (visible only in semantic mode) ─────── */}
+            {mode === "semantic" && semanticModel ? (
+              <>
+                {/* Panel 1 — Reconciled entities */}
+                <div className={styles.semanticPanel}>
+                  <div className={styles.semanticPanelHead}>
+                    <div className={styles.semanticPanelTitle}>Reconciled entities</div>
+                    <div className={styles.semanticPanelSub}>
+                      {semanticModel.entities.length} canonical &middot;{" "}
+                      {semanticModel.entities.filter((e) => e.variants.length >= 2).length} merged from multiple surface forms
+                    </div>
+                  </div>
+                  <div className={styles.entityGrid}>
+                    {semanticModel.entities.map((e) => {
+                      const merged = e.variants.length >= 2;
+                      return (
+                        <div key={e.id} className={merged ? styles.entityCardMerged : styles.entityCard}>
+                          <div className={styles.entityRow}>
+                            <span className={styles.entityDisplay}>{e.display}</span>
+                            <span className={styles.entityRole}>{e.role}</span>
+                            {merged ? (
+                              <span className={styles.mergedBadge}>reconciled</span>
+                            ) : null}
+                          </div>
+                          {merged ? (
+                            <div className={styles.variantList}>
+                              {e.variants.map((v) => (
+                                <span key={v} className={styles.variantChip}>&ldquo;{v}&rdquo;</span>
+                              ))}
+                              <span className={styles.variantArrow}>→ {e.display}</span>
+                            </div>
+                          ) : null}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Panel 2 — The frontier */}
+                <div className={styles.frontierPanel}>
+                  <div className={styles.frontierHead}>
+                    <div className={styles.frontierTitle}>Where an LLM is still required — named, not faked</div>
+                    <div className={styles.frontierCounts}>
+                      <span className={styles.frontierStat}>
+                        <strong>{semanticModel.frontier.narrativeRequirements}</strong> narrative reqs
+                      </span>
+                      <span className={styles.frontierStat}>
+                        <strong>{semanticModel.frontier.unresolvedTokens.length}</strong> unresolved tokens
+                      </span>
+                      <span className={styles.frontierStat}>
+                        <strong>{semanticModel.frontier.reviewQueue.length}</strong> merge reviews
+                      </span>
+                    </div>
+                  </div>
+                  <ul className={styles.frontierList}>
+                    {semanticModel.frontier.llmRequiredFor.map((item, i) => (
+                      <li key={i} className={styles.frontierItem}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              </>
+            ) : null}
+
             {manifest ? (
               <>
                 <div className={styles.receiptBar}>
