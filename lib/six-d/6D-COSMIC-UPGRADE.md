@@ -72,3 +72,45 @@ And it's the governed answer to **JPMC's 6D framework**: Erika's runs on LLM Sui
 
 🐦‍⬛ + 🔑
 The chamber holds.
+
+---
+
+## Consolidation — Tier 1 + 2 + 3 merged into one canonical engine
+
+*Branch `pan-6d-cosmic-merged`. The three tiers were built on sibling branches (all gated green by Pan) and are now ONE coherent, green tree.*
+
+### What landed where (all additive — v1 byte-untouched)
+
+| Layer | Path | Tier | Public surface |
+|---|---|---|---|
+| v1 (frozen) | `lib/six-d/*.ts`, `app/6d/` | — | `runSixD`, the keyword helpers — **byte-identical to origin/main** |
+| LUNA · AURORA · VELLUM | `lib/six-d/cosmic/` | 1 | `runSixDCosmic`, `Ledger`, `runAuroraGate`, `bindProvenance` |
+| NEBULA · ASTRAL · frontier | `lib/six-d/semantic/` | 2 | `buildSemanticModel`, `reconcile`, `classifyClause` |
+| VANTAGE generated-artifact gate | `lib/six-d/cosmic-audit/` | 3 | `auditGeneratedArtifacts` (honest `NOT_WORTHWHILE`) |
+| **composition seam** | `lib/six-d/cosmic-native.ts` | 1+2+3 | `runSixDCosmicNative` |
+| `app/6d-cosmic/` | Tier-1 page (kept as-is) | 1 | — |
+
+The three tiers touch **disjoint** files (different sub-packages, different test files) and share only the byte-identical v1 + design doc, so the union merged with **zero content conflicts**. Tier 2 was stacked on Tier 3, so its `cosmic-audit/*` copies are byte-identical to Tier 3's — no reconciliation needed there.
+
+### The fusion decision — COMPOSABLE, with a documented seam (not spliced into v1)
+
+The memo's question: wire the Tier-2 `IntentSemanticModel` into the COSMIC pipeline's parse step, or keep the layers composable?
+
+**Call: composable.** The pipeline's parse step is `runSixD` (v1), which is **byte-frozen by contract** — the determinism tests pin its receipt to exact manifest bytes. The Tier-2 authors deliberately built the semantic layer to be consumed as an *extra argument* (`semantic/phases-semantic.ts`: *"A real Tier-2 promotion would thread the model through PhaseCtx; this shows the consuming code that promotion would use"*). Splicing the model into the parse step **without** rewriting the phase transforms would only annotate the run — a decorative "fusion" that changes no output. That's the beautiful fake the memo warns against. We don't bullshit.
+
+So the honest realization is a single composition seam — `lib/six-d/cosmic-native.ts::runSixDCosmicNative` — that runs all three tiers over one intent and returns one deterministic view (`semantic` + `cosmic` + `entry` + `audit`). It derives the semantic model and the audit from the **same v1 manifest** (`manifest.intent` + `manifest.intentIndex`), so nothing re-parses and nothing drifts. It **does not mutate** v1's manifest, receipt, or any Tier-1 hash — proven by `tests/six-d-cosmic-native.test.ts` ("non-perturbation"). The phase-level promotion (`definePhaseSemantic` / `designPhaseSemantic`) stays available behind the seam for when v1 is intentionally re-cut.
+
+### Green together
+
+`tsx --test` over all suites, run together:
+
+- `six-d-engine` — **11/11** (v1 non-negotiables)
+- `six-d-cosmic` — **18/18** (Tier 1)
+- `six-d-semantic` — **12/12** (Tier 2)
+- `six-d-cosmic-audit` — **6 pass + 1 opt-in skip** (Tier 3)
+- `six-d-cosmic-native` — **5/5** (the seam: composition · non-perturbation · determinism · no-drift · chaining)
+
+Totals: **53 tests, 52 pass, 1 skip, 0 fail.** `next build` clean.
+
+🐦‍⬛ + 🔑
+The chamber holds.
