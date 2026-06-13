@@ -1,0 +1,475 @@
+.page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 3rem 1.25rem 5rem;
+  color: var(--foreground, #e7e7ea);
+  font-family: var(--font-sans, system-ui, sans-serif);
+}
+
+/* ── Hero ─────────────────────────────────────────────────────────────────── */
+.hero {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 1.75rem;
+  margin-bottom: 2rem;
+}
+.kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.72rem;
+  color: #8b8b95;
+  margin: 0 0 0.5rem;
+}
+.title {
+  font-size: clamp(1.5rem, 3.2vw, 2.1rem);
+  line-height: 1.15;
+  margin: 0 0 0.75rem;
+}
+.sub {
+  color: #b7b7c0;
+  line-height: 1.6;
+  max-width: 78ch;
+  margin: 0 0 1.25rem;
+}
+.sub code,
+.lede code,
+.cardReason code,
+.note code {
+  background: rgba(255, 255, 255, 0.07);
+  padding: 0.05em 0.4em;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-family: var(--font-mono, ui-monospace, monospace);
+}
+
+/* ── The loop ribbon ──────────────────────────────────────────────────────── */
+.ribbon {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.4rem;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+.ribbonStep {
+  border: 1px solid rgba(120, 140, 255, 0.3);
+  background: rgba(120, 140, 255, 0.08);
+  border-radius: 999px;
+  padding: 0.25em 0.8em;
+  color: #c7d0ff;
+  font-weight: 600;
+}
+.ribbonArrow {
+  color: #7d7d88;
+  font-family: var(--font-mono, ui-monospace, monospace);
+}
+
+/* ── Sections ─────────────────────────────────────────────────────────────── */
+.section {
+  margin: 2.5rem 0;
+}
+.section > h2 {
+  font-size: 1.2rem;
+  margin: 0 0 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.step {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.7rem;
+  color: #8b8b95;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 5px;
+  padding: 0.12em 0.5em;
+}
+.engine {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.78em;
+  letter-spacing: 0.06em;
+  color: #9fb4ff;
+  background: rgba(120, 140, 255, 0.12);
+  padding: 0.1em 0.5em;
+  border-radius: 5px;
+}
+.lede {
+  color: #b0b0ba;
+  line-height: 1.55;
+  max-width: 80ch;
+  margin: 0 0 1.25rem;
+}
+
+/* ── Funded queue (interactive) ───────────────────────────────────────────── */
+.queue {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 0.7rem;
+}
+.queueItem {
+  text-align: left;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  background: rgba(255, 255, 255, 0.02);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.queueItem:hover {
+  border-color: rgba(120, 140, 255, 0.5);
+  background: rgba(120, 140, 255, 0.06);
+}
+.queueItemActive {
+  border-color: rgba(120, 140, 255, 0.8);
+  background: rgba(120, 140, 255, 0.1);
+  box-shadow: 0 0 0 1px rgba(120, 140, 255, 0.4) inset;
+}
+.queueTop {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+.qid {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  color: #9fb4ff;
+  font-size: 0.78rem;
+}
+.qtitle {
+  font-weight: 600;
+  flex: 1;
+}
+.qmeta {
+  display: flex;
+  gap: 0.4rem 0.8rem;
+  flex-wrap: wrap;
+  font-size: 0.74rem;
+  color: #8b8b95;
+}
+.qmeta strong {
+  color: #c7c7d0;
+  font-weight: 600;
+}
+.mandateTag {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.62rem;
+  color: #f0c869;
+  border: 1px solid rgba(235, 185, 70, 0.4);
+  border-radius: 4px;
+  padding: 0 0.35em;
+}
+.pickHint {
+  color: #7d7d88;
+  font-size: 0.8rem;
+  margin: 0.75rem 0 0;
+}
+
+/* ── Selected-initiative spec panel ───────────────────────────────────────── */
+.panel {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.25rem 1.35rem;
+  background: rgba(255, 255, 255, 0.015);
+  margin-top: 0.5rem;
+}
+.panelHead {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.4rem;
+}
+.panelHead h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+.receiptBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.75rem;
+  font-size: 0.78rem;
+  margin: 0.75rem 0 0;
+  padding-top: 0.75rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+}
+.receiptBar code {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  color: #cfcfd6;
+}
+.recLabel {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.62rem;
+  color: #7d7d88;
+  margin-bottom: 0.15rem;
+}
+
+/* ── Phase / verdict grid ─────────────────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+.card {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 0.8rem 0.95rem;
+  background: rgba(255, 255, 255, 0.02);
+}
+.cardHead {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.45rem;
+}
+.phaseN {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  color: #6f6f7a;
+  font-size: 0.78rem;
+}
+.phaseName {
+  text-transform: capitalize;
+  font-weight: 600;
+  flex: 1;
+}
+.cardReason {
+  color: #a6a6b0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* ── Pills ────────────────────────────────────────────────────────────────── */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  padding: 0.18em 0.6em;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.ok {
+  background: rgba(64, 200, 130, 0.15);
+  color: #6fe0a8;
+  border: 1px solid rgba(64, 200, 130, 0.35);
+}
+.hold {
+  background: rgba(235, 185, 70, 0.15);
+  color: #f0c869;
+  border: 1px solid rgba(235, 185, 70, 0.35);
+}
+.refuse {
+  background: rgba(235, 90, 90, 0.15);
+  color: #f08a8a;
+  border: 1px solid rgba(235, 90, 90, 0.38);
+}
+
+/* ── Provenance trace (load-bearing) ──────────────────────────────────────── */
+.trace {
+  border: 1px solid rgba(64, 200, 130, 0.3);
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  background: rgba(64, 200, 130, 0.04);
+  margin-top: 1rem;
+}
+.traceFlow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.6rem;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+.traceNode {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  padding: 0.4em 0.7em;
+  background: rgba(255, 255, 255, 0.03);
+}
+.traceNode small {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.58rem;
+  color: #7d7d88;
+  margin-bottom: 0.1rem;
+}
+.traceNode code {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  color: #cfe7d8;
+  font-size: 0.82em;
+}
+.traceArrow {
+  color: #6fe0a8;
+  font-family: var(--font-mono, ui-monospace, monospace);
+}
+.traceHash {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  color: #6fe0a8;
+  font-size: 0.74rem;
+  margin: 0.6rem 0 0;
+}
+
+/* ── Feedback (reverse leg) ───────────────────────────────────────────────── */
+.feedback {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+.metric {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  background: rgba(255, 255, 255, 0.02);
+}
+.metricLabel {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.62rem;
+  color: #7d7d88;
+  margin: 0 0 0.4rem;
+}
+.metricBig {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: var(--font-mono, ui-monospace, monospace);
+}
+.estFrom {
+  color: #f08a8a;
+  text-decoration: line-through;
+  text-decoration-color: rgba(235, 90, 90, 0.6);
+}
+.estTo {
+  color: #6fe0a8;
+}
+.estArrow {
+  color: #7d7d88;
+  margin: 0 0.4em;
+}
+.metricSub {
+  color: #9a9aa4;
+  font-size: 0.76rem;
+  margin: 0.35rem 0 0;
+  line-height: 1.4;
+}
+
+.issues {
+  margin: 0.4rem 0 0;
+  padding-left: 1.1rem;
+  color: #9a9aa4;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+.issues li {
+  margin-bottom: 0.3rem;
+}
+.issuePhase {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  color: #7d7d88;
+  font-size: 0.72rem;
+}
+
+/* ── Re-prioritize (closed-loop bonus) ────────────────────────────────────── */
+.reprio {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+.reprioCol {
+  flex: 1;
+  min-width: 260px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  background: rgba(255, 255, 255, 0.02);
+}
+.reprioLabel {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.62rem;
+  color: #7d7d88;
+  margin-bottom: 0.5rem;
+}
+.queueList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.queueRow {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  padding: 0.25rem 0.4rem;
+  border-radius: 6px;
+}
+.queueRow code {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  color: #9fb4ff;
+  font-size: 0.78rem;
+}
+.queueRowName {
+  flex: 1;
+  color: #c7c7d0;
+}
+.queueRowWeeks {
+  color: #8b8b95;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.76rem;
+}
+.rowNew {
+  background: rgba(64, 200, 130, 0.1);
+  border: 1px solid rgba(64, 200, 130, 0.3);
+}
+.rowNew .queueRowName::after {
+  content: " · newly funded";
+  color: #6fe0a8;
+  font-size: 0.72rem;
+}
+.rowChanged code {
+  color: #f0c869;
+}
+
+/* ── Notes / footer ───────────────────────────────────────────────────────── */
+.note {
+  border-left: 2px solid rgba(120, 140, 255, 0.4);
+  padding: 0.4rem 0 0.4rem 0.9rem;
+  margin: 1rem 0 0;
+  color: #9a9aa4;
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+.footer {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: #8b8b95;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  max-width: 82ch;
+}
+.synthetic {
+  display: inline-block;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  color: #8b8b95;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 4px;
+  padding: 0.1em 0.5em;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
