@@ -47,7 +47,7 @@ import { buildSemanticModel, type IntentSemanticModel } from "./model";
 import { definePhaseSemantic, designPhaseSemantic } from "./phases-semantic";
 
 export const SEMANTIC_GENERATED_BY =
-  "OMNIS Semantic Spec Engine — meaning-driven · deterministic · keyless · zero egress";
+  "CADMUS — the meaning-driven spec engine · deterministic · keyless · zero egress";
 
 /** A run manifest whose artifacts were built from reconciled meaning. */
 export type SemanticRunManifest = RunManifest & {

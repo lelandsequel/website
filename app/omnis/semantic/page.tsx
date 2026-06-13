@@ -11,9 +11,9 @@ import { runSixDCosmicSemantic } from "@/lib/six-d/semantic/run-semantic";
 import type { IntentSemanticModel } from "@/lib/six-d/semantic/model";
 
 export const metadata: Metadata = {
-  title: "OMNIS — the spec engine that reads what you mean | JourdanLabs",
+  title: "CADMUS — the spec engine that reads what you mean | JourdanLabs",
   description:
-    "OMNIS reconciles an intent's entities (NEBULA), types its requirements (ASTRAL), builds the spec from that meaning, then binds (VELLUM), gates (AURORA) and chains (LUNA) it — and names exactly where an LLM is still required instead of faking it. Deterministic, keyless, synthetic data.",
+    "CADMUS reconciles an intent's entities (NEBULA), types its requirements (ASTRAL), builds the spec from that meaning, then binds (VELLUM), gates (AURORA) and chains (LUNA) it — and names exactly where an LLM is still required instead of faking it. The spec stage of the OMNIS loop. Deterministic, keyless, synthetic data.",
 };
 
 const SAMPLE_INTENT = {
@@ -74,14 +74,14 @@ export default async function OmnisSemanticPage() {
       <main style={{ maxWidth: 1040, margin: "0 auto", padding: "3rem 1.25rem 5rem" }}>
       <header style={{ marginBottom: "2.4rem" }}>
         <p style={{ fontFamily: C.mono, fontSize: 12, letterSpacing: "0.14em", textTransform: "uppercase", color: C.accent, margin: "0 0 0.8rem" }}>
-          JourdanLabs · OMNIS — the spec engine
+          JourdanLabs · CADMUS — the spec engine · OMNIS loop
         </p>
         <h1 style={{ fontSize: "clamp(2rem,5vw,3.1rem)", fontWeight: 800, letterSpacing: "-0.035em", lineHeight: 1.05, margin: "0 0 0.4rem" }}>
           It reads what you mean.
           <span style={{ ...tag(C.gold), marginLeft: 12, verticalAlign: "middle" }}>SYNTHETIC DATA</span>
         </h1>
         <p style={{ color: C.muted, fontSize: "1.06rem", lineHeight: 1.6, maxWidth: "64ch", margin: "0.8rem 0 0" }}>
-          OMNIS <strong style={{ color: C.ink }}>reconciles</strong> an intent&rsquo;s entities (NEBULA),{" "}
+          CADMUS <strong style={{ color: C.ink }}>reconciles</strong> an intent&rsquo;s entities (NEBULA),{" "}
           <strong style={{ color: C.ink }}>types</strong> its requirements (ASTRAL), and builds the spec from that
           meaning — then VELLUM binds every element to a source, AURORA gates it, LUNA chains it. And where it can&rsquo;t
           be sure, it <strong style={{ color: C.green }}>names exactly where an LLM is still required</strong> instead of
@@ -174,7 +174,7 @@ export default async function OmnisSemanticPage() {
       </section>
 
       <footer style={{ borderTop: `1px solid ${C.border}`, paddingTop: "1.4rem", color: C.faint, fontSize: "0.88rem", lineHeight: 1.6 }}>
-        OMNIS — the JourdanLabs spec engine. Meaning in, governed spec out, the gap named not faked. Every element here
+        CADMUS — the JourdanLabs spec engine, the spec stage of the OMNIS loop. Meaning in, governed spec out, the gap named not faked. Every element here
         traces to a source; the receipt re-runs identically. This page runs the same engine the loop does. 🐦‍⬛ + 🔑
       </footer>
       </main>
