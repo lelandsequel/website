@@ -16,6 +16,7 @@ import {
 import { prioritize, INITIATIVES } from "@/lib/agility";
 import { buildOutcomeToFeedback, applyBuildFeedback } from "@/lib/loop/build-feedback";
 import FactoryExplorer, { type FactoryVM } from "./FactoryExplorer";
+import FactoryTour from "@/components/tour/FactoryTour";
 import styles from "./factory.module.css";
 
 export const metadata: Metadata = {
@@ -108,7 +109,7 @@ export default async function FactoryPage() {
         </p>
 
         {/* Three-stage ribbon — third step highlighted */}
-        <div className={styles.ribbon}>
+        <div className={styles.ribbon} data-tour="stages">
           <span className={styles.ribbonStep}>Agility decides</span>
           <span className={styles.ribbonArrow}>→</span>
           <span className={styles.ribbonStep}>6D specs</span>
@@ -146,7 +147,7 @@ export default async function FactoryPage() {
       </header>
 
       {/* ── Story card ────────────────────────────────────────────────────── */}
-      <section className={styles.section}>
+      <section className={styles.section} data-tour="workorder">
         <h2>
           <span className={styles.step}>WORK ORDER</span>
           The story — acceptance criteria as executable probes
@@ -182,7 +183,9 @@ export default async function FactoryPage() {
       </section>
 
       {/* ── FactoryExplorer — the loop + LUNA chain (client component) ───── */}
-      <FactoryExplorer vm={vm} />
+      <div data-tour="loop">
+        <FactoryExplorer vm={vm} />
+      </div>
 
       {/* ── Summary / receipt bar ─────────────────────────────────────────── */}
       <section className={styles.section}>
@@ -222,7 +225,7 @@ export default async function FactoryPage() {
 
       {/* ── Stage 3 → back to Agility — the circle closes ─────────────────── */}
       {shippedFeedback && refusedFeedback && (
-        <section className={styles.section}>
+        <section className={styles.section} data-tour="backtoagility">
           <h2>
             <span className={styles.step}>BACK TO AGILITY</span>
             The circle closes — the build verdict re-decides the portfolio
@@ -298,6 +301,8 @@ export default async function FactoryPage() {
         <em>measured</em>, not guessed. The receipt rides the whole circle. Deterministic; the
         portfolio is synthetic. 🐦‍⬛ + 🔑
       </footer>
+
+      <FactoryTour />
     </main>
   );
 }
